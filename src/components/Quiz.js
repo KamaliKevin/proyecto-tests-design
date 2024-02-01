@@ -1,6 +1,3 @@
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import Basket from './Basket';
 import {
     MDBBtn,
     MDBCard,
@@ -11,14 +8,12 @@ import {
     MDBCardTitle, MDBIcon, MDBInput, MDBRadio,
     MDBTypography
 } from "mdb-react-ui-kit";
+import RelationalQuestionDots from "./quizComponents/RelationalQuestionDots";
 
 
 const Quiz = () => {
     return (
         <div className="d-flex justify-content-center align-content-center mt-5">
-            <DndProvider backend={HTML5Backend}>
-                <Basket/>
-            </DndProvider>
             <MDBCard>
                 <MDBCardHeader>
                     <MDBTypography>
@@ -35,10 +30,16 @@ const Quiz = () => {
                     <MDBCardText>
                         <div>
                             <p>(Opción múltiple)</p>
-                            <MDBRadio name='flexRadioDefault' id='flexRadioDefault1' label='Opción 1' />
-                            <MDBRadio name='flexRadioDefault' id='flexRadioDefault2' label='Opción 2' />
-                            <MDBRadio name='flexRadioDefault' id='flexRadioDefault3' label='Opción 3' />
-                            <MDBRadio name='flexRadioDefault' id='flexRadioDefault4' label='Opción 4' />
+                            <MDBRadio name='multipleChoiceRadio' id='multipleChoiceRadio1' label='Opción 1' />
+                            <MDBRadio name='multipleChoiceRadio' id='multipleChoiceRadio2' label='Opción 2' />
+                            <MDBRadio name='multipleChoiceRadio' id='multipleChoiceRadio3' label='Opción 3' />
+                            <MDBRadio name='multipleChoiceRadio' id='multipleChoiceRadio4' label='Opción 4' />
+                        </div>
+                        <hr/>
+                        <div>
+                            <p>(Verdadero / Falso)</p>
+                            <MDBRadio name='trueFalseRadio' id='trueFalseRadio1' label='Verdadero' />
+                            <MDBRadio name='trueFalseRadio' id='trueFalseRadio2' label='Falso' />
                         </div>
                         <hr/>
                         <div>
@@ -48,7 +49,7 @@ const Quiz = () => {
                         <hr/>
                         <div>
                             <p>(Relacionar)</p>
-                            <span>???</span>
+                            <RelationalQuestionDots/>
                         </div>
                     </MDBCardText>
                     <MDBBtn type='submit' className='mb-4' block>Seguir</MDBBtn>

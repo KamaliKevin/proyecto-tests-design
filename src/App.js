@@ -6,6 +6,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Quiz from "./components/Quiz";
 import {MDBContainer} from "mdb-react-ui-kit";
+import "./css/main.css";
+import Dashboard from "./components/Dashboard";
 
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
                     <Route element={<Login/>} path="/login"></Route>
                     <Route element={<Register/>} path="/register"></Route>
                     <Route element={<Quiz/>} path="/quiz"></Route>
+                    <Route element={<Dashboard/>} path="/dashboard"></Route>
                 </Route>
             </Routes>
         </MDBContainer>
