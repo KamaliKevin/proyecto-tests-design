@@ -9,19 +9,18 @@ import {
     MDBListGroupItem,
     MDBTypography
 } from "mdb-react-ui-kit";
-import {Link} from "react-router-dom";
 
 const QuizHistory = () => {
     const playedQuizzes = [
-        { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser' },
-        { category: 'Category #2', name: 'Quiz #2', creator: 'RandomUser2' },
-        { category: 'Category #3', name: 'Quiz #3', creator: 'RandomUser3' }
+        { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp'},
+        { category: 'Category #2', name: 'Quiz #2', creator: 'RandomUser2', image_src: 'https://mdbootstrap.com/img/new/fluid/city/114.webp'},
+        { category: 'Category #3', name: 'Quiz #3', creator: 'RandomUser3', image_src: 'https://mdbootstrap.com/img/new/fluid/city/115.webp'}
     ];
 
     const madeQuizzes = [
-        { category: 'Category #4', name: 'Quiz #4' },
-        { category: 'Category #5', name: 'Quiz #5' },
-        { category: 'Category #6', name: 'Quiz #6' }
+        { category: 'Category #4', name: 'Quiz #4', image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
+        { category: 'Category #5', name: 'Quiz #5', image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
+        { category: 'Category #6', name: 'Quiz #6', image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
     ];
 
     return (
@@ -46,8 +45,8 @@ const QuizHistory = () => {
                                 <div className='d-flex justify-content-between align-items-center'>
                                     <div className='d-flex align-items-center'>
                                         <img
-                                            src='https://mdbootstrap.com/img/new/avatars/8.jpg'
-                                            alt=''
+                                            src={quiz.image_src}
+                                            alt='Quiz image'
                                             style={{ width: '45px', height: '45px' }}
                                             className='rounded-circle'
                                         />
@@ -56,9 +55,11 @@ const QuizHistory = () => {
                                             <p className='text-muted mb-0'>Created by <a href="#">{quiz.creator}</a></p>
                                         </div>
                                     </div>
-                                    <MDBBtn size='sm' rounded color='link'>
-                                        View
-                                    </MDBBtn>
+                                    <div className="ms-5">
+                                        <MDBBtn size='sm' rounded color='link'>
+                                            View
+                                        </MDBBtn>
+                                    </div>
                                 </div>
                             </MDBListGroupItem>
                         ))}
@@ -77,8 +78,8 @@ const QuizHistory = () => {
                                 <div className='d-flex justify-content-between align-items-center'>
                                     <div className='d-flex align-items-center'>
                                         <img
-                                            src='https://mdbootstrap.com/img/new/avatars/8.jpg'
-                                            alt=''
+                                            src={quiz.image_src}
+                                            alt='Quiz image'
                                             style={{ width: '45px', height: '45px' }}
                                             className='rounded-circle'
                                         />
@@ -86,9 +87,11 @@ const QuizHistory = () => {
                                             <p className='fw-bold mb-1'>{quiz.name}</p>
                                         </div>
                                     </div>
-                                    <MDBBtn size='sm' rounded color='link'>
-                                        View
-                                    </MDBBtn>
+                                    <div className="ms-5">
+                                        <MDBBtn size='sm' rounded color='link'>
+                                            View
+                                        </MDBBtn>
+                                    </div>
                                 </div>
                             </MDBListGroupItem>
                         ))}

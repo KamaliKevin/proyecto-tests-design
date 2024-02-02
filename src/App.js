@@ -20,7 +20,7 @@ function App() {
                     <Route element={<Login/>} path="/login"></Route>
                     <Route element={<Register/>} path="/register"></Route>
                     <Route element={<Quiz/>} path="/quiz"></Route>
-                    <Route element={<Dashboard/>} path="/dashboard"></Route>
+                    <Route element={<Dashboard userIsAdmin={true}/>} path="/dashboard"></Route>
                 </Route>
             </Routes>
         </MDBContainer>

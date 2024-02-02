@@ -3,8 +3,11 @@ import {MDBTabsContent, MDBTabsPane, MDBTabs, MDBTabsItem, MDBTabsLink, MDBIcon}
 import Profile from './dashboard/Profile';
 import Settings from './dashboard/Settings';
 import QuizHistory from './dashboard/QuizHistory';
+import UserManagement from "./dashboard/UserManagement";
+import QuizManagement from "./dashboard/QuizManagement";
+import ContactManagement from "./dashboard/ContactManagement";
 
-const Dashboard = () => {
+const Dashboard = ({ userIsAdmin }) => {
     const [activeTab, setActiveTab] = useState('profile');
 
     const handleTabClick = (tab) => {
@@ -29,6 +32,25 @@ const Dashboard = () => {
                         <MDBIcon fas icon="list-alt" /> Quiz History
                     </MDBTabsLink>
                 </MDBTabsItem>
+                {userIsAdmin && (
+                    <>
+                        <MDBTabsItem>
+                            <MDBTabsLink onClick={() => handleTabClick('user-management')} active={activeTab === 'user-management'}>
+                                <MDBIcon fas icon="users-cog" /> User Management
+                            </MDBTabsLink>
+                        </MDBTabsItem>
+                        <MDBTabsItem>
+                            <MDBTabsLink onClick={() => handleTabClick('quiz-management')} active={activeTab === 'quiz-management'}>
+                                <MDBIcon fas icon="list-ul" /> Quiz Management
+                            </MDBTabsLink>
+                        </MDBTabsItem>
+                        <MDBTabsItem>
+                            <MDBTabsLink onClick={() => handleTabClick('contact-management')} active={activeTab === 'contact-management'}>
+                                <MDBIcon fas icon="phone-square" /> Contact Management
+                            </MDBTabsLink>
+                        </MDBTabsItem>
+                    </>
+                )}
             </MDBTabs>
 
             <MDBTabsContent>
@@ -41,6 +63,19 @@ const Dashboard = () => {
                 <MDBTabsPane open={activeTab === 'quizHistory'}>
                     <QuizHistory />
                 </MDBTabsPane>
+                {userIsAdmin && (
+                    <>
+                        <MDBTabsPane open={activeTab === 'user-management'}>
+                            <UserManagement/>
+                        </MDBTabsPane>
+                        <MDBTabsPane open={activeTab === 'quiz-management'}>
+                            <QuizManagement/>
+                        </MDBTabsPane>
+                        <MDBTabsPane open={activeTab === 'contact-management'}>
+                            <ContactManagement/>
+                        </MDBTabsPane>
+                    </>
+                )}
             </MDBTabsContent>
         </div>
     );
