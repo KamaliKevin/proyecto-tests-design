@@ -9,9 +9,15 @@ import {
     MDBTypography,
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Register = () => {
+
+    const test = (e) => {
+        e.preventDefault();
+        console.log("aaa");
+    }
+
     return (
         <div className="d-flex justify-content-center align-content-center mt-5">
             <MDBCard>
@@ -33,7 +39,7 @@ const Register = () => {
                                 defaultChecked
                             />
 
-                            <MDBBtn type='submit' className='mb-4' block>
+                            <MDBBtn type='submit' className='mb-4' block onClick={test}>
                                 Sign up
                             </MDBBtn>
 
