@@ -69,12 +69,12 @@ const Home = () => {
                 ))}
             </MDBCarousel>
 
-            {titles.map((item, index) => (
+            {titles.map((title, index) => (
                 <div className="mt-5" key={index}>
                     <MDBCard>
                         <MDBCardHeader>
                             <MDBTypography tag='h3' className="text-center my-3">
-                                <MDBIcon fas icon={item.icon} /> {item.title}
+                                <MDBIcon fas icon={title.icon} /> {title.title}
                             </MDBTypography>
                         </MDBCardHeader>
                         <MDBCardBody>
@@ -87,9 +87,9 @@ const Home = () => {
                                                 <MDBCard>
                                                     <MDBRipple rippleTag='div' className='bg-image hover-zoom'>
                                                         <MDBCardImage src={card.image} alt={card.title} position="top" />
-                                                        <a href='#'>
+                                                        <MDBCardLink href="/quiz">
                                                             <div className='mask'></div>
-                                                        </a>
+                                                        </MDBCardLink>
                                                     </MDBRipple>
                                                     <MDBCardBody>
                                                         <MDBCardLink href="/quiz">
@@ -101,6 +101,9 @@ const Home = () => {
                                             </MDBCol>
                                         ))}
                                 </MDBRow>
+                                <div className="d-flex justify-content-center mt-5">
+                                    <MDBCardLink href="/category">Ver más de "{title.title}"</MDBCardLink>
+                                </div>
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>
