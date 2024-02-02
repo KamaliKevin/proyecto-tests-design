@@ -54,12 +54,20 @@ const ContactManagement = () => {
                                         <MDBBtn size='sm' rounded color='link'>
                                             View
                                         </MDBBtn>
-                                        <MDBBtn size='sm' rounded color='danger' className="ms-2">
-                                            Dismiss
-                                        </MDBBtn>
-                                        <MDBBtn size='sm' rounded color='success' className="ms-2">
-                                            Resolve
-                                        </MDBBtn>
+                                        {contact.category === 'Feedback' ? (
+                                            <MDBBtn size='sm' rounded color='success' className="ms-2">
+                                                Marked as read
+                                            </MDBBtn>
+                                        ) : (
+                                            <>
+                                                <MDBBtn size='sm' rounded color='danger' className="ms-2">
+                                                    Dismiss
+                                                </MDBBtn>
+                                                <MDBBtn size='sm' rounded color='success' className="ms-2">
+                                                    Resolve
+                                                </MDBBtn>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </MDBListGroupItem>
