@@ -13,9 +13,15 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
 
-    const test = (e) => {
+    const test = async (e) => {
         e.preventDefault();
-        console.log("aaa");
+
+        const cookie = await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
+        console.log(token);
     }
 
     return (
