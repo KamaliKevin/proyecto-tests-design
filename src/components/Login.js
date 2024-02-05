@@ -11,6 +11,44 @@ import {
 import {Link} from "react-router-dom";
 
 const Login = () => {
+
+    const login = async (e) => {
+        e.preventDefault();
+
+        const cookie = await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+       
+        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
+        console.log(token);
+        console.log(decodeURIComponent(token));
+
+        // Build formData object.
+        
+        let formData = new FormData();
+        formData.append('email', document.querySelector("#email").value);
+        formData.append('password', document.querySelector("#password").value);
+
+
+        const login = await fetch("http://localhost:8000/login", {
+            method: 'POST',
+            headers: {
+                
+                "X-CSRF-Token": token,
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: "same-origin",
+            body: formData,
+
+        }).then(
+
+        );
+    }
+
     return (
         <div className="d-flex justify-content-center align-content-center mt-5">
             <MDBCard>
@@ -32,7 +70,7 @@ const Login = () => {
                                 </MDBCol>
                             </MDBRow>
 
-                            <MDBBtn type='submit' className='mb-4' block>
+                            <MDBBtn type='submit' className='mb-4' block onClick={login}>
                                 Sign in
                             </MDBBtn>
 

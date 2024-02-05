@@ -10,19 +10,19 @@ import {
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
 import { Link } from "react-router-dom";
-
 const Register = () => {
 
-    const test = async (e) => {
+    const register = async (e) => {
         e.preventDefault();
 
         const cookie = await fetch("http://localhost:8000/sanctum/csrf-cookie", {
             method: 'GET',
             credentials: 'include'
         });
-        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
-        console.log(token);
+        //const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
+        const token = getCookies("XSRF-TOKEN");
 
+        console.log(token);
         // Build formData object.
         
         let formData = new FormData();
@@ -69,7 +69,7 @@ const Register = () => {
                                 defaultChecked
                             />
 
-                            <MDBBtn type='submit' className='mb-4' block onClick={test}>
+                            <MDBBtn type='submit' className='mb-4' block onClick={register}>
                                 Sign up
                             </MDBBtn>
 
