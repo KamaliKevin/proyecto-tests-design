@@ -10,7 +10,7 @@ const Navbar = () => {
         <MDBNavbar expand="lg" dark bgColor="dark">
             <MDBContainer fluid>
                 <Link to="/" className="nav-link">
-                    <MDBNavbarBrand>Brand</MDBNavbarBrand>
+                    <MDBNavbarBrand>Logo</MDBNavbarBrand>
                 </Link>
 
                 <MDBNavbarToggler
@@ -25,7 +25,7 @@ const Navbar = () => {
                 <MDBCollapse navbar open={openBasic}>
                     <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
                         <MDBNavbarItem>
-                            <Link to="/" className="nav-link">Home</Link>
+                            <MDBNavbarLink href="/">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
                             <MDBNavbarLink href="#">Link</MDBNavbarLink>
@@ -34,12 +34,12 @@ const Navbar = () => {
                         <MDBNavbarItem>
                             <MDBDropdown>
                                 <MDBDropdownToggle tag="a" className="nav-link" role="button">
-                                    Dropdown
+                                    Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    <MDBDropdownItem link>Action</MDBDropdownItem>
-                                    <MDBDropdownItem link>Another action</MDBDropdownItem>
-                                    <MDBDropdownItem link>Something else here</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category">Lengua y literatura</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category">Geografía</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category">Matemáticas</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>

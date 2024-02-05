@@ -1,4 +1,4 @@
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import {MDBBtn, MDBCol, MDBContainer, MDBFooter, MDBIcon, MDBInput, MDBRow} from "mdb-react-ui-kit";
 
 const Layout = () => {
@@ -71,14 +71,14 @@ const Layout = () => {
 
                                     <ul className='list-unstyled mb-0'>
                                         <li>
-                                            <a href='#' className='text-white'>
-                                                Link 1
-                                            </a>
+                                            <Link to="/privacy" className="text-white">
+                                                Privacy
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a href='#' className='text-white'>
-                                                Link 2
-                                            </a>
+                                            <Link to="/terms" className="text-white">
+                                                Terms & Conditions
+                                            </Link>
                                         </li>
                                         <li>
                                             <a href='#' className='text-white'>
