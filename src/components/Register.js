@@ -22,7 +22,30 @@ const Register = () => {
         });
         const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
         console.log(token);
+
+        // Build formData object.
+        
+        let formData = new FormData();
+        formData.append('name', document.querySelector("#username").value);
+        formData.append('email', document.querySelector("#email").value);
+        formData.append('password', document.querySelector("#password").value);
+        formData.append('password_confirmation', document.querySelector("#password_confirmation").value);
+
+
+        const register = await fetch("http://localhost:8000/register", {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "X-CSRF-Token": token
+            },
+            body: formData,
+
+        }).then(
+            
+        );
     }
+
+
 
     return (
         <div className="d-flex justify-content-center align-content-center mt-5">
@@ -32,11 +55,12 @@ const Register = () => {
                 </MDBCardHeader>
                 <MDBCardBody>
                     <MDBCardText>
-                        <form>
+                        <form id="formElement">
                             <MDBInput className='mb-4' type='text' id='username' label='Username' />
                             <MDBInput className='mb-4' type='email' id='email' label='Email' />
                             <MDBInput className='mb-4' type='password' id='password' label='Password' />
-                            <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' />
+                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Password' />
+                            {/* <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' /> */}
 
                             <MDBCheckbox
                                 wrapperClass='d-flex justify-content-center mb-4'
