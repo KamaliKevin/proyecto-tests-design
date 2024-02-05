@@ -41,7 +41,7 @@ const Register = () => {
             body: formData,
 
         }).then(
-            
+
         );
     }
 
@@ -59,7 +59,7 @@ const Register = () => {
                             <MDBInput className='mb-4' type='text' id='username' label='Username' />
                             <MDBInput className='mb-4' type='email' id='email' label='Email' />
                             <MDBInput className='mb-4' type='password' id='password' label='Password' />
-                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Password' />
+                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Confirm Password' />
                             {/* <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' /> */}
 
                             <MDBCheckbox
