@@ -9,11 +9,12 @@ import {
     MDBTypography,
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react";
 import Swal from "sweetalert2";
 
 const Register = () => {
+    const navigate = useNavigate();
     const [errors, setErrors] = useState(null);
 
     const register = async (e) => {
@@ -49,22 +50,19 @@ const Register = () => {
                 return res.json();
             }
             else {
-                return res.json();
+                navigate('/login');
             }
         }).then(res=>{
             console.log(res.errors);
-            handleValidation(res);
+            handleErrors(res.errors);
         });
             
         console.log(register);
     }
 
-    const handleValidation = (res) => {
-        if(res.errors){
-            setErrors(res.errors);
-        }
-        else {
-            window.location.replace("http://localhost:3000/login");
+    const handleErrors = (errors) => {
+        if(errors){
+            setErrors(errors);
         }
     }
 

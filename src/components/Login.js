@@ -8,10 +8,11 @@ import {
     MDBRow,
     MDBTypography
 } from "mdb-react-ui-kit";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react";
 
-const Login = () => {
+const Login = ({onLogin}) => {
+    const navigate = useNavigate();
     const [errors, setErrors] = useState(null);
 
     const login = async (e) => {
@@ -48,21 +49,19 @@ const Login = () => {
                 return res.json();
             }
             else {
-                window.location.replace("http://localhost:3000/home");
+                onLogin();
+                navigate('/home');
             }
         }).then(res=>{
             console.log(res.errors);
-            handleValidation(res);
+            handleErrors(res.errors);
         });
 
     }
 
-    const handleValidation = (res) => {
-        if(res.errors){
-            setErrors(res.errors);
-        }
-        else {
-            window.location.replace("http://localhost:3000/home");
+    const handleErrors = (errors) => {
+        if(errors){
+            setErrors(errors);
         }
     }
 

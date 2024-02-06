@@ -12,17 +12,24 @@ import Dashboard from "./components/Dashboard";
 import Privacy from "./components/Privacy";
 import Terms from "./components/Terms";
 import CreateQuiz from "./components/CreateQuiz";
+import {useState} from "react";
 
 
 function App() {
+    const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
+    const handleLogin = () => {
+        setUserIsLoggedIn(true);
+    };
+
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
-            <Navbar userIsLoggedIn={true} />
+            <Navbar userIsLoggedIn={userIsLoggedIn} />
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route element={<Home/>} path="/home"></Route>
                     <Route element={<Category/>} path="/category"></Route>
-                    <Route element={<Login/>} path="/login"></Route>
+                    <Route element={<Login onLogin={handleLogin}/>} path="/login"></Route>
                     <Route element={<Register/>} path="/register"></Route>
                     <Route element={<Quiz/>} path="/quiz"></Route>
                     <Route element={<Dashboard userIsAdmin={true}/>} path="/dashboard"></Route>
