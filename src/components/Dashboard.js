@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {MDBTabsContent, MDBTabsPane, MDBTabs, MDBTabsItem, MDBTabsLink, MDBIcon} from 'mdb-react-ui-kit';
-import Profile from './dashboard/Profile';
-import Settings from './dashboard/Settings';
-import QuizHistory from './dashboard/QuizHistory';
-import UserManagement from "./dashboard/UserManagement";
-import QuizManagement from "./dashboard/QuizManagement";
-import ContactManagement from "./dashboard/ContactManagement";
+import Profile from './DashboardComponents/Profile'
+import Settings from './DashboardComponents/Settings';
+import QuizHistory from './DashboardComponents/QuizHistory';
+import UserManagement from "./DashboardComponents/UserManagement";
+import QuizManagement from "./DashboardComponents/QuizManagement";
+import ContactManagement from "./DashboardComponents/ContactManagement";
 
 const Dashboard = ({ userIsAdmin }) => {
     const [activeTab, setActiveTab] = useState('profile');

@@ -8,7 +8,7 @@ import {
     MDBCardTitle, MDBIcon, MDBInput, MDBRadio,
     MDBTypography
 } from "mdb-react-ui-kit";
-import RelationalQuestionDots from "./quizComponents/RelationalQuestionDots";
+import RelationalQuestionDots from "./QuizComponents/RelationalQuestionDots";
 
 
 const Quiz = () => {
