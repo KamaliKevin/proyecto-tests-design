@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {MDBTabsContent, MDBTabsPane, MDBTabs, MDBTabsItem, MDBTabsLink, MDBIcon} from 'mdb-react-ui-kit';
-import Profile from './DashboardComponents/Profile'
+import Profile from './DashboardComponents/Profile';
 import Settings from './DashboardComponents/Settings';
 import QuizHistory from './DashboardComponents/QuizHistory';
 import UserManagement from "./DashboardComponents/UserManagement";

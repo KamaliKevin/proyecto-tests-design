@@ -3,7 +3,7 @@ import {useState} from "react";
 import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
     MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
 
-const Navbar = () => {
+const Navbar = ({userIsLoggedIn}) => {
     const [openBasic, setOpenBasic] = useState(false);
 
     return (
@@ -57,8 +57,17 @@ const Navbar = () => {
                     </form>
 
                     <div className="d-grid gap-2 d-lg-flex">
-                        <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/login">Login</MDBBtn>
-                        <MDBBtn color="success" href="/register">Register</MDBBtn>
+                        {userIsLoggedIn ? (
+                            <>
+                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/dashboard">Dashboard</MDBBtn>
+                                <MDBBtn color="warning" href="/create-quiz">Create Quiz</MDBBtn>
+                            </>
+                        ) : (
+                            <>
+                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/login">Login</MDBBtn>
+                                <MDBBtn color="success" href="/register">Register</MDBBtn>
+                            </>
+                        )}
                     </div>
 
                 </MDBCollapse>
