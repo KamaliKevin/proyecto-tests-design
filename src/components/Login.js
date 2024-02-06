@@ -8,7 +8,7 @@ import {
     MDBRow,
     MDBTypography
 } from "mdb-react-ui-kit";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -20,33 +20,29 @@ const Login = () => {
             credentials: 'include'
         });
 
-       
-        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
-        console.log(token);
-        console.log(decodeURIComponent(token));
+        const csrfToken = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+            ?.split('=')[1];
 
         // Build formData object.
-        
+
         let formData = new FormData();
         formData.append('email', document.querySelector("#email").value);
         formData.append('password', document.querySelector("#password").value);
 
 
-        const login = await fetch("http://localhost:8000/login", {
+        const loginResponse = await fetch("http://localhost:8000/login", {
             method: 'POST',
             headers: {
-                
-                "X-CSRF-Token": token,
-                'Accept': 'application/json, text/plain, */*',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
             },
-            credentials: "same-origin",
-            body: formData,
-
-        }).then(
-
-        );
+            credentials: 'include', // Include cookies in the request
+            body: formData
+        });
     }
 
     return (
