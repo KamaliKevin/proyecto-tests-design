@@ -19,8 +19,8 @@ const Register = () => {
             method: 'GET',
             credentials: 'include'
         });
-        //const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
-        const token = getCookies("XSRF-TOKEN");
+        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
+        //const token = getCookies("XSRF-TOKEN");
 
         console.log(token);
         // Build formData object.

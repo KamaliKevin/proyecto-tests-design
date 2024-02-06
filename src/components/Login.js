@@ -31,17 +31,18 @@ const Login = () => {
         formData.append('email', document.querySelector("#email").value);
         formData.append('password', document.querySelector("#password").value);
 
-
-        const loginResponse = await fetch("http://localhost:8000/login", {
+        await fetch("http://localhost:8000/login", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
+                //'Content-Type': 'application/json',
+                //'X-Requested-With': 'XMLHttpRequest',
                 'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
             },
             credentials: 'include', // Include cookies in the request
             body: formData
+        }).then(() => {
+            window.location.replace("http://localhost:3000/home");
         });
     }
 
