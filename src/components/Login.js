@@ -9,8 +9,10 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+import {useState} from "react";
 
 const Login = () => {
+    const [errors, setErrors] = useState(null);
 
     const login = async (e) => {
         e.preventDefault();
@@ -50,8 +52,18 @@ const Login = () => {
             }
         }).then(res=>{
             console.log(res.errors);
+            handleValidation(res);
         });
 
+    }
+
+    const handleValidation = (res) => {
+        if(res.errors){
+            setErrors(res.errors);
+        }
+        else {
+            window.location.replace("http://localhost:3000/home");
+        }
     }
 
     return (
@@ -63,6 +75,15 @@ const Login = () => {
                 <MDBCardBody>
                     <MDBCardText>
                         <form>
+                            {errors && (
+                                <div className="alert alert-danger" role="alert">
+                                    <h4>Has cometido los siguientes errores al iniciar sesión:</h4>
+                                    {Object.keys(errors).map((key) => (
+                                        <p key={key}>{key}: {errors[key]}</p>
+                                    ))}
+                                </div>
+                            )}
+
                             <MDBInput className='mb-4' type='email' id='email' label='Email address' />
                             <MDBInput className='mb-4' type='password' id='password' label='Password' />
 

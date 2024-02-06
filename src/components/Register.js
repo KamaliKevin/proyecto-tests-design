@@ -10,7 +10,11 @@ import {
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
 import { Link } from "react-router-dom";
+import {useState} from "react";
+import Swal from "sweetalert2";
+
 const Register = () => {
+    const [errors, setErrors] = useState(null);
 
     const register = async (e) => {
         e.preventDefault();
@@ -49,67 +53,86 @@ const Register = () => {
             }
         }).then(res=>{
             console.log(res.errors);
+            handleValidation(res);
         });
             
-console.log(register);
+        console.log(register);
+    }
+
+    const handleValidation = (res) => {
+        if(res.errors){
+            setErrors(res.errors);
+        }
+        else {
+            window.location.replace("http://localhost:3000/login");
+        }
     }
 
 
 
-return (
-    <div className="d-flex justify-content-center align-content-center mt-5">
-        <MDBCard>
-            <MDBCardHeader>
-                <MDBTypography tag='h3' className="my-3">Register</MDBTypography>
-            </MDBCardHeader>
-            <MDBCardBody>
-                <MDBCardText>
-                    <form id="formElement">
-                        <MDBInput className='mb-4' type='text' id='username' label='Username' />
-                        <MDBInput className='mb-4' type='email' id='email' label='Email' />
-                        <MDBInput className='mb-4' type='password' id='password' label='Password' />
-                        <MDBInput className='mb-4' type='password' id='password_confirmation' label='Confirm Password' />
-                        {/* <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' /> */}
+    return (
+        <div className="d-flex justify-content-center align-content-center mt-5">
+            <MDBCard>
+                <MDBCardHeader>
+                    <MDBTypography tag='h3' className="my-3">Register</MDBTypography>
+                </MDBCardHeader>
+                <MDBCardBody>
+                    <MDBCardText>
+                        <form id="formElement">
+                            {errors && (
+                                <div className="alert alert-danger" role="alert">
+                                    <h6>Has cometido los siguientes errores al registrarte:</h6>
+                                    {Object.keys(errors).map((key) => (
+                                        <p key={key}>{key}: {errors[key]}</p>
+                                    ))}
+                                </div>
+                            )}
 
-                        <MDBCheckbox
-                            wrapperClass='d-flex justify-content-center mb-4'
-                            id='newsletterSubscription'
-                            label='Subscribe to our newsletter'
-                            defaultChecked
-                        />
+                            <MDBInput className='mb-4' type='text' id='username' label='Username' />
+                            <MDBInput className='mb-4' type='email' id='email' label='Email' />
+                            <MDBInput className='mb-4' type='password' id='password' label='Password' />
+                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Confirm Password' />
+                            {/* <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' /> */}
 
-                        <MDBBtn type='submit' className='mb-4' block onClick={register}>
-                            Sign up
-                        </MDBBtn>
+                            <MDBCheckbox
+                                wrapperClass='d-flex justify-content-center mb-4'
+                                id='newsletterSubscription'
+                                label='Subscribe to our newsletter'
+                                defaultChecked
+                            />
 
-                        <div className='text-center'>
-                            <p>
-                                Already a member? <Link to="/login">Login</Link>
-                            </p>
-                            <p>or sign up with:</p>
-
-                            <MDBBtn floating color="secondary" className='mx-1'>
-                                <MDBIcon fab icon='facebook-f' />
+                            <MDBBtn type='submit' className='mb-4' block onClick={register}>
+                                Sign up
                             </MDBBtn>
 
-                            <MDBBtn floating color="secondary" className='mx-1'>
-                                <MDBIcon fab icon='google' />
-                            </MDBBtn>
+                            <div className='text-center'>
+                                <p>
+                                    Already a member? <Link to="/login">Login</Link>
+                                </p>
+                                <p>or sign up with:</p>
 
-                            <MDBBtn floating color="secondary" className='mx-1'>
-                                <MDBIcon fab icon='twitter' />
-                            </MDBBtn>
+                                <MDBBtn floating color="secondary" className='mx-1'>
+                                    <MDBIcon fab icon='facebook-f' />
+                                </MDBBtn>
 
-                            <MDBBtn floating color="secondary" className='mx-1'>
-                                <MDBIcon fab icon='github' />
-                            </MDBBtn>
-                        </div>
-                    </form>
-                </MDBCardText>
-            </MDBCardBody>
-        </MDBCard>
-    </div>
-);
+                                <MDBBtn floating color="secondary" className='mx-1'>
+                                    <MDBIcon fab icon='google' />
+                                </MDBBtn>
+
+                                <MDBBtn floating color="secondary" className='mx-1'>
+                                    <MDBIcon fab icon='twitter' />
+                                </MDBBtn>
+
+                                <MDBBtn floating color="secondary" className='mx-1'>
+                                    <MDBIcon fab icon='github' />
+                                </MDBBtn>
+                            </div>
+                        </form>
+                    </MDBCardText>
+                </MDBCardBody>
+            </MDBCard>
+        </div>
+    );
 }
 
 export default Register;
