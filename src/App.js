@@ -20,7 +20,7 @@ function App() {
             <Navbar userIsLoggedIn={true} />
             <Routes>
                 <Route path="/" element={<Layout/>}>
-                    <Route element={<Home/>} path="/"></Route>
+                    <Route element={<Home/>} path="/home"></Route>
                     <Route element={<Category/>} path="/category"></Route>
                     <Route element={<Login/>} path="/login"></Route>
                     <Route element={<Register/>} path="/register"></Route>
