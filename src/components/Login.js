@@ -41,9 +41,17 @@ const Login = () => {
             },
             credentials: 'include', // Include cookies in the request
             body: formData
-        }).then(() => {
-            window.location.replace("http://localhost:3000/home");
+        }).then(res => {
+            if (!res.ok) {
+                return res.json();
+            }
+            else {
+                window.location.replace("http://localhost:3000/home");
+            }
+        }).then(res=>{
+            console.log(res.errors);
         });
+
     }
 
     return (
