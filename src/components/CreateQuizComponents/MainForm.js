@@ -5,7 +5,7 @@ import { FormularioPregunta } from './FormularioPregunta';
 import { PreguntasCreadas } from './PreguntasCreadas';
 import { Route, Routes } from 'react-router-dom';
 import { FormularioUsuario } from './FormularioUsuario';
-import {MDBBtn, MDBFile} from "mdb-react-ui-kit";
+import { MDBBtn, MDBFile } from "mdb-react-ui-kit";
 
 let idActualPregunta = 1;
 
@@ -34,8 +34,8 @@ function MainForm() {
 
         // Hacer que las preguntas estén ordenadas, independientemente de cuál se borre:
         setPreguntas(preguntas
-            .filter((pregunta) => pregunta.id != id)
-            .map((pregunta, index) => ({...pregunta, id: index + 1})));
+          .filter((pregunta) => pregunta.id != id)
+          .map((pregunta, index) => ({ ...pregunta, id: index + 1 })));
 
         Swal.fire({
           title: "¡Eliminada!",
@@ -44,6 +44,39 @@ function MainForm() {
         });
       }
     });
+
+  }
+
+  const saveToAccount = async () => {
+
+
+    const formData = new FormData();
+    formData.append('name', 'Test Name'); // Replace 'Test Name' with the actual test name
+    let blob = new Blob([JSON.stringify(preguntas)], { type: "application/json" });
+    let file = new File([blob], "preguntas.json", {
+      type: "application/json",
+      lastModified: new Date()
+    });
+    //encodeURIComponent()
+    formData.append('test_file', file); // Assuming 'file' is a File object from an <input> or drag-and-drop
+    await fetch('http://localhost:8000/api/upload-test', {
+      headers: {
+        'Accept': 'application/json'
+      },
+      method: 'POST',
+      credentials: 'include', // Include cookies for the domain
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+
+    await fetch('http://localhost:8000/api/user', {
+      method: 'GET',
+      credentials: 'include', // Important: Include credentials for authentication
+    }).then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error("Fucky wacky", error));
 
   }
 
@@ -103,7 +136,7 @@ function MainForm() {
       console.log("El cuestionario ha sido importado con éxito")
     }
 
-    function checkFileFormat (preguntas) {
+    function checkFileFormat(preguntas) {
       // Verificar si el cuestionario es un arreglo
       if (!Array.isArray(preguntas)) {
         return false;
@@ -142,17 +175,17 @@ function MainForm() {
 
         // Verificar si la pregunta tiene todas las propiedades necesarias y cumple el formato
         if (
-            typeof pregunta.enunciado !== "string" ||
-            !Array.isArray(pregunta.respuestas) ||
-            pregunta.respuestas.length < 2 ||
-            typeof pregunta.respuestacorrecta !== "number" ||
-            pregunta.respuestacorrecta < 0 ||
-            pregunta.respuestacorrecta % 1 !== 0 ||
-            pregunta.respuestacorrecta >= pregunta.respuestas.length ||
-            typeof pregunta.favorita !== "boolean" ||
-            typeof pregunta.id !== "number" ||
-            pregunta.id % 1 !== 0 ||
-            pregunta.id < 1
+          typeof pregunta.enunciado !== "string" ||
+          !Array.isArray(pregunta.respuestas) ||
+          pregunta.respuestas.length < 2 ||
+          typeof pregunta.respuestacorrecta !== "number" ||
+          pregunta.respuestacorrecta < 0 ||
+          pregunta.respuestacorrecta % 1 !== 0 ||
+          pregunta.respuestacorrecta >= pregunta.respuestas.length ||
+          typeof pregunta.favorita !== "boolean" ||
+          typeof pregunta.id !== "number" ||
+          pregunta.id % 1 !== 0 ||
+          pregunta.id < 1
         ) {
           return false;
         }
@@ -177,19 +210,19 @@ function MainForm() {
         addPregunta={addQuestion}>
       </FormularioPregunta>
 
-        {/* Comprobar que solo se puede exportar cuestionarios si hay al menos una pregunta */}
-        {preguntas.length > 0 && (
-            <div className="mt-5">
-              <a id="downloadAnchorElem" href={"data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(preguntas))}
-                 download="preguntas.json">
-                <MDBBtn color="info" block>Exportar cuestionario</MDBBtn>
-              </a>
-            </div>
-        )}
-
+      {/* Comprobar que solo se puede exportar cuestionarios si hay al menos una pregunta */}
+      {preguntas.length > 0 && (
         <div className="mt-5">
-          <MDBFile label="Importar cuestionario" id="avatar" name="avatar" accept=".json" onChange={uploadJson}/>
+          <a id="downloadAnchorElem" href={"data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(preguntas))}
+            download="preguntas.json">
+            <MDBBtn color="info" block>Exportar cuestionario</MDBBtn>
+          </a>
         </div>
+      )}
+
+      <div className="mt-5">
+        <MDBFile label="Importar cuestionario" id="avatar" name="avatar" accept=".json" onChange={uploadJson} />
+      </div>
 
       <PreguntasCreadas
         preguntas={preguntas}
@@ -199,6 +232,9 @@ function MainForm() {
       <FormularioUsuario
         preguntas={preguntas}
       ></FormularioUsuario>
+      <MDBBtn type='submit' className='mb-4' block onClick={saveToAccount}>
+        Confirmar
+      </MDBBtn>
     </>
   );
 }
