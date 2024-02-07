@@ -49,6 +49,11 @@ function MainForm() {
 
   const saveToAccount = async () => {
 
+    const csrfToken = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+      ?.split('=')[1];
+
 
     const formData = new FormData();
     formData.append('name', 'Test Name'); // Replace 'Test Name' with the actual test name
@@ -60,10 +65,11 @@ function MainForm() {
     //encodeURIComponent()
     formData.append('test_file', file); // Assuming 'file' is a File object from an <input> or drag-and-drop
     await fetch('http://localhost:8000/api/upload-test', {
-      headers: {
-        'Accept': 'application/json'
-      },
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
+      },
       credentials: 'include', // Include cookies for the domain
       body: formData,
     })
