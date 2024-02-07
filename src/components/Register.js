@@ -52,10 +52,7 @@ const Register = () => {
             else {
                 navigate('/login');
             }
-        }).then(res=>{
-            console.log(res.errors);
-            handleErrors(res.errors);
-        });
+        })
             
         console.log(register);
     }

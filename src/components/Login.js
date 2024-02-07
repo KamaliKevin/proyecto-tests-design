@@ -9,9 +9,9 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 
-const Login = ({onLogin}) => {
+const Login = ({ onLogin }) => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState(null);
 
@@ -44,23 +44,25 @@ const Login = ({onLogin}) => {
             },
             credentials: 'include', // Include cookies in the request
             body: formData
-        }).then(res => {
+        }).then(async (res) => {
             if (!res.ok) {
                 return res.json();
             }
             else {
-                onLogin();
+                await fetch('http://localhost:8000/api/user', {
+                    method: 'GET',
+                    credentials: 'include', // Important: Include credentials for authentication
+                }).then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error("Fucky wacky", error));
                 navigate('/home');
             }
-        }).then(res=>{
-            console.log(res.errors);
-            handleErrors(res.errors);
-        });
+        })
 
     }
 
     const handleErrors = (errors) => {
-        if(errors){
+        if (errors) {
             setErrors(errors);
         }
     }
