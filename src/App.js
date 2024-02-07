@@ -49,6 +49,7 @@ function App() {
                             <Route element={<Register userIsLoggedIn={userIsLoggedIn} />} path="/register" />
                         </>
                     )}
+                    <Route element={<Dashboard userIsLoggedIn={true} userIsAdmin={true} />} path="/dashboard" />
                     <Route element={<Quiz />} path="/quiz"></Route>
                     <Route element={<Privacy />} path="/privacy"></Route>
                     <Route element={<Terms />} path="/terms"></Route>
