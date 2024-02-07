@@ -9,19 +9,59 @@ import {
     MDBListGroupItem,
     MDBTypography
 } from "mdb-react-ui-kit";
-
+import { useEffect, useState } from "react";
 const QuizHistory = () => {
-    const playedQuizzes = [
-        { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp'},
-        { category: 'Category #2', name: 'Quiz #2', creator: 'RandomUser2', image_src: 'https://mdbootstrap.com/img/new/fluid/city/114.webp'},
-        { category: 'Category #3', name: 'Quiz #3', creator: 'RandomUser3', image_src: 'https://mdbootstrap.com/img/new/fluid/city/115.webp'}
-    ];
 
-    const madeQuizzes = [
-        { category: 'Category #4', name: 'Quiz #4', image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
-        { category: 'Category #5', name: 'Quiz #5', image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
-        { category: 'Category #6', name: 'Quiz #6', image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
+    const [madeQuizzes, setMadeQuizzes] = useState(
+        []
+    )
+
+    const playedQuizzes = [
+        { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp' },
+        { category: 'Category #2', name: 'Quiz #2', creator: 'RandomUser2', image_src: 'https://mdbootstrap.com/img/new/fluid/city/114.webp' },
+        { category: 'Category #3', name: 'Quiz #3', creator: 'RandomUser3', image_src: 'https://mdbootstrap.com/img/new/fluid/city/115.webp' }
     ];
+    useEffect(() => {
+        async function fetchAndSetUserTests() {
+            try {
+                const response = await fetch('http://localhost:8000/api/user/tests', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user tests');
+                }
+
+                const data = await response.json();
+                const tests = data.tests;
+
+                let tempQuizzes = tests.map(element => ({
+                    category: 'Category #4',
+                    name: element,
+                    image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp'
+                }));
+
+                setMadeQuizzes(tempQuizzes);
+            } catch (error) {
+                console.error('Error fetching user tests:', error);
+            }
+        }
+
+        fetchAndSetUserTests();
+    }, []);
+
+
+
+
+
+
+
+    // madeQuizzes = [
+    //     { category: 'Category #4', name: 'Quiz #4', image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
+    //     { category: 'Category #5', name: 'Quiz #5', image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
+    //     { category: 'Category #6', name: 'Quiz #6', image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
+    // ];
 
     return (
         <div className="d-flex justify-content-center">
