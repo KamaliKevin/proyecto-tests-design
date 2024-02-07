@@ -1,23 +1,16 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import {
     MDBBtn, MDBCard,
     MDBCardBody,
     MDBCardHeader,
     MDBCardText,
-    MDBCheckbox,
-    MDBIcon,
     MDBInput,
     MDBTypography
 } from "mdb-react-ui-kit";
 import MainForm from "./CreateQuizComponents/MainForm";
 import { useNavigate } from "react-router-dom";
 
-const CreateQuiz = ({ userIsLoggedIn }) => {
-    const navigate = useNavigate();
-    if(!userIsLoggedIn){
-        navigate("/login");
-    }
-
+const CreateQuiz = () => {
     // State to store the selected option
     const [selectedOption, setSelectedOption] = useState('');
 

@@ -1,7 +1,5 @@
 import {
     MDBInput,
-    MDBCol,
-    MDBRow,
     MDBCheckbox,
     MDBBtn,
     MDBIcon,
@@ -11,14 +9,8 @@ import {
 } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react";
-import Swal from "sweetalert2";
 
-const Register = ({ userIsLoggedIn }) => {
-    const navigate = useNavigate();
-    if(userIsLoggedIn){
-        navigate("/dashboard");
-    }
-
+const Register = () => {
     const [errors, setErrors] = useState(null);
 
     const register = async (e) => {

@@ -1,4 +1,5 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/layouts/Layout";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -35,24 +36,25 @@ function App() {
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
             <Navbar userIsLoggedIn={userIsLoggedIn} />
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route element={<Home />} path="/home"></Route>
-                    <Route element={<Category />} path="/category"></Route>
-                    {userIsLoggedIn ? (
-                        <>
-                            <Route element={<Dashboard userIsLoggedIn={userIsLoggedIn} userIsAdmin={true} />} path="/dashboard" />
-                            <Route element={<CreateQuiz userIsLoggedIn={userIsLoggedIn} />} path="/create-quiz" />
-                        </>
-                    ) : (
-                        <>
-                            <Route element={<Login userIsLoggedIn={userIsLoggedIn} onLogin={handleLogin} />} path="/login" />
-                            <Route element={<Register userIsLoggedIn={userIsLoggedIn} />} path="/register" />
-                        </>
-                    )}
-                    <Route element={<Dashboard userIsLoggedIn={true} userIsAdmin={true} />} path="/dashboard" />
-                    <Route element={<Quiz />} path="/quiz"></Route>
-                    <Route element={<Privacy />} path="/privacy"></Route>
-                    <Route element={<Terms />} path="/terms"></Route>
+                <Route element={<Layout/>} path="/">
+                    <Route element={<Navigate to="/home" replace />} path="/"/> {/* Redirige a "/home" desde la ruta raíz, "/" */}
+                    <Route element={<Home/>} path="/home"/>
+                    <Route element={<Category/>} path="/category"/>
+
+                    {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
+                    <Route element={<ProtectedRoute userIsLoggedIn={userIsLoggedIn} redirectPath="/login"/>}>
+                        <Route element={<Dashboard userIsAdmin={true}/>} path="/dashboard"/>
+                        <Route element={<CreateQuiz/>} path="/create-quiz"/>
+                    </Route>
+
+                    <Route element={<ProtectedRoute userIsLoggedIn={userIsLoggedIn} redirectPath="/dashboard"/>}>
+                        <Route element={<Login onLogin={handleLogin}/>} path="/login"/>
+                        <Route element={<Register/>} path="/register"/>
+                    </Route>
+
+                    <Route element={<Quiz/>} path="/quiz"/>
+                    <Route element={<Privacy/>} path="/privacy"/>
+                    <Route element={<Terms/>} path="/terms"/>
                 </Route>
             </Routes>
         </MDBContainer>

@@ -8,15 +8,10 @@ import {
     MDBRow,
     MDBTypography
 } from "mdb-react-ui-kit";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Login = ({ onLogin, userIsLoggedIn }) => {
-    const navigate = useNavigate();
-    if(userIsLoggedIn){
-        navigate("/dashboard");
-    }
-
+const Login = ({ onLogin }) => {
     const [errors, setErrors] = useState(null);
 
     const login = async (e) => {
