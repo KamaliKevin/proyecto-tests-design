@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import {
     MDBBtn, MDBCard,
     MDBCardBody,
@@ -31,7 +31,7 @@ const CreateQuiz = () => {
                     <MDBCardText>
                         <MDBInput className='mb-4' type='text' id='title' label='Título' />
                         <select className="form-select mb-4" id='type'
-                                value={selectedOption} onChange={handleSelectChange}>
+                            value={selectedOption} onChange={handleSelectChange}>
                             <option value="">-- Elige el tipo de test --</option>
                             <option value="Opcion multiple">Opción múltiple</option>
                             <option value="Verdadero / Falso">Verdadero / Falso</option>
@@ -42,26 +42,22 @@ const CreateQuiz = () => {
                         {selectedOption === 'Opcion multiple' && (
                             <div>
                                 <MainForm></MainForm>
-                                <MDBBtn type='submit' className='mb-4' block>
-                                    Confirmar
-                                </MDBBtn>
                             </div>
                         )}
                         {selectedOption === 'Verdadero / Falso' && (
                             <div>
                                 <p>Texto de muestra para Verdadero / Falso</p>
-                                <MDBBtn type='submit' className='mb-4' block>
-                                    Confirmar
-                                </MDBBtn>
                             </div>
                         )}
                         {selectedOption === 'Relacional' && (
                             <div>
                                 <p>Texto de muestra para Relacional</p>
-                                <MDBBtn type='submit' className='mb-4' block>
-                                    Confirmar
-                                </MDBBtn>
                             </div>
+                        )}
+                        {selectedOption !== "" && (
+                            <MDBBtn type='submit' className='mb-4' block>
+                                Confirmar
+                            </MDBBtn>
                         )}
                     </MDBCardText>
                 </MDBCardBody>
