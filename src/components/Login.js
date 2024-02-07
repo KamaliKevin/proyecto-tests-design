@@ -11,8 +11,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, userIsLoggedIn }) => {
     const navigate = useNavigate();
+    if(userIsLoggedIn){
+        navigate("/dashboard");
+    }
+
     const [errors, setErrors] = useState(null);
 
     const login = async (e) => {
@@ -46,6 +50,7 @@ const Login = ({ onLogin }) => {
             body: formData
         }).then(async (res) => {
             if (!res.ok) {
+                handleErrors(res.errors);
                 return res.json();
             }
             else {
@@ -53,9 +58,15 @@ const Login = ({ onLogin }) => {
                     method: 'GET',
                     credentials: 'include', // Important: Include credentials for authentication
                 }).then(response => response.json())
-                .then(data => console.log(data))
+                .then(data => {
+                    console.log(data);
+
+                    // If login is successful, store the token in local storage
+                    localStorage.setItem("XSRF-TOKEN", csrfToken);
+
+                    onLogin(); // Maneja la lógica en el inicio de sesión exitoso
+                })
                 .catch(error => console.error("Fucky wacky", error));
-                navigate('/home');
             }
         })
 

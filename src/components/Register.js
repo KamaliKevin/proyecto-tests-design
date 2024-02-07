@@ -13,8 +13,12 @@ import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react";
 import Swal from "sweetalert2";
 
-const Register = () => {
+const Register = ({ userIsLoggedIn }) => {
     const navigate = useNavigate();
+    if(userIsLoggedIn){
+        navigate("/dashboard");
+    }
+
     const [errors, setErrors] = useState(null);
 
     const register = async (e) => {
@@ -47,10 +51,11 @@ const Register = () => {
 
         }).then(res => {
             if (!res.ok) {
+                handleErrors(res.errors);
                 return res.json();
             }
             else {
-                navigate('/login');
+                navigate("/login");
             }
         })
             

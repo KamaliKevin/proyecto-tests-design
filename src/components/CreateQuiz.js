@@ -10,8 +10,14 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import MainForm from "./CreateQuizComponents/MainForm";
+import { useNavigate } from "react-router-dom";
 
-const CreateQuiz = () => {
+const CreateQuiz = ({ userIsLoggedIn }) => {
+    const navigate = useNavigate();
+    if(!userIsLoggedIn){
+        navigate("/login");
+    }
+
     // State to store the selected option
     const [selectedOption, setSelectedOption] = useState('');
 

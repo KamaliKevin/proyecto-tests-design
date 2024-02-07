@@ -6,8 +6,14 @@ import QuizHistory from './DashboardComponents/QuizHistory';
 import UserManagement from "./DashboardComponents/UserManagement";
 import QuizManagement from "./DashboardComponents/QuizManagement";
 import ContactManagement from "./DashboardComponents/ContactManagement";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard = ({ userIsAdmin }) => {
+const Dashboard = ({ userIsAdmin, userIsLoggedIn }) => {
+    const navigate = useNavigate();
+    if(!userIsLoggedIn){
+        navigate("/login");
+    }
+
     const [activeTab, setActiveTab] = useState('profile');
 
     const handleTabClick = (tab) => {

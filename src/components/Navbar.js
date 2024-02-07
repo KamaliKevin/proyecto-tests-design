@@ -25,7 +25,7 @@ const Navbar = ({userIsLoggedIn}) => {
                 <MDBCollapse navbar open={openBasic}>
                     <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
                         <MDBNavbarItem>
-                            <MDBNavbarLink href="/">Inicio</MDBNavbarLink>
+                            <MDBNavbarLink href="/home">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
                         <MDBNavbarItem>
                             <MDBNavbarLink href="#">Link</MDBNavbarLink>

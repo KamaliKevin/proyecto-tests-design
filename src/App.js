@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Layout from "./components/layouts/Layout";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -16,10 +16,14 @@ import {useState} from "react";
 
 
 function App() {
+    const navigate = useNavigate();
     const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
 
     const handleLogin = () => {
-        setUserIsLoggedIn(true);
+        if(localStorage.getItem("XSRF-TOKEN")){
+            setUserIsLoggedIn(true);
+            navigate("/home");
+        }
     };
 
     return (
@@ -29,11 +33,18 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route element={<Home/>} path="/home"></Route>
                     <Route element={<Category/>} path="/category"></Route>
-                    <Route element={<Login onLogin={handleLogin}/>} path="/login"></Route>
-                    <Route element={<Register/>} path="/register"></Route>
+                    {userIsLoggedIn ? (
+                        <>
+                            <Route element={<Dashboard userIsLoggedIn={userIsLoggedIn} userIsAdmin={true} />} path="/dashboard"/>
+                            <Route element={<CreateQuiz userIsLoggedIn={userIsLoggedIn} />} path="/create-quiz"/>
+                        </>
+                    ) : (
+                        <>
+                            <Route element={<Login userIsLoggedIn={userIsLoggedIn} onLogin={handleLogin} />} path="/login"/>
+                            <Route element={<Register userIsLoggedIn={userIsLoggedIn} />} path="/register"/>
+                        </>
+                    )}
                     <Route element={<Quiz/>} path="/quiz"></Route>
-                    <Route element={<Dashboard userIsAdmin={true}/>} path="/dashboard"></Route>
-                    <Route element={<CreateQuiz/>} path="/create-quiz"></Route>
                     <Route element={<Privacy/>} path="/privacy"></Route>
                     <Route element={<Terms/>} path="/terms"></Route>
                 </Route>
