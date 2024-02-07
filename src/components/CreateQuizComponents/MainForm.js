@@ -56,14 +56,14 @@ function MainForm() {
 
 
     const formData = new FormData();
-    formData.append('name', 'Test Name'); // Replace 'Test Name' with the actual test name
+    formData.append('name', document.querySelector("#title").value); // Replace 'Test Name' with the actual test name
     let blob = new Blob([JSON.stringify(preguntas)], { type: "application/json" });
     let file = new File([blob], "preguntas.json", {
       type: "application/json",
       lastModified: new Date()
     });
     //encodeURIComponent()
-    formData.append('test_file', file); // Assuming 'file' is a File object from an <input> or drag-and-drop
+    formData.append('test_file', file);
     await fetch('http://localhost:8000/api/upload-test', {
       method: 'POST',
       headers: {
@@ -74,7 +74,13 @@ function MainForm() {
       body: formData,
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        Swal.fire({
+          icon: "success",
+          title: "El cuestionario se sido subido a la plataforma con éxito",
+          showConfirmButton: true,
+        })
+      })
       .catch(error => console.error('Error:', error));
 
     await fetch('http://localhost:8000/api/user', {
