@@ -53,11 +53,11 @@ const CreateQuiz = () => {
                                 <p>Texto de muestra para Relacional</p>
                             </div>
                         )}
-                        {selectedOption !== "" && (
+                        {/* {selectedOption !== "" && (
                             <MDBBtn type='submit' className='mb-4' block>
                                 Confirmar
                             </MDBBtn>
-                        )}
+                        )} */}
                     </MDBCardText>
                 </MDBCardBody>
             </MDBCard>
