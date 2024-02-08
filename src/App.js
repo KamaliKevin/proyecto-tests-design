@@ -1,5 +1,6 @@
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 import Layout from "./components/layouts/Layout";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -19,42 +20,43 @@ function App() {
     const navigate = useNavigate();
     const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        if (userIsLoggedIn) {
-            console.log(userIsLoggedIn);
+
+    const handleLogin = async () => {
+        if (localStorage.getItem("XSRF-TOKEN")) {
+            await setUserIsLoggedIn(true);
             navigate("/home");
         }
-    }, [userIsLoggedIn]);
+    };
 
-    const handleLogin = () => {
-        if (localStorage.getItem("XSRF-TOKEN")) {
+    useEffect(() => {
+        // Check for token existence on component mount
+        const token = localStorage.getItem("XSRF-TOKEN");
+        if (token) {
             setUserIsLoggedIn(true);
         }
-    };
+    }, []);
 
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
             <Navbar userIsLoggedIn={userIsLoggedIn} />
             <Routes>
-                <Route element={<Layout/>} path="/">
-                    <Route element={<Navigate to="/home" replace />} path="/"/> {/* Redirige a "/home" desde la ruta raíz, "/" */}
-                    <Route element={<Home/>} path="/home"/>
-                    <Route element={<Category/>} path="/category"/>
+                <Route element={<Layout />} path="/">
+                    <Route element={<Navigate to="/home" replace />} path="/" /> {/* Redirige a "/home" desde la ruta raíz, "/" */}
+                    <Route element={<Home />} path="/home" />
+                    <Route element={<Category />} path="/category" />
 
                     {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
-                    <Route element={<ProtectedRoute userIsLoggedIn={userIsLoggedIn} redirectPath="/login"/>}>
-                        <Route element={<Dashboard userIsAdmin={true}/>} path="/dashboard"/>
-                        <Route element={<CreateQuiz/>} path="/create-quiz"/>
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/dashboard" element={<Dashboard userIsAdmin={true} />} />
+                        <Route path="/create-quiz" element={<CreateQuiz />} />
                     </Route>
-
-                    <Route element={<ProtectedRoute userIsLoggedIn={userIsLoggedIn} redirectPath="/dashboard"/>}>
-                        <Route element={<Login onLogin={handleLogin}/>} path="/login"/>
-                        <Route element={<Register/>} path="/register"/>
+                    <Route element={<GuestRoute />}>
+                        <Route element={<Login onLogin={handleLogin} />} path="/login" />
+                        <Route element={<Register />} path="/register" />
                     </Route>
-
-                    <Route element={<Quiz/>} path="/quiz"/>
-                    <Route element={<Privacy/>} path="/privacy"/>
-                    <Route element={<Terms/>} path="/terms"/>
+                    <Route element={<Quiz />} path="/quiz" />
+                    <Route element={<Privacy />} path="/privacy" />
+                    <Route element={<Terms />} path="/terms" />
                 </Route>
             </Routes>
         </MDBContainer>

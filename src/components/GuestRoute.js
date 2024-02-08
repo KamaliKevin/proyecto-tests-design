@@ -5,7 +5,7 @@ const ProtectedRoute = ({ userIsLoggedIn }) => { // Temporarily hard-code for de
     if (token) {
         userIsLoggedIn = true;
     }
-    return userIsLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+    return userIsLoggedIn ? <Navigate to="/dashboard" replace /> : <Outlet />;
 };
 
 export default ProtectedRoute;
