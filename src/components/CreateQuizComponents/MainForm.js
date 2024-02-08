@@ -1,18 +1,39 @@
 import Swal from 'sweetalert2';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormularioPregunta } from './FormularioPregunta';
 import { PreguntasCreadas } from './PreguntasCreadas';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useSearchParams } from 'react-router-dom';
 import { FormularioUsuario } from './FormularioUsuario';
 import { MDBBtn, MDBFile } from "mdb-react-ui-kit";
-
 let idActualPregunta = 1;
 
 function MainForm() {
   const [preguntas, setPreguntas] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    const downloadID = async (e) => {
+      const response = await fetch("http://localhost:8000/api/download-test/" + id, {
+        method: 'GET',
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        throw new Error('Failed to download test');
+      }
+
+      const testJson = await response.json();
+      setPreguntas(testJson);
+      console.log(testJson);
+
+    }
+    downloadID();
+    console.log(id);
+  }, id);
 
   const addQuestion = (nueva) => {
+
     nueva.id = idActualPregunta;
     idActualPregunta++;
     setPreguntas([...preguntas, nueva]);

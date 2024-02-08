@@ -10,11 +10,13 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const QuizHistory = () => {
-
+    const navigate = useNavigate();
     const [madeQuizzes, setMadeQuizzes] = useState(
         []
     )
+    
 
     const playedQuizzes = [
         { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp' },
@@ -38,8 +40,9 @@ const QuizHistory = () => {
 
                 let tempQuizzes = tests.map(element => ({
                     category: 'Category #4',
-                    name: element,
-                    image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp'
+                    name: element.name,
+                    image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp',
+                    id: element.id
                 }));
 
                 setMadeQuizzes(tempQuizzes);
@@ -47,13 +50,15 @@ const QuizHistory = () => {
                 console.error('Error fetching user tests:', error);
             }
         }
-
         fetchAndSetUserTests();
     }, []);
 
 
 
-
+    const onView = async(id) =>{
+        console.log("aa"+id);
+        navigate("/create-quiz?id="+id)
+    }
 
 
 
@@ -96,7 +101,7 @@ const QuizHistory = () => {
                                         </div>
                                     </div>
                                     <div className="ms-5">
-                                        <MDBBtn size='sm' rounded color='link'>
+                                        <MDBBtn size='sm' rounded color='link' >
                                             View
                                         </MDBBtn>
                                     </div>
@@ -128,7 +133,7 @@ const QuizHistory = () => {
                                         </div>
                                     </div>
                                     <div className="ms-5">
-                                        <MDBBtn size='sm' rounded color='link'>
+                                        <MDBBtn size='sm' rounded color='link' onClick={() => onView(quiz.id)}>
                                             View
                                         </MDBBtn>
                                     </div>
