@@ -11,25 +11,29 @@ let idActualPregunta = 1;
 function MainForm() {
   const [preguntas, setPreguntas] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  let id = null;
+  id = searchParams.get("id");
 
   useEffect(() => {
-    const downloadID = async (e) => {
-      const response = await fetch("http://localhost:8000/api/download-test/" + id, {
-        method: 'GET',
-        credentials: 'include'
-      });
-      if (!response.ok) {
-        throw new Error('Failed to download test');
+    if (id != null) {
+      const downloadID = async (e) => {
+        const response = await fetch("http://localhost:8000/api/download-test/" + id, {
+          method: 'GET',
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          throw new Error('Failed to download test');
+        }
+
+        const testJson = await response.json();
+        setPreguntas(testJson);
+        console.log(testJson);
+
       }
-
-      const testJson = await response.json();
-      setPreguntas(testJson);
-      console.log(testJson);
-
+      downloadID();
+      console.log(id);
     }
-    downloadID();
-    console.log(id);
+
   }, id);
 
   const addQuestion = (nueva) => {
