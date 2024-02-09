@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CreateQuizContext } from "./CreateQuizComponents/CreateQuizContext";
+import { useSearchParams } from "react-router-dom";
 import MultipleChoiceMain from "./CreateQuizComponents/MultipleChoiceComponents/MultipleChoiceMain";
 import CreatedQuestions from "./CreateQuizComponents/CreatedQuestions";
 import CheckQuestions from "./CreateQuizComponents/CheckQuestions";
@@ -19,8 +20,33 @@ const CreateQuiz = () => {
 
     const { currentQuestionId, questions } = useContext(CreateQuizContext);
     const { preguntas, setPreguntas } = questions;
-    let { idPreguntaActual, setIdPreguntaActual} = currentQuestionId;
+    const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    let id = null;
+    id = searchParams.get("id");
+
+    useEffect(() => {
+        if (id != null) {
+            const downloadID = async (e) => {
+                const response = await fetch("http://localhost:8000/api/download-test/" + id, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to download test');
+                }
+
+                const testJson = await response.json();
+                setPreguntas(testJson);
+                setIdPreguntaActual(testJson.length +1);
+
+            }
+            downloadID();
+            console.log(id);
+        }
+
+    }, id);
 
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
@@ -147,7 +173,7 @@ const CreateQuiz = () => {
 
             // Continuar con el procesamiento del archivo
             setPreguntas(importedQuestions);
-            idPreguntaActual = importedQuestions.length;
+            setIdPreguntaActual(importedQuestions.length+1);
             Swal.fire({
                 icon: "success",
                 title: "El cuestionario ha sido importado con éxito",
@@ -227,7 +253,7 @@ const CreateQuiz = () => {
                     <MDBCardText>
                         <MDBInput className='mb-4' type='text' id='title' label='Título' />
                         <select className="form-select mb-4" id='type'
-                                value={selectedOption} onChange={handleSelectChange}>
+                            value={selectedOption} onChange={handleSelectChange}>
                             <option value="">-- Elige el tipo de pregunta --</option>
                             <option value="Opcion multiple">Opción múltiple</option>
                             <option value="Verdadero / Falso">Verdadero / Falso</option>
@@ -272,7 +298,7 @@ const CreateQuiz = () => {
                             <>
                                 <div className="mt-5">
                                     <a id="downloadAnchorElem" href={"data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(preguntas))}
-                                       download="preguntas.json">
+                                        download="preguntas.json">
                                         <MDBBtn color="info" block>
                                             <MDBIcon fas icon="file-export" /> Exportar cuestionario
                                         </MDBBtn>

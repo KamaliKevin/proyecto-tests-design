@@ -2,7 +2,7 @@ import {createContext, useState} from "react";
 
 const CreateQuizContext = createContext();
 const CreateQuizContextProvider = ({ children }) => {
-    let [idPreguntaActual, setIdPreguntaActual] = useState(1);
+    const [idPreguntaActual, setIdPreguntaActual] = useState(1);
     const [preguntas, setPreguntas] = useState([]);
 
     return (
