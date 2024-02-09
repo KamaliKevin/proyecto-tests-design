@@ -19,7 +19,7 @@ import { CreateQuizContextProvider } from "./components/CreateQuizComponents/Cre
 
 function App() {
     const navigate = useNavigate();
-    const [userIsLoggedIn, setUserIsLoggedIn] = useState(true);
+    const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
 
 
     const handleLogin = async () => {
