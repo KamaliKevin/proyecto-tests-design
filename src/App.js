@@ -29,7 +29,6 @@ function App() {
         }
     };
 
-    /*
     useEffect(() => {
         // Check for token existence on component mount
         const token = localStorage.getItem("XSRF-TOKEN");
@@ -37,7 +36,6 @@ function App() {
             setUserIsLoggedIn(true);
         }
     }, []);
-    */
 
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
@@ -50,7 +48,7 @@ function App() {
                         <Route element={<Category />} path="/category" />
 
                         {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
-                        <Route element={<ProtectedRoute userIsLoggedIn={userIsLoggedIn}/>}>
+                        <Route element={<ProtectedRoute/>}>
                             <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
                             <Route element={<CreateQuiz />} path="/create-quiz"/>
                         </Route>
