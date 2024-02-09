@@ -9,7 +9,7 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 
-export const Pregunta = ({ pregunta, removeQuestion }) => {
+export const Question = ({ pregunta, removeQuestion }) => {
     const { enunciado, respuestas } = pregunta;
 
 
@@ -58,3 +58,5 @@ export const Pregunta = ({ pregunta, removeQuestion }) => {
         </MDBListGroupItem>
     )
 }
+
+export default Question;

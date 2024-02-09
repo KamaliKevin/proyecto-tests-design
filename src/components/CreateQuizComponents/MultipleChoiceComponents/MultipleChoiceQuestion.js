@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import {MDBBtn, MDBInput, MDBRadio, MDBSwitch, MDBTextArea, MDBTypography} from "mdb-react-ui-kit";
+import {MDBBtn, MDBIcon, MDBInput, MDBRadio, MDBSwitch, MDBTextArea, MDBTypography} from "mdb-react-ui-kit";
 
-export const FormularioPregunta = ({ addPregunta }) => {
+export const MultipleChoiceQuestion = ({ addPregunta }) => {
     const [pregunta, setPregunta] = useState({
         enunciado: "",
         respuestas: ["", "", "", ""],
@@ -25,7 +25,7 @@ export const FormularioPregunta = ({ addPregunta }) => {
         }
 
         // Return errors, or validation passed
-        if (errors.length == 0) {
+        if (errors.length === 0) {
             return true;
         } else {
             return errors;
@@ -89,6 +89,7 @@ export const FormularioPregunta = ({ addPregunta }) => {
         }
     }
 
+
     const addAnswer = (e) => {
         e.preventDefault();
         const updatedRespuestas = [...pregunta.respuestas, ""];
@@ -98,6 +99,8 @@ export const FormularioPregunta = ({ addPregunta }) => {
             respuestas: updatedRespuestas
         });
     }
+
+
     const deleteAnswer = (e) => {
         e.preventDefault();
         let updatedRespuestas = [...pregunta.respuestas];
@@ -132,14 +135,14 @@ export const FormularioPregunta = ({ addPregunta }) => {
             {
                 pregunta.respuestas.map((respuesta, index) => {
                     return (
-                        <div className="form-check mt-5">
+                        <div className="form-check mt-5" key={index}>
                             <MDBRadio name="respuestacorrecta" id={"inputCheck" + index} onChange={handleChange}/>
                             <MDBInput type="text" label={"Respuesta " + (index + 1)} className="mb-2"
                                       name={"respuesta" + index} htmlFor={"inputCheck" + index}
                                       value={pregunta.respuestas[index]} onChange={handleChange}/>
 
                             <MDBBtn type="submit" id={index.toString()} color="danger" className="mt-2" onClick={deleteAnswer}>
-                                Borrar respuesta
+                                <MDBIcon fas icon="trash" /> Borrar respuesta
                             </MDBBtn>
                         </div>
                     )
@@ -154,8 +157,12 @@ export const FormularioPregunta = ({ addPregunta }) => {
                            onChange={handleChange}/>
             </div>
             <div className="d-grid gap-2 mt-3">
-                <MDBBtn type="submit" color="success">Terminar pregunta</MDBBtn>
-                <MDBBtn type="submit" color="primary" onClick={addAnswer}>Añadir respuesta</MDBBtn>
+                <MDBBtn type="submit" color="primary" onClick={addAnswer}>
+                    <MDBIcon fas icon="plus" /> Añadir respuesta
+                </MDBBtn>
+                <MDBBtn type="submit" color="success">
+                    <MDBIcon fas icon="check" /> Terminar pregunta
+                </MDBBtn>
             </div>
         </form>
     )

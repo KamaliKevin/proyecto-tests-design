@@ -15,6 +15,7 @@ import Privacy from "./components/Privacy";
 import Terms from "./components/Terms";
 import CreateQuiz from "./components/CreateQuiz";
 import { useEffect, useState } from "react";
+import { CreateQuizContextProvider } from "./components/CreateQuizComponents/CreateQuizContext";
 
 function App() {
     const navigate = useNavigate();
@@ -39,26 +40,30 @@ function App() {
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
             <Navbar userIsLoggedIn={userIsLoggedIn} />
-            <Routes>
-                <Route element={<Layout />} path="/">
-                    <Route element={<Navigate to="/home" replace />} path="/" /> {/* Redirige a "/home" desde la ruta raíz, "/" */}
-                    <Route element={<Home />} path="/home" />
-                    <Route element={<Category />} path="/category" />
+            <CreateQuizContextProvider>
+                <Routes>
+                    <Route element={<Layout />} path="/">
+                        <Route element={<Navigate to="/home" replace />} path="/" /> {/* Redirige a "/home" desde la ruta raíz, "/" */}
+                        <Route element={<Home />} path="/home" />
+                        <Route element={<Category />} path="/category" />
 
-                    {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
-                    <Route element={<ProtectedRoute />}>
-                        <Route path="/dashboard" element={<Dashboard userIsAdmin={true} />} />
-                        <Route path="/create-quiz" element={<CreateQuiz />} />
+                        {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
+                        <Route element={<ProtectedRoute />}>
+                            <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
+                            <Route element={<CreateQuiz />} path="/create-quiz"/>
+                        </Route>
+
+                        <Route element={<GuestRoute />}>
+                            <Route element={<Login onLogin={handleLogin} />} path="/login" />
+                            <Route element={<Register />} path="/register" />
+                        </Route>
+
+                        <Route element={<Quiz />} path="/quiz" />
+                        <Route element={<Privacy />} path="/privacy" />
+                        <Route element={<Terms />} path="/terms" />
                     </Route>
-                    <Route element={<GuestRoute />}>
-                        <Route element={<Login onLogin={handleLogin} />} path="/login" />
-                        <Route element={<Register />} path="/register" />
-                    </Route>
-                    <Route element={<Quiz />} path="/quiz" />
-                    <Route element={<Privacy />} path="/privacy" />
-                    <Route element={<Terms />} path="/terms" />
-                </Route>
-            </Routes>
+                </Routes>
+            </CreateQuizContextProvider>
         </MDBContainer>
     );
 }

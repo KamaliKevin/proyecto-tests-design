@@ -1,17 +1,14 @@
-import { useState } from "react"
-import { Pregunta } from "./Pregunta";
 import {
-    MDBBtn, MDBBtnGroup,
+    MDBBtnGroup,
     MDBCard,
     MDBCardBody,
-    MDBCardFooter,
     MDBCardHeader,
     MDBCardText,
     MDBCardTitle, MDBListGroup, MDBListGroupItem,
     MDBTypography
 } from "mdb-react-ui-kit";
 
-export const FormularioUsuario = ({ preguntas }) => {
+export const CheckQuestions = ({ preguntas }) => {
     return (
         <div className="mt-5">
             {preguntas.length > 0 && (<h1>¡Comprueba tu test!</h1>)}
@@ -71,3 +68,5 @@ export const FormularioUsuario = ({ preguntas }) => {
     //     favorita: false
     // })
 }
+
+export default CheckQuestions;
