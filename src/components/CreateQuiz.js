@@ -14,6 +14,8 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 
+import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseMain";
+
 
 const CreateQuiz = () => {
     const [selectedOption, setSelectedOption] = useState('');
@@ -70,6 +72,7 @@ const CreateQuiz = () => {
                 setPreguntas(preguntas
                     .filter((pregunta) => pregunta.id != id)
                     .map((pregunta, index) => ({ ...pregunta, id: index + 1 })));
+                setIdPreguntaActual(preguntas.length);
 
                 Swal.fire({
                     title: "¡Eliminada!",
@@ -268,7 +271,7 @@ const CreateQuiz = () => {
                         )}
                         {selectedOption === 'Verdadero / Falso' && (
                             <div>
-                                <p>Texto de muestra para Verdadero / Falso</p>
+                                <TrueFalseMain/>
                             </div>
                         )}
                         {selectedOption === 'Relacional' && (
