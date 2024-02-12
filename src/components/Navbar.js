@@ -37,9 +37,9 @@ const Navbar = ({userIsLoggedIn}) => {
                                     Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    <MDBDropdownItem link href="/category">Lengua y literatura</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category">Geografía</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category">Matemáticas</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category/1">Lengua y literatura</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category/1">Geografía</MDBDropdownItem>
+                                    <MDBDropdownItem link href="/category/1">Matemáticas</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>

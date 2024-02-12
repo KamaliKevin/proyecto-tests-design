@@ -24,7 +24,7 @@ const PETS = [
     { id: 4, name: 'hamster' },
 ]
 
-const Basket = () => {
+const DragAndDrop = () => {
     const [basket, setBasket] = useState([])
     const [{ isOver }, dropRef] = useDrop({
         accept: 'pet',
@@ -49,4 +49,4 @@ const Basket = () => {
     )
 }
 
-export default Basket;
+export default DragAndDrop;

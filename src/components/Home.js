@@ -102,7 +102,7 @@ const Home = () => {
                                         ))}
                                 </MDBRow>
                                 <div className="d-flex justify-content-center mt-5">
-                                    <MDBCardLink href="/category">Ver más de "{title.title}"</MDBCardLink>
+                                    <MDBCardLink href="/category/1">Ver más de "{title.title}"</MDBCardLink>
                                 </div>
                             </MDBCardText>
                         </MDBCardBody>

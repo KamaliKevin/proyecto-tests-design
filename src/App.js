@@ -16,6 +16,7 @@ import Terms from "./components/Terms";
 import CreateQuiz from "./components/CreateQuiz";
 import { useEffect, useState } from "react";
 import { CreateQuizContextProvider } from "./components/CreateQuizComponents/CreateQuizContext";
+import NotFound from "./components/NotFound";
 
 function App() {
     const navigate = useNavigate();
@@ -43,9 +44,14 @@ function App() {
             <CreateQuizContextProvider>
                 <Routes>
                     <Route element={<Layout />} path="/">
-                        <Route element={<Navigate to="/home" replace />} path="/" /> {/* Redirige a "/home" desde la ruta raíz, "/" */}
+                        {/* Redirige a "/home" desde la ruta raíz, "/" */}
+                        <Route element={<Navigate to="/home" replace />} path="/" />
+
+                        {/* Redirige a "/category/1" desde la ruta "/category" */}
+                        <Route element={<Navigate to="/category/1" replace />} path="/category" /> {/* IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD! */}
+
                         <Route element={<Home />} path="/home" />
-                        <Route element={<Category />} path="/category" />
+                        <Route element={<Category />} path="/category/:pageNumber" /> {/* IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD! */}
 
                         {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                         <Route element={<ProtectedRoute/>}>
@@ -61,6 +67,8 @@ function App() {
                         <Route element={<Quiz />} path="/quiz" />
                         <Route element={<Privacy />} path="/privacy" />
                         <Route element={<Terms />} path="/terms" />
+
+                        <Route element={<NotFound />} path="*" />
                     </Route>
                 </Routes>
             </CreateQuizContextProvider>
