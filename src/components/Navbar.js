@@ -1,10 +1,29 @@
 import { Link } from 'react-router-dom';
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
     MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
 
 const Navbar = ({userIsLoggedIn}) => {
     const [openBasic, setOpenBasic] = useState(false);
+    const [categoryData, setCategoryData] = useState([]);
+
+    // Conseguir los datos de las categorías existentes:
+    useEffect(() => {
+        const categories = async(e) => {
+            await fetch('http://localhost:8000/api/categories', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setCategoryData(data);
+                })
+                .catch(error => console.error("error", error));
+        };
+
+        categories();
+    }, []);
+
 
     return (
         <MDBNavbar expand="lg" dark bgColor="dark">
@@ -37,9 +56,9 @@ const Navbar = ({userIsLoggedIn}) => {
                                     Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    <MDBDropdownItem link href="/category/1">Lengua y literatura</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category/1">Geografía</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category/1">Matemáticas</MDBDropdownItem>
+                                    {categoryData.map(category => (
+                                        <MDBDropdownItem link href={`/category/${category.name}/1`}>{category.name}</MDBDropdownItem>
+                                    ))}
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>

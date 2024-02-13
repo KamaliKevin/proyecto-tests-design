@@ -4,14 +4,14 @@ import {
     MDBCol, MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBRow, MDBTypography
 } from "mdb-react-ui-kit";
 
-const CardPaginationComponent = ({ pageNumber, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
+const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
     const navigate = useNavigate();
     const currentPage = pageNumber; // Índice de la página actual
     const pageCount = Math.ceil(cards.length / cardsPerPage); // Total de páginas
 
     const handlePageClick = (newPage) => {
         if(newPage >= 1 && newPage <= pageCount){
-            navigate(`/category/${newPage}`); // Ir a la nueva página | IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD!
+            navigate(`/${pageName}/${title}/${newPage}`); // Ir a la nueva página | IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD!
             window.scrollTo(0, 0);
         }
     };
