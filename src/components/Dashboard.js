@@ -19,7 +19,7 @@ const Dashboard = ({ userIsAdmin }) => {
             <MDBTabs justify className='mb-3'>
                 <MDBTabsItem>
                     <MDBTabsLink onClick={() => handleTabClick('profile')} active={activeTab === 'profile'}>
-                        <MDBIcon fas icon="user-cog" /> Profile
+                        <MDBIcon fas icon="user-cog" /> Perfil
                     </MDBTabsLink>
                 </MDBTabsItem>
                 <MDBTabsItem>

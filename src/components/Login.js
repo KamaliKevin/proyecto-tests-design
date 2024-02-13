@@ -56,8 +56,10 @@ const Login = ({ onLogin }) => {
                 .then(data => {
                     console.log(data);
 
-                    // If login is successful, store the token in local storage
+                    // Si el inicio de sesión fue un éxito, guardamos el token
+                    // y la información no sensible del usuario en el almacenamiento local
                     localStorage.setItem("XSRF-TOKEN", csrfToken);
+                    localStorage.setItem("USER", data);
 
                     onLogin(); // Maneja la lógica en el inicio de sesión exitoso
                 })

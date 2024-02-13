@@ -9,17 +9,13 @@ import {
 } from 'mdb-react-ui-kit';
 
 const Profile = () => {
-    const initialUserData = {
-        username: 'John Doe',
-        password: 'password123',
-        email: 'johndoe@example.com',
-        phoneNumber: '123-456-7890',
-        profileImage: 'https://example.com/profile.jpg'
-    };
+    // Obtenemos los datos del usuario que inició sesión
+    const retrievedUserData = localStorage.getItem("USER") ?? "";
+    const formattedUserData = JSON.parse(retrievedUserData);
 
-    const [userData, setUserData] = useState(initialUserData);
+    const [userData, setUserData] = useState(formattedUserData);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedUserData, setEditedUserData] = useState({ ...initialUserData });
+    const [editedUserData, setEditedUserData] = useState({ ...formattedUserData });
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -44,6 +40,11 @@ const Profile = () => {
             return;
         }
 
+        // Actualizar datos a nivel de almacenamiento local
+        const newUserData = JSON.stringify(editedUserData);
+        localStorage.setItem("USER", newUserData);
+
+        // Actualizar datos del usuario a nivel de componente
         setUserData({ ...editedUserData });
         setIsEditing(false);
     };
@@ -58,52 +59,37 @@ const Profile = () => {
             <MDBCard>
                 <MDBCardHeader>
                     <MDBTypography tag='h3' className="my-3">
-                        <MDBIcon fas icon="user-cog" /> Profile
+                        <MDBIcon fas icon="user-cog" /> Perfil
                     </MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
                     <MDBCardText>
                         <MDBInput
-                            label="Username"
+                            label="Nombre de usuario"
                             type="text"
                             name="username"
-                            value={isEditing ? editedUserData.username : userData.username}
+                            value={isEditing ? editedUserData.name : userData.name}
                             disabled={!isEditing}
                             onChange={handleInputChange}
                             className='mb-4'
                         />
+                        {/* NOTA: Encontrar una manera de actualizar la contraseña */}
+                        {/*
+                            <MDBInput
+                                label="Contraseña"
+                                type="password"
+                                name="password"
+                                value={isEditing ? editedUserData.password : userData.password}
+                                disabled={!isEditing}
+                                onChange={handleInputChange}
+                                className='mb-4'
+                            />
+                        */}
                         <MDBInput
-                            label="Password"
-                            type="password"
-                            name="password"
-                            value={isEditing ? editedUserData.password : userData.password}
-                            disabled={!isEditing}
-                            onChange={handleInputChange}
-                            className='mb-4'
-                        />
-                        <MDBInput
-                            label="Email"
+                            label="Correo electrónico"
                             type="email"
                             name="email"
                             value={isEditing ? editedUserData.email : userData.email}
-                            disabled={!isEditing}
-                            onChange={handleInputChange}
-                            className='mb-4'
-                        />
-                        <MDBInput
-                            label="Phone Number"
-                            type="tel"
-                            name="phoneNumber"
-                            value={isEditing ? editedUserData.phoneNumber : userData.phoneNumber}
-                            disabled={!isEditing}
-                            onChange={handleInputChange}
-                            className='mb-4'
-                        />
-                        <MDBInput
-                            label="Profile Image"
-                            type="text"
-                            name="profileImage"
-                            value={isEditing ? editedUserData.profileImage : userData.profileImage}
                             disabled={!isEditing}
                             onChange={handleInputChange}
                             className='mb-4'
