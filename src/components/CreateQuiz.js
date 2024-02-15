@@ -23,13 +23,13 @@ const CreateQuiz = () => {
 
     const [selectedCategory, setSelectedCategory] = useState(""); // Controla la opción seleccionada del desplegable de categorías
     const [selectedCategories, setSelectedCategories] = useState([ // Lista de categorías seleccionadas
-        {id: 1, name: "Sin categorizar", created_at: "", updated_at: ""}
+        { id: 1, name: "Sin categorizar", created_at: "", updated_at: "" }
     ]);
 
     useEffect(() => {
         // Regresa al estado por defecto para la lista de categorías seleccionadas si no hay ninguna
-        if(selectedCategories.length === 0){
-            setSelectedCategories([{id: 1, name: "Sin categorizar", created_at: "", updated_at: ""}]);
+        if (selectedCategories.length === 0) {
+            setSelectedCategories([{ id: 1, name: "Sin categorizar", created_at: "", updated_at: "" }]);
         }
     }, [selectedCategories]);
 
@@ -155,7 +155,20 @@ const CreateQuiz = () => {
 
         const formData = new FormData();
         formData.append('name', document.querySelector("#title").value);
-        formData.append('category', selectedCategory);
+
+        let CategoryIDs = [];
+
+        selectedCategories.forEach(element => {
+            CategoryIDs.push(element.id);
+        });
+
+        console.log(CategoryIDs);
+
+        // Append each category ID individually
+        CategoryIDs.forEach((categoryId) => {
+            formData.append('category_ids[]', categoryId); // Notice 'category_ids[]' to denote it's an array
+        });
+
         let blob = new Blob([JSON.stringify(preguntas)], { type: "application/json" });
         let file = new File([blob], "preguntas.json", {
             type: "application/json",
@@ -326,7 +339,7 @@ const CreateQuiz = () => {
                         <div className="mt-4">
                             <MDBTypography tag='h6'>Categorías</MDBTypography>
                             <select className="form-select mb-4" id='category'
-                                    value={selectedCategory} onChange={handleCategorySelect}>
+                                value={selectedCategory} onChange={handleCategorySelect}>
                                 <option value="" selected>-- Elija las categorías del test --</option>
                                 {categories.map(category => (
                                     <option value={`${category.name}`}>{category.name}</option>
@@ -348,7 +361,7 @@ const CreateQuiz = () => {
                         <div className="mt-4">
                             <MDBTypography tag='h6'>Preguntas</MDBTypography>
                             <select className="form-select mb-4" id='type'
-                                    value={selectedQuestionType} onChange={handleQuestionTypeSelect}>
+                                value={selectedQuestionType} onChange={handleQuestionTypeSelect}>
                                 <option value="">-- Elige el tipo de pregunta --</option>
                                 <option value="Opcion multiple">Opción múltiple</option>
                                 <option value="Verdadero / Falso">Verdadero / Falso</option>
