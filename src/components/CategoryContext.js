@@ -1,13 +1,13 @@
-import {createContext, useEffect, useState} from "react";
+import { createContext, useEffect, useState } from "react";
 
 const CategoryContext = createContext();
 
-const CategoryContextProvider = ({children}) => {
+const CategoryContextProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
 
     // Conseguir los datos de las categorías existentes:
     useEffect(() => {
-        const categories = async(e) => {
+        const fetchCategories = async () => {
             await fetch('http://localhost:8000/api/categories', {
                 method: 'GET'
             })
@@ -19,11 +19,11 @@ const CategoryContextProvider = ({children}) => {
                 .catch(error => console.error("error", error));
         };
 
-        categories();
+        fetchCategories();
     }, []);
 
     return (
-        <CategoryContext.Provider value={{categories, setCategories}}>
+        <CategoryContext.Provider value={{ categories, setCategories }}>
             {children}
         </CategoryContext.Provider>
     );
