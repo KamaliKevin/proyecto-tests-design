@@ -9,21 +9,37 @@ import {
     MDBBtn, MDBCard,
     MDBCardBody,
     MDBCardHeader,
-    MDBCardText, MDBFile, MDBIcon,
-    MDBInput,
+    MDBCardText, MDBCheckbox, MDBFile, MDBIcon,
+    MDBInput, MDBListGroup, MDBListGroupItem,
     MDBTypography
 } from "mdb-react-ui-kit";
 
 import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseMain";
+import { CategoryContext } from "./CategoryContext";
 
 
 const CreateQuiz = () => {
-    const [selectedOption, setSelectedOption] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState([]);
+    const { categories, setCategories } = useContext(CategoryContext);
+
+    const [selectedCategory, setSelectedCategory] = useState(""); // Controla la opción seleccionada del desplegable de categorías
+    const [selectedCategories, setSelectedCategories] = useState([ // Lista de categorías seleccionadas
+        {id: 1, name: "Sin categorizar", created_at: "", updated_at: ""}
+    ]);
+
+    useEffect(() => {
+        // Regresa al estado por defecto para la lista de categorías seleccionadas si no hay ninguna
+        if(selectedCategories.length === 0){
+            setSelectedCategories([{id: 1, name: "Sin categorizar", created_at: "", updated_at: ""}]);
+        }
+    }, [selectedCategories]);
+
+
+    const [selectedQuestionType, setSelectedQuestionType] = useState("");
 
     const { currentQuestionId, questions } = useContext(CreateQuizContext);
     const { preguntas, setPreguntas } = questions;
     const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
+
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [categoryData, setCategoryData] = useState([]);
@@ -69,8 +85,30 @@ const CreateQuiz = () => {
 
     }, id);
 
-    const handleSelectChange = (event) => {
-        setSelectedOption(event.target.value);
+
+    const handleCategoryDelete = (categoryId) => {
+        setSelectedCategories((prevCategories) => prevCategories.filter(category => category.id !== categoryId));
+    };
+
+    const handleCategorySelect = (event) => {
+        const selectedCategoryName = event.target.value;
+
+        if (selectedCategoryName && !selectedCategories.some(category => category.name === selectedCategoryName)) {
+            handleCategoryDelete(selectedCategories.find(category => category.name === "Sin categorizar")?.id);
+
+            const newCategory = {
+                id: categories.find(category => category.name === selectedCategoryName)?.id, // El ID sería idéntico al que le corresponde de la BD
+                name: selectedCategoryName,
+                created_at: categories.find(category => category.name === selectedCategoryName)?.created_at,
+                updated_at: categories.find(category => category.name === selectedCategoryName)?.updated_at
+            };
+
+            setSelectedCategories((prevCategories) => [...prevCategories, newCategory]);
+        }
+    };
+
+    const handleQuestionTypeSelect = (event) => {
+        setSelectedQuestionType(event.target.value);
     };
     const handleCategoryAdd = (event) => {
         // Multiple category WIP
@@ -280,42 +318,56 @@ const CreateQuiz = () => {
                 <MDBCardBody>
 
                     <MDBCardText>
-                        <MDBInput className='mb-4' type='text' id='title' label='Título' />
-                        <select className="form-select mb-4" id='category'
-                            value={selectedCategory} onChange={handleCategoryAdd}>
-                            <option value="">-- Elige las categorias del test --</option>
-                            {
-                                categoryData.map(category => (
-                                    <option value={category.id}>{category.name}</option>
-                                ))
-                            }
-                        </select>
+                        {/* Título */}
+                        <MDBInput type='text' id='title' label='Título' />
 
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
 
-                        <select className="form-select mb-4" id='type'
-                            value={selectedOption} onChange={handleSelectChange}>
-                            <option value="">-- Elige el tipo de pregunta --</option>
-                            <option value="Opcion multiple">Opción múltiple</option>
-                            <option value="Verdadero / Falso">Verdadero / Falso</option>
-                            <option value="Relacional">Relacional</option>
-                        </select>
+                        {/* Categorías */}
+                        <div className="mt-4">
+                            <MDBTypography tag='h6'>Categorías</MDBTypography>
+                            <select className="form-select mb-4" id='category'
+                                    value={selectedCategory} onChange={handleCategorySelect}>
+                                <option value="" selected>-- Elija las categorías del test --</option>
+                                {categories.map(category => (
+                                    <option value={`${category.name}`}>{category.name}</option>
+                                ))}
+                            </select>
+                            <MDBListGroup className="mt-3" id="categories">
+                                {selectedCategories.map(category => (
+                                    <MDBListGroupItem key={category.id} className="d-flex justify-content-between align-items-center">
+                                        {category.name}
+                                        {category.name === "Sin categorizar" ?
+                                            "" : <MDBIcon icon="times" color="danger" style={{ cursor: "pointer" }} onClick={() => handleCategoryDelete(category.id)} />}
+                                    </MDBListGroupItem>
+                                ))}
+                            </MDBListGroup>
+                        </div>
+
+
+                        {/* Tipo de pregunta */}
+                        <div className="mt-4">
+                            <MDBTypography tag='h6'>Preguntas</MDBTypography>
+                            <select className="form-select mb-4" id='type'
+                                    value={selectedQuestionType} onChange={handleQuestionTypeSelect}>
+                                <option value="">-- Elige el tipo de pregunta --</option>
+                                <option value="Opcion multiple">Opción múltiple</option>
+                                <option value="Verdadero / Falso">Verdadero / Falso</option>
+                                <option value="Relacional">Relacional</option>
+                            </select>
+                        </div>
 
                         {/* Enseñar pregunta según el tipo elegido */}
-                        {selectedOption === 'Opcion multiple' && (
+                        {selectedQuestionType === 'Opcion multiple' && (
                             <div>
                                 <MultipleChoiceMain />
                             </div>
                         )}
-                        {selectedOption === 'Verdadero / Falso' && (
+                        {selectedQuestionType === 'Verdadero / Falso' && (
                             <div>
                                 <TrueFalseMain />
                             </div>
                         )}
-                        {selectedOption === 'Relacional' && (
+                        {selectedQuestionType === 'Relacional' && (
                             <div>
                                 <p>Texto de muestra para Relacional</p>
                             </div>
@@ -354,7 +406,7 @@ const CreateQuiz = () => {
                             </>
                         )}
 
-                        {/* {selectedOption !== "" && (
+                        {/* {selectedQuestionType !== "" && (
                             <MDBBtn type='submit' className='mb-4' block>
                                 Confirmar
                             </MDBBtn>
