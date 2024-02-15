@@ -1,29 +1,27 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import {
-    MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
-    MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler
-} from "mdb-react-ui-kit";
-const Navbar = ({ userIsLoggedIn }) => {
+import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
+    MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
+
+const Navbar = ({userIsLoggedIn}) => {
     const [openBasic, setOpenBasic] = useState(false);
-    const [dropdownItems, setDropdownItems] = useState([]);
+    const [categoryData, setCategoryData] = useState([]);
 
-    const getCategory = async () => {
-        await fetch('http://localhost:8000/api/categories', {
-            method: 'GET',
-        }).then(response => response.json())
-            .then(data => {
-                console.log(data);
-
-                const categoryArray = data.map(element => {
-                    return (<MDBDropdownItem link href={"/category/" + element.id}>{element.name}</MDBDropdownItem>)
-                })
-                setDropdownItems(categoryArray);
-            })
-            .catch(error => console.error("Fucky wacky", error));
-    }
+    // Conseguir los datos de las categorías existentes:
     useEffect(() => {
-        getCategory();
+        const categories = async(e) => {
+            await fetch('http://localhost:8000/api/categories', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setCategoryData(data);
+                })
+                .catch(error => console.error("error", error));
+        };
+
+        categories();
     }, []);
 
 
@@ -58,7 +56,9 @@ const Navbar = ({ userIsLoggedIn }) => {
                                     Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    {dropdownItems}
+                                    {categoryData.map(category => (
+                                        <MDBDropdownItem link href={`/category/${category.name}/1`}>{category.name}</MDBDropdownItem>
+                                    ))}
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>

@@ -48,10 +48,10 @@ function App() {
                         <Route element={<Navigate to="/home" replace />} path="/" />
 
                         {/* Redirige a "/category/1" desde la ruta "/category" */}
-                        <Route element={<Navigate to="/category/1" replace />} path="/category" /> {/* IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD! */}
+                        {/* <Route element={<Navigate to="/category/:categoryName/1" replace />} path="/category" /> IMPORTANTE: ¡Adaptar redirección con las nuevas rutas! */}
 
                         <Route element={<Home />} path="/home" />
-                        <Route element={<Category />} path="/category/:pageNumber" /> {/* IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD! */}
+                        <Route element={<Category />} path="/category/:categoryName/:pageNumber" />
 
                         {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                         <Route element={<ProtectedRoute/>}>
