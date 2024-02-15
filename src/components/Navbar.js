@@ -1,10 +1,31 @@
 import { Link } from 'react-router-dom';
-import {useState} from "react";
-import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
-    MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
-
-const Navbar = ({userIsLoggedIn}) => {
+import { useEffect, useState } from "react";
+import {
+    MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
+    MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler
+} from "mdb-react-ui-kit";
+const Navbar = ({ userIsLoggedIn }) => {
     const [openBasic, setOpenBasic] = useState(false);
+    const [dropdownItems, setDropdownItems] = useState([]);
+
+    const getCategory = async () => {
+        await fetch('http://localhost:8000/api/categories', {
+            method: 'GET',
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                const categoryArray = data.map(element => {
+                    return (<MDBDropdownItem link href={"/category/" + element.id}>{element.name}</MDBDropdownItem>)
+                })
+                setDropdownItems(categoryArray);
+            })
+            .catch(error => console.error("Fucky wacky", error));
+    }
+    useEffect(() => {
+        getCategory();
+    }, []);
+
 
     return (
         <MDBNavbar expand="lg" dark bgColor="dark">
@@ -37,9 +58,7 @@ const Navbar = ({userIsLoggedIn}) => {
                                     Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    <MDBDropdownItem link href="/category/1">Lengua y literatura</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category/1">Geografía</MDBDropdownItem>
-                                    <MDBDropdownItem link href="/category/1">Matemáticas</MDBDropdownItem>
+                                    {dropdownItems}
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>
