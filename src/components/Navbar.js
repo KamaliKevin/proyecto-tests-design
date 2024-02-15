@@ -1,29 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
     MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
+import { CategoryContext } from "./CategoryContext";
 
 const Navbar = ({userIsLoggedIn}) => {
     const [openBasic, setOpenBasic] = useState(false);
-    const [categoryData, setCategoryData] = useState([]);
-
-    // Conseguir los datos de las categorías existentes:
-    useEffect(() => {
-        const categories = async(e) => {
-            await fetch('http://localhost:8000/api/categories', {
-                method: 'GET'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    setCategoryData(data);
-                })
-                .catch(error => console.error("error", error));
-        };
-
-        categories();
-    }, []);
-
+    const { categories, setCategories } = useContext(CategoryContext);
 
     return (
         <MDBNavbar expand="lg" dark bgColor="dark">
@@ -56,7 +39,7 @@ const Navbar = ({userIsLoggedIn}) => {
                                     Categorías
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu dark>
-                                    {categoryData.map(category => (
+                                    {categories.map(category => (
                                         <MDBDropdownItem link href={`/category/${category.name}/1`}>{category.name}</MDBDropdownItem>
                                     ))}
                                 </MDBDropdownMenu>
