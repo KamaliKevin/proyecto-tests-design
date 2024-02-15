@@ -19,12 +19,31 @@ import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseM
 
 const CreateQuiz = () => {
     const [selectedOption, setSelectedOption] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState([]);
 
     const { currentQuestionId, questions } = useContext(CreateQuizContext);
     const { preguntas, setPreguntas } = questions;
     const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
 
     const [searchParams, setSearchParams] = useSearchParams();
+    const [categoryData, setCategoryData] = useState([]);
+
+    // Conseguir los datos de las categorías existentes:
+    useEffect(() => {
+        const categories = async (e) => {
+            await fetch('http://localhost:8000/api/categories', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setCategoryData(data);
+                })
+                .catch(error => console.error("error", error));
+        };
+
+        categories();
+    }, []);
     let id = null;
     id = searchParams.get("id");
 
@@ -41,7 +60,7 @@ const CreateQuiz = () => {
 
                 const testJson = await response.json();
                 setPreguntas(testJson);
-                setIdPreguntaActual(testJson.length +1);
+                setIdPreguntaActual(testJson.length + 1);
 
             }
             downloadID();
@@ -52,6 +71,11 @@ const CreateQuiz = () => {
 
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
+    };
+    const handleCategoryAdd = (event) => {
+        // Multiple category WIP
+        //setSelectedCategory([...selectedCategory ,event.target.value]);
+        setSelectedCategory(event.target.value);
     };
 
     const removeQuestion = (id) => {
@@ -92,7 +116,8 @@ const CreateQuiz = () => {
             ?.split('=')[1];
 
         const formData = new FormData();
-        formData.append('name', document.querySelector("#title").value); // Replace 'Test Name' with the actual test name
+        formData.append('name', document.querySelector("#title").value);
+        formData.append('category', selectedCategory);
         let blob = new Blob([JSON.stringify(preguntas)], { type: "application/json" });
         let file = new File([blob], "preguntas.json", {
             type: "application/json",
@@ -176,7 +201,7 @@ const CreateQuiz = () => {
 
             // Continuar con el procesamiento del archivo
             setPreguntas(importedQuestions);
-            setIdPreguntaActual(importedQuestions.length+1);
+            setIdPreguntaActual(importedQuestions.length + 1);
             Swal.fire({
                 icon: "success",
                 title: "El cuestionario ha sido importado con éxito",
@@ -253,8 +278,24 @@ const CreateQuiz = () => {
                     <MDBTypography tag='h3' className="my-3">Crear cuestionario</MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
+
                     <MDBCardText>
                         <MDBInput className='mb-4' type='text' id='title' label='Título' />
+                        <select className="form-select mb-4" id='category'
+                            value={selectedCategory} onChange={handleCategoryAdd}>
+                            <option value="">-- Elige las categorias del test --</option>
+                            {
+                                categoryData.map(category => (
+                                    <option value={category.id}>{category.name}</option>
+                                ))
+                            }
+                        </select>
+
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
                         <select className="form-select mb-4" id='type'
                             value={selectedOption} onChange={handleSelectChange}>
                             <option value="">-- Elige el tipo de pregunta --</option>
@@ -266,12 +307,12 @@ const CreateQuiz = () => {
                         {/* Enseñar pregunta según el tipo elegido */}
                         {selectedOption === 'Opcion multiple' && (
                             <div>
-                                <MultipleChoiceMain/>
+                                <MultipleChoiceMain />
                             </div>
                         )}
                         {selectedOption === 'Verdadero / Falso' && (
                             <div>
-                                <TrueFalseMain/>
+                                <TrueFalseMain />
                             </div>
                         )}
                         {selectedOption === 'Relacional' && (
