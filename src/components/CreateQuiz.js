@@ -9,7 +9,7 @@ import {
     MDBCardBody,
     MDBCardHeader,
     MDBCardText, MDBCheckbox, MDBFile, MDBIcon,
-    MDBInput, MDBListGroup, MDBListGroupItem,
+    MDBInput, MDBListGroup, MDBListGroupItem, MDBTextArea,
     MDBTypography
 } from "mdb-react-ui-kit";
 
@@ -18,7 +18,7 @@ import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseM
 import { CategoryContext } from "./CategoryContext";
 
 
-const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
+const CreateQuiz = ({ quizToBeEdited }) => {
     const { categories, setCategories } = useContext(CategoryContext);
 
     const [selectedCategory, setSelectedCategory] = useState(""); // Controla la opción seleccionada del desplegable de categorías
@@ -31,7 +31,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
         // Si la edición está activada, esto se encarga de recoger los datos de las categorías correspondientes
         // y actualizar las categorías seleccionadas
         const quizCategoryData = async (e) => {
-            if(editIsTriggered && quizToBeEdited){
+            if(quizToBeEdited){
                 const data = quizToBeEdited.category_names.map(category_name => {
                     return categories.find(category => category.name === category_name);
                 });
@@ -65,7 +65,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
         // Si la edición está activada, esto se encarga de recoger los datos de las preguntas
         // y actualizar en el contexto correspondidente ("CreateQuizContext")
         const questionData = async (e) => {
-            if(editIsTriggered && quizToBeEdited){
+            if(quizToBeEdited){
                 setPreguntas(quizToBeEdited.questions);
             }
         }
@@ -78,7 +78,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
         // Si la edición está activada, esto se encarga de recoger los datos de la visibilidad
         // y actualizar
         const visibilityData = async (e) => {
-            if(editIsTriggered && quizToBeEdited){
+            if(quizToBeEdited){
                 setSelectedVisibility(quizToBeEdited.visibility);
             }
         }
@@ -345,7 +345,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
         <div className="d-flex justify-content-center align-content-center mt-5">
             <MDBCard>
                 <MDBCardHeader>
-                    <MDBTypography tag='h3' className="my-3">{editIsTriggered ? 'Editar' : 'Crear'} cuestionario</MDBTypography>
+                    <MDBTypography tag='h3' className="my-3">{quizToBeEdited ? 'Editar' : 'Crear'} cuestionario</MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
 
@@ -364,6 +364,9 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
                                 <option value="public">Publica</option>
                             </select>
                         </div>
+
+                        {/* Descripción */}
+                        <MDBTextArea id='description' label='Descripción' rows={4} value={quizToBeEdited?.description ?? ''} />
 
                         {/* Categorías */}
                         <div className="mt-4">

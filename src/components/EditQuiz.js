@@ -45,7 +45,7 @@ const EditQuiz = () => {
     }
 
     return (
-        <CreateQuiz editIsTriggered={true} quizToBeEdited={quizToBeEdited} />
+        <CreateQuiz quizToBeEdited={quizToBeEdited} />
     );
 }
 
