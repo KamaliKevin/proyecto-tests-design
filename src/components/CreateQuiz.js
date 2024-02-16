@@ -43,6 +43,7 @@ const CreateQuiz = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [categoryData, setCategoryData] = useState([]);
+    const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de categorías
 
     // Conseguir los datos de las categorías existentes:
     useEffect(() => {
@@ -107,13 +108,12 @@ const CreateQuiz = () => {
         }
     };
 
+    const handleVisibilityTypeSelect = (event) => {
+        setSelectedVisibility(event.target.value);
+    };
+
     const handleQuestionTypeSelect = (event) => {
         setSelectedQuestionType(event.target.value);
-    };
-    const handleCategoryAdd = (event) => {
-        // Multiple category WIP
-        //setSelectedCategory([...selectedCategory ,event.target.value]);
-        setSelectedCategory(event.target.value);
     };
 
     const removeQuestion = (id) => {
@@ -155,6 +155,7 @@ const CreateQuiz = () => {
 
         const formData = new FormData();
         formData.append('name', document.querySelector("#title").value);
+        formData.append('visibility', selectedVisibility);
 
         let CategoryIDs = [];
 
@@ -174,7 +175,6 @@ const CreateQuiz = () => {
             type: "application/json",
             lastModified: new Date()
         });
-        //encodeURIComponent()
         formData.append('test_file', file);
         await fetch('http://localhost:8000/api/upload-test', {
             method: 'POST',
@@ -194,13 +194,6 @@ const CreateQuiz = () => {
                 })
             })
             .catch(error => console.error('Error:', error));
-
-        await fetch('http://localhost:8000/api/user', {
-            method: 'GET',
-            credentials: 'include', // Important: Include credentials for authentication
-        }).then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error("Fucky wacky", error));
 
     }
 
@@ -334,6 +327,17 @@ const CreateQuiz = () => {
                         {/* Título */}
                         <MDBInput type='text' id='title' label='Título' />
 
+                        {/* Visibilidad del test */}
+                        <div className="mt-4">
+                            <MDBTypography tag='h6'>Visibilidad</MDBTypography>
+                            <select className="form-select mb-4" id='type'
+                                value={selectedVisibility} onChange={handleVisibilityTypeSelect}>
+                                <option value="">-- Elige la visibilidad--</option>
+                                <option value="private">Privada</option>
+                                <option value="friend">Solo amigos</option>
+                                <option value="public">Publica</option>
+                            </select>
+                        </div>
 
                         {/* Categorías */}
                         <div className="mt-4">
