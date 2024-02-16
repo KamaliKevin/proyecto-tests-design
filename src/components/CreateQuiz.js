@@ -62,6 +62,19 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
     const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de visibilidad
 
     useEffect(() => {
+        // Si la edición está activada, esto se encarga de recoger los datos de las preguntas
+        // y actualizar en el contexto correspondidente ("CreateQuizContext")
+        const questionData = async (e) => {
+            if(editIsTriggered && quizToBeEdited){
+                setPreguntas(quizToBeEdited.questions);
+            }
+        }
+
+        questionData();
+    }, []);
+
+
+    useEffect(() => {
         // Si la edición está activada, esto se encarga de recoger los datos de la visibilidad
         // y actualizar
         const visibilityData = async (e) => {
