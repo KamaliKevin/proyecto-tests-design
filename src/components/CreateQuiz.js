@@ -59,31 +59,27 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
 
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [categoryData, setCategoryData] = useState([]);
-    const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de categorías
+    const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de visibilidad
 
-    // Conseguir los datos de las categorías existentes:
     useEffect(() => {
-        const categories = async (e) => {
-            await fetch('http://localhost:8000/api/categories', {
-                method: 'GET'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    setCategoryData(data);
-                })
-                .catch(error => console.error("error", error));
-        };
+        // Si la edición está activada, esto se encarga de recoger los datos de la visibilidad
+        // y actualizar
+        const visibilityData = async (e) => {
+            if(editIsTriggered && quizToBeEdited){
+                setSelectedVisibility(quizToBeEdited.visibility);
+            }
+        }
 
-        categories();
+        visibilityData();
     }, []);
+
+    // Descargar cuestionarios:
     let id = null;
     id = searchParams.get("id");
 
     useEffect(() => {
-        if (id != null) {
-            const downloadID = async (e) => {
+        if (id !== null) {
+            const downloadTest = async (e) => {
                 const response = await fetch("http://localhost:8000/api/download-test/" + id, {
                     method: 'GET',
                     credentials: 'include'
@@ -97,7 +93,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
                 setIdPreguntaActual(testJson.length + 1);
 
             }
-            downloadID();
+            downloadTest();
             console.log(id);
         }
 
@@ -336,7 +332,7 @@ const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
         <div className="d-flex justify-content-center align-content-center mt-5">
             <MDBCard>
                 <MDBCardHeader>
-                    <MDBTypography tag='h3' className="my-3">Crear cuestionario</MDBTypography>
+                    <MDBTypography tag='h3' className="my-3">{editIsTriggered ? 'Editar' : 'Crear'} cuestionario</MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
 
