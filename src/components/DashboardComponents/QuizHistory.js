@@ -72,7 +72,7 @@ const QuizHistory = () => {
     // madeQuizzes = [
     //     {id: 1, name: 'El arte de la ciencia', category_names: ['Arte', 'Ciencia'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
     //     {id: 2, name: 'Cielo y tierra', category_names: ['Geografía'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
-    //     {id: 3, name: 'Historia del álgebra', category_names: ['Matemáticas', 'Ciencia'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
+    //     {id: 3, name: 'Historia del álgebra', category_names: ['Matemáticas', 'Historia'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
     // ];
 
     return (
