@@ -11,12 +11,14 @@ import {
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const QuizHistory = () => {
     const navigate = useNavigate();
+
     const [madeQuizzes, setMadeQuizzes] = useState(
         []
     )
-    
+
 
     const playedQuizzes = [
         { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp' },
@@ -39,12 +41,11 @@ const QuizHistory = () => {
                 const tests = data.tests;
 
                 let tempQuizzes = tests.map(element => ({
-                    category: 'Category #4',
+                    category: element.category_names,
                     name: element.name,
                     image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp',
                     id: element.id
                 }));
-
                 setMadeQuizzes(tempQuizzes);
             } catch (error) {
                 console.error('Error fetching user tests:', error);
@@ -55,9 +56,9 @@ const QuizHistory = () => {
 
 
 
-    const onView = async(id) =>{
-        console.log("aa"+id);
-        navigate("/create-quiz?id="+id)
+    const onView = async (id) => {
+        console.log("aa" + id);
+        navigate("/create-quiz?id=" + id)
     }
 
 
@@ -87,6 +88,7 @@ const QuizHistory = () => {
                                 <MDBBadge pill light color='primary' className="mb-3">
                                     {quiz.category}
                                 </MDBBadge>
+
                                 <div className='d-flex justify-content-between align-items-center'>
                                     <div className='d-flex align-items-center'>
                                         <img
@@ -117,9 +119,11 @@ const QuizHistory = () => {
                     <MDBListGroup light className='mb-4'>
                         {madeQuizzes.map((quiz, index) => (
                             <MDBListGroupItem key={index}>
-                                <MDBBadge pill light color='primary' className="mb-3">
-                                    {quiz.category}
-                                </MDBBadge>
+                                {quiz.category.map(name => (
+                                    <MDBBadge pill light color='primary' className="mb-3 me-1">
+                                        {name}
+                                    </MDBBadge>
+                                ))}
                                 <div className='d-flex justify-content-between align-items-center'>
                                     <div className='d-flex align-items-center'>
                                         <img
