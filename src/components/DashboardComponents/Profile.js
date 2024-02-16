@@ -10,8 +10,13 @@ import {
 
 const Profile = () => {
     // Obtenemos los datos del usuario que inició sesión
-    const retrievedUserData = localStorage.getItem("USER") ?? "";
-    const formattedUserData = JSON.parse(retrievedUserData);
+    // const retrievedUserData = localStorage.getItem("USER") ?? "";
+    // const formattedUserData = JSON.parse(retrievedUserData);
+    const formattedUserData = {
+        id: 1,
+        name: "Kevin",
+        email: "kevin@example.com"
+    };
 
     const [userData, setUserData] = useState(formattedUserData);
     const [isEditing, setIsEditing] = useState(false);
@@ -29,9 +34,9 @@ const Profile = () => {
     const handleSaveClick = () => {
         // Check if any input field (except for password) is empty or contains only spaces
         const isAnyFieldEmpty = Object.values(editedUserData).some((value, index) => {
-            if (index !== 1) { // Exclude the password field
-                return !value.trim();
-            }
+            // if (index !== 1) { // Excluir la contraseña en este caso
+            //     return !value.trim();
+            // }
             return false;
         });
 
@@ -65,9 +70,9 @@ const Profile = () => {
                 <MDBCardBody>
                     <MDBCardText>
                         <MDBInput
-                            label="Nombre de usuario"
+                            label="Nombre"
                             type="text"
-                            name="username"
+                            name="name"
                             value={isEditing ? editedUserData.name : userData.name}
                             disabled={!isEditing}
                             onChange={handleInputChange}

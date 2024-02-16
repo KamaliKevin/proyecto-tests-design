@@ -20,11 +20,13 @@ const QuizHistory = () => {
     )
 
 
+    // NOTA: Sustituir "playedQuizzes" después con datos de los tests jugados por un usuario desde la BD
     const playedQuizzes = [
         { category: 'Category #1', name: 'Quiz #1', creator: 'RandomUser', image_src: 'https://mdbootstrap.com/img/new/fluid/city/113.webp' },
         { category: 'Category #2', name: 'Quiz #2', creator: 'RandomUser2', image_src: 'https://mdbootstrap.com/img/new/fluid/city/114.webp' },
         { category: 'Category #3', name: 'Quiz #3', creator: 'RandomUser3', image_src: 'https://mdbootstrap.com/img/new/fluid/city/115.webp' }
     ];
+
     useEffect(() => {
         async function fetchAndSetUserTests() {
             try {
@@ -38,35 +40,39 @@ const QuizHistory = () => {
                 }
 
                 const data = await response.json();
-                const tests = data.tests;
+                const userTests = data.tests;
 
-                let tempQuizzes = tests.map(element => ({
-                    category: element.category_names,
-                    name: element.name,
-                    image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp',
-                    id: element.id
+                let userTestData = userTests.map(test => ({
+                    id: test.id,
+                    name: test.name,
+                    category_names: test.category_names,
+                    image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp', // NOTA: Sustituir después por imagen relacionada desde la BD
                 }));
-                setMadeQuizzes(tempQuizzes);
-            } catch (error) {
+
+                setMadeQuizzes(userTestData);
+            }
+            catch (error) {
                 console.error('Error fetching user tests:', error);
             }
         }
+
         fetchAndSetUserTests();
     }, []);
 
 
 
-    const onView = async (id) => {
-        console.log("aa" + id);
-        navigate("/create-quiz?id=" + id)
+    const onView = async (id) =>{
+        // console.log("aa"+id);
+        // navigate("/create-quiz?id="+id)
+        navigate(`/quiz/edit/${id}`);
     }
 
 
 
     // madeQuizzes = [
-    //     { category: 'Category #4', name: 'Quiz #4', image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
-    //     { category: 'Category #5', name: 'Quiz #5', image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
-    //     { category: 'Category #6', name: 'Quiz #6', image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
+    //     {id: 1, name: 'El arte de la ciencia', category_names: ['Arte', 'Ciencia'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp' },
+    //     {id: 2, name: 'Cielo y tierra', category_names: ['Geografía'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/117.webp' },
+    //     {id: 3, name: 'Historia del álgebra', category_names: ['Matemáticas', 'Ciencia'], image_src: 'https://mdbootstrap.com/img/new/fluid/city/118.webp' }
     // ];
 
     return (

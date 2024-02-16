@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { CreateQuizContext } from "./CreateQuizComponents/CreateQuizContext";
-import { useSearchParams } from "react-router-dom";
-import MultipleChoiceMain from "./CreateQuizComponents/MultipleChoiceComponents/MultipleChoiceMain";
+import {useParams, useSearchParams} from "react-router-dom";
 import CreatedQuestions from "./CreateQuizComponents/CreatedQuestions";
 import CheckQuestions from "./CreateQuizComponents/CheckQuestions";
 import Swal from "sweetalert2";
@@ -14,17 +13,35 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 
+import MultipleChoiceMain from "./CreateQuizComponents/MultipleChoiceComponents/MultipleChoiceMain";
 import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseMain";
 import { CategoryContext } from "./CategoryContext";
 
 
-const CreateQuiz = () => {
+const CreateQuiz = ({ editIsTriggered, quizToBeEdited }) => {
     const { categories, setCategories } = useContext(CategoryContext);
 
     const [selectedCategory, setSelectedCategory] = useState(""); // Controla la opción seleccionada del desplegable de categorías
     const [selectedCategories, setSelectedCategories] = useState([ // Lista de categorías seleccionadas
         { id: 1, name: "Sin categorizar", created_at: "", updated_at: "" }
     ]);
+
+
+    useEffect(() => {
+        // Si la edición está activada, esto se encarga de recoger los datos de las categorías correspondientes
+        // y actualizar las categorías seleccionadas
+        const quizCategoryData = async (e) => {
+            if(editIsTriggered && quizToBeEdited){
+                const data = quizToBeEdited.category_names.map(category_name => {
+                    return categories.find(category => category.name === category_name);
+                });
+                setSelectedCategories(data);
+            }
+        }
+
+        quizCategoryData();
+    }, []);
+
 
     useEffect(() => {
         // Regresa al estado por defecto para la lista de categorías seleccionadas si no hay ninguna
@@ -325,7 +342,7 @@ const CreateQuiz = () => {
 
                     <MDBCardText>
                         {/* Título */}
-                        <MDBInput type='text' id='title' label='Título' />
+                        <MDBInput type='text' id='title' label='Título' value={quizToBeEdited?.name ?? ''}/>
 
                         {/* Visibilidad del test */}
                         <div className="mt-4">

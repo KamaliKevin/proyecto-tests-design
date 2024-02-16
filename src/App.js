@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { CreateQuizContextProvider } from "./components/CreateQuizComponents/CreateQuizContext";
 import NotFound from "./components/NotFound";
 import { CategoryContextProvider } from "./components/CategoryContext";
+import EditQuiz from "./components/EditQuiz";
 
 function App() {
     const navigate = useNavigate();
@@ -31,13 +32,6 @@ function App() {
         }
     };
 
-    useEffect(() => {
-        // Check for token existence on component mount
-        const token = localStorage.getItem("XSRF-TOKEN");
-        if (token) {
-            setUserIsLoggedIn(true);
-        }
-    }, []);
 
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
@@ -58,7 +52,8 @@ function App() {
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                             <Route element={<ProtectedRoute/>}>
                                 <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
-                                <Route element={<CreateQuiz />} path="/create-quiz"/>
+                                <Route element={<CreateQuiz editIsTriggered={false} quizToBeEdited={null}/>} path="/create-quiz"/>
+                                <Route element={<EditQuiz />} path="/quiz/edit/:quizId"/>
                             </Route>
 
                             <Route element={<GuestRoute />}>
