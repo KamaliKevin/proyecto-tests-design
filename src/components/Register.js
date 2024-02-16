@@ -8,11 +8,11 @@ import {
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 
-const Register = () => {
+const Register = ({ onLogin }) => {
     const [errors, setErrors] = useState(null);
-
+    const navigate = useNavigate();
     const register = async (e) => {
         e.preventDefault();
 
@@ -20,8 +20,10 @@ const Register = () => {
             method: 'GET',
             credentials: 'include'
         });
-        const token = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))?.split("=")[1];
-        //const token = getCookies("XSRF-TOKEN");
+        const token = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+            ?.split('=')[1];
 
         console.log(token);
         // Build formData object.
@@ -33,29 +35,45 @@ const Register = () => {
         formData.append('password_confirmation', document.querySelector("#password_confirmation").value);
 
 
-        const register = await fetch("http://localhost:8000/register", {
+        await fetch("http://localhost:8000/register", {
             method: 'POST',
             headers: {
-                "Accept": "application/json",
-                "X-CSRF-Token": token
+                'Accept': 'application/json',
+                //'Content-Type': 'application/json',
+                //'X-Requested-With': 'XMLHttpRequest',
+                'X-XSRF-TOKEN': decodeURIComponent(token), // Include the CSRF token in the headers
             },
-            body: formData,
-
-        }).then(res => {
+            credentials: 'include', // Include cookies in the request
+            body: formData
+        }).then(async (res) => {
             if (!res.ok) {
                 handleErrors(res.errors);
                 return res.json();
             }
             else {
-                navigate("/login");
+                await fetch('http://localhost:8000/api/user', {
+                    method: 'GET',
+                    credentials: 'include', // Important: Include credentials for authentication
+                }).then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+
+                        // Si el inicio de sesión fue un éxito, guardamos el token
+                        // y la información no sensible del usuario en el almacenamiento local
+                        localStorage.setItem("XSRF-TOKEN", token);
+                        localStorage.setItem("USER", JSON.stringify(data));
+
+                        onLogin(); // Maneja la lógica en el inicio de sesión exitoso
+                    })
+                    .catch(error => console.error("Fucky wacky", error));
             }
         })
-            
+
         console.log(register);
     }
 
     const handleErrors = (errors) => {
-        if(errors){
+        if (errors) {
             setErrors(errors);
         }
     }

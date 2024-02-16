@@ -63,7 +63,7 @@ function App() {
 
                             <Route element={<GuestRoute />}>
                                 <Route element={<Login onLogin={handleLogin} />} path="/login" />
-                                <Route element={<Register />} path="/register" />
+                                <Route element={<Register onLogin={handleLogin} />} path="/register" />
                             </Route>
 
                             <Route element={<Quiz />} path="/quiz" />
