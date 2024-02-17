@@ -1,4 +1,5 @@
 import {
+    MDBBadge,
     MDBCard,
     MDBCardBody,
     MDBCardHeader,
@@ -14,25 +15,62 @@ import {
     MDBRow,
     MDBTypography
 } from "mdb-react-ui-kit";
-
+import { useEffect, useState } from "react";
 const Home = () => {
+    const [cards, setCards] = useState([]); // Controla la opción seleccionada del desplegable de categorías
+    // { title: 'Card 1', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 2', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 3', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 4', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 5', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 6', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 7', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+    // { title: 'Card 8', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
+
+
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/api/public-tests`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to fetch quiz data");
+                }
+                const quizData = await response.json();
+                console.log(quizData);
+
+                const prepareCards = quizData.data.map(quiz => ({
+                    title: quiz.name,
+                    text: quiz.description || "Sin descripción",
+                    category_names: quiz.category_names,
+                    image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp'
+                }));
+
+
+                console.log(cards);
+                setCards([...cards, ...prepareCards]);
+
+            }
+            catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchQuiz();
+    }, []);
+
+
+
     const titles = [
-        {title: "Lo más votado", icon: "angle-double-up"},
-        {title: "Lo más nuevo", icon: "fire"},
-        {title: "Recomendaciones", icon: "clipboard-list"}
+        { title: "Lo más votado", icon: "angle-double-up" },
+        { title: "Lo más nuevo", icon: "fire" },
+        { title: "Recomendaciones", icon: "clipboard-list" }
     ];
 
-    const cards = [
-        { title: 'Card 1', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 2', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 3', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 4', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 5', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 6', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 7', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 8', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-        { title: 'Card 9', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    ];
+
 
     const carouselItems = [
         {
@@ -95,6 +133,11 @@ const Home = () => {
                                                         <MDBCardLink href="/quiz">
                                                             <MDBCardTitle>{card.title}</MDBCardTitle>
                                                         </MDBCardLink>
+                                                        {card.category_names.map(name => (
+                                                            <MDBBadge pill light color='primary' className="mb-3 me-1">
+                                                                {name}
+                                                            </MDBBadge>
+                                                        ))}
                                                         <MDBCardText>{card.text}</MDBCardText>
                                                     </MDBCardBody>
                                                 </MDBCard>
