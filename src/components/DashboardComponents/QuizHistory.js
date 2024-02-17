@@ -125,7 +125,7 @@ const QuizHistory = () => {
                     <MDBListGroup light className='mb-4'>
                         {madeQuizzes.map((quiz, index) => (
                             <MDBListGroupItem key={index}>
-                                {quiz.category.map(name => (
+                                {quiz.category_names.map(name => (
                                     <MDBBadge pill light color='primary' className="mb-3 me-1">
                                         {name}
                                     </MDBBadge>
