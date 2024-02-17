@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { CreateQuizContext } from "./CreateQuizComponents/CreateQuizContext";
-import {useParams, useSearchParams} from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import CreatedQuestions from "./CreateQuizComponents/CreatedQuestions";
 import CheckQuestions from "./CreateQuizComponents/CheckQuestions";
 import Swal from "sweetalert2";
@@ -20,22 +20,28 @@ import { CategoryContext } from "./CategoryContext";
 
 const CreateQuiz = ({ quizToBeEdited }) => {
     const { categories, setCategories } = useContext(CategoryContext);
+    const { currentQuestionId, questions } = useContext(CreateQuizContext);
+
 
     const [selectedCategory, setSelectedCategory] = useState(""); // Controla la opción seleccionada del desplegable de categorías
+    const [selectedQuestionType, setSelectedQuestionType] = useState("");
+    const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de visibilidad
     const [selectedCategories, setSelectedCategories] = useState([ // Lista de categorías seleccionadas
         { id: 1, name: "Sin categorizar", created_at: "", updated_at: "" }
     ]);
 
+    const { preguntas, setPreguntas } = questions;
+    const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
 
     useEffect(() => {
         // Si la edición está activada, esto se encarga de recoger los datos de las categorías correspondientes
         // y actualizar las categorías seleccionadas
         const quizCategoryData = async (e) => {
             if(quizToBeEdited){
-                const data = quizToBeEdited.category_names.map(category_name => {
-                    return categories.find(category => category.name === category_name);
-                });
-                setSelectedCategories(data);
+                    const data = quizToBeEdited.category_names.map(category_name => {
+                        return categories.find(category => category.name === category_name);
+                    });
+                    setSelectedCategories(data);
             }
         }
 
@@ -51,40 +57,21 @@ const CreateQuiz = ({ quizToBeEdited }) => {
     }, [selectedCategories]);
 
 
-    const [selectedQuestionType, setSelectedQuestionType] = useState("");
 
-    const { currentQuestionId, questions } = useContext(CreateQuizContext);
-    const { preguntas, setPreguntas } = questions;
-    const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
 
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [selectedVisibility, setSelectedVisibility] = useState(""); // Controla la opción seleccionada del desplegable de visibilidad
 
     useEffect(() => {
-        // Si la edición está activada, esto se encarga de recoger los datos de las preguntas
-        // y actualizar en el contexto correspondidente ("CreateQuizContext")
-        const questionData = async (e) => {
-            if(quizToBeEdited){
-                setPreguntas(quizToBeEdited.questions);
-            }
+        // Si la edición está activada, esto se encarga de recoger los datos del test y actualizar
+        if (quizToBeEdited) {
+            setPreguntas(quizToBeEdited.questions);
+            setSelectedVisibility(quizToBeEdited.visibility);
+            setIdPreguntaActual(quizToBeEdited.questions.length + 1);
         }
 
-        questionData();
     }, []);
 
-
-    useEffect(() => {
-        // Si la edición está activada, esto se encarga de recoger los datos de la visibilidad
-        // y actualizar
-        const visibilityData = async (e) => {
-            if(quizToBeEdited){
-                setSelectedVisibility(quizToBeEdited.visibility);
-            }
-        }
-
-        visibilityData();
-    }, []);
 
     // Descargar cuestionarios:
     let id = null;
