@@ -28,10 +28,20 @@ function App() {
     const handleLogin = async () => {
         if (localStorage.getItem("XSRF-TOKEN")) {
             await setUserIsLoggedIn(true);
+            console.log(userIsLoggedIn);
             navigate("/home");
         }
     };
-
+    // This useEffect is required, since after you log in and get redirected handleLogin, it works 
+    // but the moment you change tabs, pages, handleLogin is not called (Not being redirected from register or login) , so the default state prevails (false)
+    // Meaning that after being logged in and changing pages (Ie, the dashboard), the register/login tabs reappear, and the protected routes dissapear
+    useEffect(() => {
+        // Check for token existence on component mount
+        const token = localStorage.getItem("XSRF-TOKEN");
+        if (token) {
+            setUserIsLoggedIn(true);
+        }
+    }, []);
 
     return (
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
@@ -50,10 +60,10 @@ function App() {
                             <Route element={<Category />} path="/category/:categoryName/:pageNumber" />
 
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
-                            <Route element={<ProtectedRoute/>}>
+                            <Route element={<ProtectedRoute />}>
                                 <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
-                                <Route element={<CreateQuiz quizToBeEdited={null}/>} path="/create-quiz"/>
-                                <Route element={<EditQuiz />} path="/quiz/edit/:quizId"/>
+                                <Route element={<CreateQuiz quizToBeEdited={null} />} path="/create-quiz" />
+                                <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />
                             </Route>
 
                             <Route element={<GuestRoute />}>
