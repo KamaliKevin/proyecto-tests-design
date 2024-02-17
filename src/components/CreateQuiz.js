@@ -71,7 +71,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
 
             document.querySelector("#title").value = quizToBeEdited.name;
             document.querySelector("#title").classList.add("active");
-            
+
             document.querySelector("#description").value = quizToBeEdited.description;
             document.querySelector("#description").classList.add("active");
         }
@@ -361,7 +361,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                         </div>
 
                         {/* Descripción */}
-                        <MDBInput type='text' id='description' label='Descripción' rows={4} />
+                        <MDBTextArea type='text' id='description' label='Descripción' rows={4} />
                         {/* Categorías */}
                         <div className="mt-4">
                             <MDBTypography tag='h6'>Categorías</MDBTypography>
