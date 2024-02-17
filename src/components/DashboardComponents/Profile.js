@@ -1,4 +1,5 @@
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
     MDBBtn,
     MDBCard,
@@ -7,32 +8,14 @@ import {
     MDBCardText, MDBIcon,
     MDBInput, MDBTypography
 } from 'mdb-react-ui-kit';
+import Swal from "sweetalert2";
 
 const Profile = () => {
     // Obtenemos los datos del usuario que inició sesión
     const retrievedUserData = localStorage.getItem("USER") ?? "";
-    const [formattedUserData, setFormattedUserData] = useState(JSON.parse(retrievedUserData));
+    const formattedUserData = JSON.parse(retrievedUserData);
 
-    useEffect(() => {
-        // Obtenemos la contraseña del usuario directamente de la base de datos
-        // (quizá estaría bien tener una ruta en específica para esto)
-        // (no es recomendable almacenar datos sensibles en el almacenamiento local):
-        const fetchPassword = async (e) => {
-            await fetch('http://localhost:8000/api/user', {
-                method: 'GET',
-                credentials: 'include', // Important: Include credentials for authentication
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    setFormattedUserData(prevUserData => ({...prevUserData, password: data.password}));
-                })
-                .catch(error => console.error("Fucky wacky", error));
-        }
-
-        fetchPassword();
-    }, []);
-
-
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(formattedUserData);
     const [isEditing, setIsEditing] = useState(false);
     const [editedUserData, setEditedUserData] = useState({ ...formattedUserData });
@@ -41,18 +24,55 @@ const Profile = () => {
         setIsEditing(true);
     };
 
+    const handleChangePasswordClick = async (e) => {
+        try {
+            // NOTA: "http://localhost:8000/forgot-password" es la ruta del back usada por Sanctum para INICIAR
+            // el proceso de cambio de contraseña, no para realizar el proceso en si. Esto manda un mensaje por email
+            // con un link que lleva a la página para introducir una nueva contraseña ("ChangePassword")
+
+            const response = await fetch('http://localhost:8000/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    //'Content-Type': 'application/json',
+                    //'X-Requested-With': 'XMLHttpRequest',
+                    'X-XSRF-TOKEN': decodeURIComponent(localStorage.getItem("XSRF-TOKEN")), // Include the CSRF token in the headers
+                },
+                credentials: 'include', // Include cookies in the request
+                body: JSON.stringify({ email: userData.email }) // La petición necesita de al menos el email
+            });
+
+            if (response.ok) {
+                console.log('Password change email sent successfully');
+                await Swal.fire({
+                    title: `Se ha enviado un mensaje a ${userData.email} para iniciar el proceso de cambio de contraseña`,
+                    icon: "success",
+                    showConfirmButton: true
+                });
+            }
+            else {
+                console.error('Failed to send password change email');
+                await Swal.fire({
+                    title: `No se ha podido enviar un mensaje a ${userData.email} para iniciar el proceso de cambio de contraseña. Inténtelo más tarde`,
+                    icon: "error",
+                    showConfirmButton: true
+                });
+            }
+        }
+        catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+
     const handleCancelClick = () => {
         setIsEditing(false);
         setEditedUserData({ ...userData });
     };
 
     const handleSaveClick = () => {
-        // Check if any input field (except for password) is empty or contains only spaces
-        const isAnyFieldEmpty = Object.values(editedUserData).some((value, index) => {
-            // if (index !== 1) { // Excluir la contraseña en este caso
-            //     return !value.trim();
-            // }
-            return false;
+        // Check if any input field is empty or contains only spaces
+        const isAnyFieldEmpty = Object.values(editedUserData).some(value => {
+            return !value.trim(); // Check if any value is empty after trimming whitespace
         });
 
         if (isAnyFieldEmpty) {
@@ -61,8 +81,7 @@ const Profile = () => {
         }
 
         // Actualizar datos a nivel de almacenamiento local
-        const { password, editedUserDataWithoutPassword } = editedUserData;
-        const newUserData = JSON.stringify(editedUserDataWithoutPassword);
+        const newUserData = JSON.stringify(editedUserData);
         localStorage.setItem("USER", newUserData);
 
         // Actualizar datos del usuario a nivel de componente
@@ -96,16 +115,6 @@ const Profile = () => {
                         />
 
                         <MDBInput
-                            label="Contraseña"
-                            type="password"
-                            name="password"
-                            value={isEditing ? editedUserData.password : userData.password}
-                            disabled={!isEditing}
-                            onChange={handleInputChange}
-                            className='mb-4'
-                        />
-
-                        <MDBInput
                             label="Correo electrónico"
                             type="email"
                             name="email"
@@ -121,7 +130,8 @@ const Profile = () => {
                             </div>
                         ) : (
                             <div className="d-grid gap-2">
-                                <MDBBtn onClick={handleEditClick}>Editar datos</MDBBtn>
+                                <MDBBtn color="secondary" onClick={handleEditClick}>Editar perfil</MDBBtn>
+                                <MDBBtn color="primary" onClick={handleChangePasswordClick}>Cambiar contraseña</MDBBtn>
                             </div>
                         )}
                     </MDBCardText>

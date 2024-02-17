@@ -19,6 +19,7 @@ import { CreateQuizContextProvider } from "./components/CreateQuizComponents/Cre
 import NotFound from "./components/NotFound";
 import { CategoryContextProvider } from "./components/CategoryContext";
 import EditQuiz from "./components/EditQuiz";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
     const navigate = useNavigate();
@@ -62,6 +63,7 @@ function App() {
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                             <Route element={<ProtectedRoute />}>
                                 <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
+                                <Route element={<ChangePassword/>} path="/change-password/:token"/>
                                 <Route element={<CreateQuiz quizToBeEdited={null} />} path="/create-quiz" />
                                 <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />
                             </Route>
