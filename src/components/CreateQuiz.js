@@ -37,16 +37,16 @@ const CreateQuiz = ({ quizToBeEdited }) => {
         // Si la edición está activada, esto se encarga de recoger los datos de las categorías correspondientes
         // y actualizar las categorías seleccionadas
         const quizCategoryData = async (e) => {
-            if(quizToBeEdited){
-                    const data = quizToBeEdited.category_names.map(category_name => {
-                        return categories.find(category => category.name === category_name);
-                    });
-                    setSelectedCategories(data);
+            if (quizToBeEdited && categories.length != 0) {
+                const data = quizToBeEdited.category_names.map(category_name => {
+                    return categories.find(category => category.name === category_name);
+                });
+                setSelectedCategories(data);
             }
         }
 
         quizCategoryData();
-    }, []);
+    }, [categories]);
 
 
     useEffect(() => {
