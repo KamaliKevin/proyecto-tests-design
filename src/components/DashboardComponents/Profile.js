@@ -30,16 +30,23 @@ const Profile = () => {
             // el proceso de cambio de contraseña, no para realizar el proceso en si. Esto manda un mensaje por email
             // con un link que lleva a la página para introducir una nueva contraseña ("ChangePassword")
 
+            const csrfToken = document.cookie
+                .split('; ')
+                .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+                ?.split('=')[1];
+
+            const formData = new FormData();
+            formData.append('email', userData.email);
             const response = await fetch('http://localhost:8000/forgot-password', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     //'Content-Type': 'application/json',
                     //'X-Requested-With': 'XMLHttpRequest',
-                    'X-XSRF-TOKEN': decodeURIComponent(localStorage.getItem("XSRF-TOKEN")), // Include the CSRF token in the headers
+                    'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
                 },
                 credentials: 'include', // Include cookies in the request
-                body: JSON.stringify({ email: userData.email }) // La petición necesita de al menos el email
+                body: formData
             });
 
             if (response.ok) {
