@@ -33,6 +33,9 @@ const CreateQuiz = ({ quizToBeEdited }) => {
     const { preguntas, setPreguntas } = questions;
     const { idPreguntaActual, setIdPreguntaActual } = currentQuestionId;
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
+
     useEffect(() => {
         // Si la edición está activada, esto se encarga de recoger los datos de las categorías correspondientes
         // y actualizar las categorías seleccionadas
@@ -56,12 +59,6 @@ const CreateQuiz = ({ quizToBeEdited }) => {
         }
     }, [selectedCategories]);
 
-
-
-
-
-    const [searchParams, setSearchParams] = useSearchParams();
-
     useEffect(() => {
         // Si la edición está activada, esto se encarga de recoger los datos del test y actualizar
         if (quizToBeEdited) {
@@ -77,34 +74,6 @@ const CreateQuiz = ({ quizToBeEdited }) => {
         }
 
     }, []);
-
-
-    // Descargar cuestionarios:
-    let id = null;
-    id = searchParams.get("id");
-
-    useEffect(() => {
-        if (id !== null) {
-            const downloadTest = async (e) => {
-                const response = await fetch("http://localhost:8000/api/download-test/" + id, {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to download test');
-                }
-
-                const testJson = await response.json();
-                setPreguntas(testJson);
-                setIdPreguntaActual(testJson.length + 1);
-
-            }
-            downloadTest();
-            console.log(id);
-        }
-
-    }, id);
-
 
     const handleCategoryDelete = (categoryId) => {
         setSelectedCategories((prevCategories) => prevCategories.filter(category => category.id !== categoryId));
