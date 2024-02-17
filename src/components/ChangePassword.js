@@ -23,10 +23,14 @@ const ChangePassword = () => {
 
     const changePassword = async (e) => {
         e.preventDefault();
-
+        const csrfToken = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+            ?.split('=')[1];
         let formData = new FormData();
         formData.append('email', userData.email);
         formData.append('password', document.querySelector("#new_password").value);
+        formData.append('password_confirmation', document.querySelector("#new_password_confirmation").value);
         formData.append('token', token);
 
         // NOTA: "http://localhost:8000/reset-password" es la ruta del back usada por Sanctum para COMPLETAR
@@ -37,7 +41,7 @@ const ChangePassword = () => {
                 'Accept': 'application/json',
                 //'Content-Type': 'application/json',
                 //'X-Requested-With': 'XMLHttpRequest',
-                'X-XSRF-TOKEN': decodeURIComponent(localStorage.getItem("XSRF-TOKEN")), // Include the CSRF token in the headers
+                'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
             },
             credentials: 'include', // Include cookies in the request
             body: formData
@@ -83,8 +87,7 @@ const ChangePassword = () => {
                             )}
 
                             <MDBInput className='mb-4' type='password' id='new_password' label='Contraseña nueva' />
-
-
+                            <MDBInput className='mb-4' type='password' id='new_password_confirmation' label='Confirmar contraseña nueva' />
                             <MDBBtn type='submit' className='mb-4' block onClick={changePassword}>
                                 Enviar
                             </MDBBtn>
