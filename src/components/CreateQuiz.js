@@ -68,6 +68,12 @@ const CreateQuiz = ({ quizToBeEdited }) => {
             setPreguntas(quizToBeEdited.questions);
             setSelectedVisibility(quizToBeEdited.visibility);
             setIdPreguntaActual(quizToBeEdited.questions.length + 1);
+
+            document.querySelector("#title").value = quizToBeEdited.name;
+            document.querySelector("#title").classList.add("active");
+            
+            document.querySelector("#description").value = quizToBeEdited.description;
+            document.querySelector("#description").classList.add("active");
         }
 
     }, []);
@@ -169,6 +175,8 @@ const CreateQuiz = ({ quizToBeEdited }) => {
         const formData = new FormData();
         formData.append('name', document.querySelector("#title").value);
         formData.append('visibility', selectedVisibility);
+        formData.append('description', document.querySelector("#description").value);
+
 
         let CategoryIDs = [];
 
@@ -338,7 +346,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
 
                     <MDBCardText>
                         {/* Título */}
-                        <MDBInput type='text' id='title' label='Título' value={quizToBeEdited?.name ?? ''}/>
+                        <MDBInput type='text' id='title' label='Título'/>
 
                         {/* Visibilidad del test */}
                         <div className="mt-4">
@@ -353,8 +361,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                         </div>
 
                         {/* Descripción */}
-                        <MDBTextArea id='description' label='Descripción' rows={4} value={quizToBeEdited?.description ?? ''} />
-
+                        <MDBInput type='text' id='description' label='Descripción' rows={4} />
                         {/* Categorías */}
                         <div className="mt-4">
                             <MDBTypography tag='h6'>Categorías</MDBTypography>
