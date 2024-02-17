@@ -1,15 +1,29 @@
-import { useParams } from "react-router-dom";
+import {json, useParams} from "react-router-dom";
 import CardPaginationComponent from "./utils/CardPaginationComponent";
+import {useEffect, useState} from "react";
 
 const Category = () => {
     const { categoryName, pageNumber } = useParams(); // Parámetros de cada categoría
+    const [categoryCards, setCategoryCards] = useState([]);
 
-    // NOTA: Sustituir "cards" por los datos de los cuestionarios que se consigan de una categoría
-    const cards = Array.from({ length: 63 }, (_, index) => ({
-        title: `Card ${index + 1}`,
-        text: 'This is some text within a card body.',
-        image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp'
-    }));
+    useEffect(() => {
+        const fetchCategoryCards = async () => {
+            try {
+                const response = await fetch('https://localhost:8000/api/public-tests');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const testData = await response.json();
+                const formattedCategoryCards = testData.data.filter(categoryCard => categoryCard.category_names.includes(categoryName));
+                setCategoryCards(formattedCategoryCards);
+            }
+            catch (error) {
+                console.error('Error fetching category cards: ', error);
+            }
+        };
+
+        fetchCategoryCards();
+    });
 
     return (
         <div className="mt-5">
@@ -18,7 +32,7 @@ const Category = () => {
                 pageNumber={Number(pageNumber)}
                 title={categoryName}
                 titleIcon="question-circle"
-                cards={cards}
+                cards={categoryCards}
                 cardsPerPage={9}
                 cardsPerRow={3}
             />

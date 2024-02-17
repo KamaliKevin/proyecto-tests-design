@@ -11,7 +11,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
 
     const handlePageClick = (newPage) => {
         if(newPage >= 1 && newPage <= pageCount){
-            navigate(`/${pageName}/${title}/${newPage}`); // Ir a la nueva página | IMPORTANTE: ¡Cambiar la ruta cuando haya categorías desde la BD!
+            navigate(`/${pageName}/${title}/${newPage}`); // Ir a la nueva página
             window.scrollTo(0, 0);
         }
     };

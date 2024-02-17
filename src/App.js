@@ -73,7 +73,7 @@ function App() {
                                 <Route element={<Register onLogin={handleLogin} />} path="/register" />
                             </Route>
 
-                            <Route element={<Quiz />} path="/quiz" />
+                            <Route element={<Quiz />} path="/quiz/play/:id" />
                             <Route element={<Privacy />} path="/privacy" />
                             <Route element={<Terms />} path="/terms" />
 
