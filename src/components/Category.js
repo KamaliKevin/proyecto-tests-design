@@ -19,6 +19,7 @@ const Category = () => {
                 const testData = await response.json();
                 const formattedCategoryCards = testData.data.filter(categoryCard => categoryCard.category_names.includes(categoryName));
                 const prepareCards = formattedCategoryCards.map(quiz => ({
+                    id: quiz.id,
                     title: quiz.name,
                     text: quiz.description || "Sin descripción",
                     category_names: quiz.category_names,

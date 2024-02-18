@@ -17,16 +17,7 @@ import {
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 const Home = () => {
-    const [cards, setCards] = useState([]); // Controla la opción seleccionada del desplegable de categorías
-    // { title: 'Card 1', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 2', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 3', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 4', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 5', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 6', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 7', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-    // { title: 'Card 8', text: 'This is some text within a card body.', image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp' },
-
+    const [cards, setCards] = useState([]);
 
 
     useEffect(() => {
@@ -43,6 +34,7 @@ const Home = () => {
                 console.log(quizData);
 
                 const prepareCards = quizData.data.map(quiz => ({
+                    id: quiz.id,
                     title: quiz.name,
                     text: quiz.description || "Sin descripción",
                     category_names: quiz.category_names,
@@ -125,12 +117,12 @@ const Home = () => {
                                                 <MDBCard>
                                                     <MDBRipple rippleTag='div' className='bg-image hover-zoom'>
                                                         <MDBCardImage src={card.image} alt={card.title} position="top" />
-                                                        <MDBCardLink href="/quiz">
+                                                        <MDBCardLink href={`/quiz/play/${card.id}`}>
                                                             <div className='mask'></div>
                                                         </MDBCardLink>
                                                     </MDBRipple>
                                                     <MDBCardBody>
-                                                        <MDBCardLink href="/quiz">
+                                                        <MDBCardLink href={`/quiz/play/${card.id}`}>
                                                             <MDBCardTitle>{card.title}</MDBCardTitle>
                                                         </MDBCardLink>
                                                         {card.category_names.map(name => (

@@ -38,12 +38,12 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
                             <MDBCard>
                                 <MDBRipple rippleTag='div' className='bg-image hover-zoom'>
                                     <MDBCardImage src={card.image} alt={card.title} position="top" />
-                                    <MDBCardLink href="/quiz">
+                                    <MDBCardLink href={`/quiz/play/${card.id}`}>
                                         <div className='mask'></div>
                                     </MDBCardLink>
                                 </MDBRipple>
                                 <MDBCardBody>
-                                    <MDBCardLink href="/quiz">
+                                    <MDBCardLink href={`/quiz/play/${card.id}`}>
                                         <MDBCardTitle>{card.title}</MDBCardTitle>
                                     </MDBCardLink>
                                     <MDBCardText>{card.text}</MDBCardText>

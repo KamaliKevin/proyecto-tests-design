@@ -11,8 +11,6 @@ const EditQuiz = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                // NOTA: Sería ideal tener una ruta tipo "/user/tests/{quizId}" para poder obtener directamente los datos
-                // de un cuestionario específico
                 const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
                     method: 'GET',
                     credentials: 'include'
