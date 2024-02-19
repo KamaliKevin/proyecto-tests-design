@@ -15,6 +15,7 @@ import {
 
 import MultipleChoiceMain from "./CreateQuizComponents/MultipleChoiceComponents/MultipleChoiceMain";
 import TrueFalseMain from "./CreateQuizComponents/TrueFalseComponents/TrueFalseMain";
+import MultipleAnswerMain from "./CreateQuizComponents/MultipleAnswerComponents/MultipleAnswerMain";
 import { CategoryContext } from "./CategoryContext";
 
 
@@ -388,6 +389,8 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                                 value={selectedQuestionType} onChange={handleQuestionTypeSelect}>
                                 <option value="">-- Elige el tipo de pregunta --</option>
                                 <option value="Opcion multiple">Opción múltiple</option>
+                                <option value="Multiple respuestas">Multiple respuestas</option>
+
                                 <option value="Verdadero / Falso">Verdadero / Falso</option>
                                 <option value="Relacional">Relacional</option>
                             </select>
@@ -402,6 +405,11 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                         {selectedQuestionType === 'Verdadero / Falso' && (
                             <div>
                                 <TrueFalseMain />
+                            </div>
+                        )}
+                        {selectedQuestionType === 'Multiple respuestas' && (
+                            <div>
+                                <MultipleAnswerMain />
                             </div>
                         )}
                         {selectedQuestionType === 'Relacional' && (
