@@ -6,6 +6,7 @@ const TrueFalseQuestion = ({ addPregunta }) => {
     const [pregunta, setPregunta] = useState({
         enunciado: "",
         respuestas: ["Verdadero", "Falso"],
+        tipo: "falsoVerdadero",
         respuestacorrecta: -1,
         favorita: false
     })

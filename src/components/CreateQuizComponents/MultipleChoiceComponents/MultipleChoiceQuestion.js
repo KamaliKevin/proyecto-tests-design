@@ -6,6 +6,7 @@ export const MultipleChoiceQuestion = ({ addPregunta }) => {
     const [pregunta, setPregunta] = useState({
         enunciado: "",
         respuestas: ["", "", "", ""],
+        tipo: "multipleChoice",
         respuestacorrecta: -1,
         favorita: false
     })
