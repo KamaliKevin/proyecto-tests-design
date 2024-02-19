@@ -166,24 +166,52 @@ const CreateQuiz = ({ quizToBeEdited }) => {
             lastModified: new Date()
         });
         formData.append('test_file', file);
-        await fetch('http://localhost:8000/api/upload-test', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
-            },
-            credentials: 'include', // Include cookies for the domain
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                Swal.fire({
-                    icon: "success",
-                    title: "El cuestionario se sido subido a la plataforma con éxito",
-                    showConfirmButton: true,
-                })
+
+
+        console.log(formData);
+        if (quizToBeEdited) {
+
+            // Use method spoofing for Laravel, since using PUT doesn't work properly
+            formData.append('_method', 'PUT');
+
+            await fetch('http://localhost:8000/api/user/test/' + quizToBeEdited.test_id, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
+                },
+                credentials: 'include', // Include cookies for the domain
+                body: formData,
             })
-            .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "El cuestionario fue actualizado con éxito",
+                        showConfirmButton: true,
+                    })
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            await fetch('http://localhost:8000/api/upload-test', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
+                },
+                credentials: 'include', // Include cookies for the domain
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "El cuestionario se sido subido a la plataforma con éxito",
+                        showConfirmButton: true,
+                    })
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
     }
 
