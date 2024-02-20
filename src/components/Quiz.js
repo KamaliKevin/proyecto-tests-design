@@ -97,6 +97,17 @@ const Quiz = () => {
         }
     }
 
+    const handleShareButtonClick = async () => {
+        // NOTA: El "async" es necesario debido a que "navigator" es una API nativa de JS
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            console.log("Quiz URL copied to clipboard successfully");
+        }
+        catch (error) {
+            console.error("Failed to copy quiz URL to clipboard: ", error);
+        }
+    };
+
     const handlePlayButtonClick = () => {
         setQuizIsPlaying(true);
         setCurrentQuestion(quiz.questions[0]);
@@ -286,11 +297,17 @@ const Quiz = () => {
 
     return (
         <div>
-            <MDBTypography tag="h4" color="primary" className="mt-5 ms-3">
-                {quiz.category_names.map((name, index) => (
-                    <span>{index === 0 ? name : ", " + name}</span>
-                ))}
-            </MDBTypography>
+            <div className="d-flex justify-content-between align-content-center">
+                <MDBTypography tag="h4" color="primary" className="mt-5 ms-3">
+                    {quiz.category_names.map((name, index) => (
+                        <span>{index === 0 ? name : ", " + name}</span>
+                    ))}
+                </MDBTypography>
+
+                <MDBBtn color='link' rippleColor='dark' onClick={handleShareButtonClick}>
+                    <MDBIcon fas icon="share-alt" />
+                </MDBBtn>
+            </div>
 
             <div className="d-flex justify-content-center align-content-center mt-5">
                 <MDBCard>

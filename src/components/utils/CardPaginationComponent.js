@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import {
+    MDBBtn,
     MDBCard, MDBCardBody, MDBCardHeader, MDBCardImage, MDBCardLink, MDBCardText, MDBCardTitle,
-    MDBCol, MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBRow, MDBTypography
+    MDBCol, MDBFooter, MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBRow, MDBTypography
 } from "mdb-react-ui-kit";
 
 const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
@@ -13,6 +14,17 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
         if(newPage >= 1 && newPage <= pageCount){
             navigate(`/${pageName}/${title}/${newPage}`); // Ir a la nueva página
             window.scrollTo(0, 0);
+        }
+    };
+
+    const handleShareButtonClick = async (cardId) => {
+        // NOTA: El "async" es necesario debido a que "navigator" es una API nativa de JS
+        try {
+            await navigator.clipboard.writeText(`http://localhost:3000/quiz/play/${cardId}`);
+            console.log("Quiz URL copied to clipboard successfully");
+        }
+        catch (error) {
+            console.error("Failed to copy quiz URL to clipboard: ", error);
         }
     };
 
@@ -48,6 +60,11 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
                                     </MDBCardLink>
                                     <MDBCardText>{card.text}</MDBCardText>
                                 </MDBCardBody>
+                                <MDBFooter>
+                                    <MDBBtn color='link' rippleColor='dark' onClick={() => handleShareButtonClick(card.id)}>
+                                        <MDBIcon fas icon="share-alt" />
+                                    </MDBBtn>
+                                </MDBFooter>
                             </MDBCard>
                         </MDBCol>
                     ))}
