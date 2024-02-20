@@ -50,12 +50,13 @@ const Quiz = () => {
                 // Eliminamos las respuestas correctas para que no sean accesibles,
                 // y de paso, quitamos datos innecesarios:
                 quizData.questions.forEach(question => {
-                    delete question.respuestacorrecta;
+                    // Delete data, when api is implemented
+                    //delete question.respuestacorrecta;
                     delete question.favorita;
                 });
 
-                console.log(quizData);
                 setQuiz(quizData);
+
             }
             catch (error) {
                 console.error(error);
@@ -77,7 +78,7 @@ const Quiz = () => {
 
     const handleCurrentQuestionType = (question) => {
         // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
-        if(question.respuestas.length === 2 && question.respuestas.includes("Verdadero") && question.respuestas.includes("Falso")){
+        if (question.respuestas.length === 2 && question.respuestas.includes("Verdadero") && question.respuestas.includes("Falso")) {
             setCurrentQuestionType("Verdadero/Falso");
         }
         else {
@@ -89,10 +90,12 @@ const Quiz = () => {
         setQuizIsPlaying(true);
         setCurrentQuestion(quiz.questions[0]);
         handleCurrentQuestionType(quiz.questions[0]);
+        console.log(quiz);
+
     }
 
     const handlePreviousButtonClick = () => {
-        if(currentQuestionIndex >= 1){
+        if (currentQuestionIndex >= 1) {
             setCurrentQuestion(quiz.questions[currentQuestionIndex - 1]);
             handleCurrentQuestionType(quiz.questions[currentQuestionIndex - 1]);
             setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -100,7 +103,7 @@ const Quiz = () => {
     }
 
     const handleNextButtonClick = () => {
-        if(currentQuestionIndex < quiz.questions.length - 1){
+        if (currentQuestionIndex < quiz.questions.length - 1) {
             setCurrentQuestion(quiz.questions[currentQuestionIndex + 1]);
             handleCurrentQuestionType(quiz.questions[currentQuestionIndex + 1]);
             setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -137,9 +140,9 @@ const Quiz = () => {
     };
 
     const showQuestionResult = (question) => {
-        if(quizIsFinished){
+        if (quizIsFinished) {
             const existingChosenAnswer = chosenAnswers.find(answer => answer.questionId === question.id);
-            if(existingChosenAnswer.isCorrect){
+            if (existingChosenAnswer.isCorrect) {
                 return <p className="text-success">Respuesta correcta</p>;
             }
             else {
@@ -164,36 +167,41 @@ const Quiz = () => {
             confirmButtonColor: "green",
             cancelButtonColor: "red"
         }).then(result => {
-            if(result.isConfirmed){
+            if (result.isConfirmed) {
                 // TODO - Manejar la lógica para cuando se termina el cuestionario
+                console.log(chosenAnswers);
+
                 const compareToCorrectAnswers = async (e) => {
                     try {
-                        const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
-                            method: 'GET',
-                            credentials: 'include'
-                        });
+                        // When api is available, fix this
 
-                        if (!response.ok) {
-                            throw new Error("Failed to fetch quiz data to compare to correct answers");
-                        }
+                        // const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
+                        //     method: 'GET',
+                        //     credentials: 'include'
+                        // });
 
-                        const quizData = await response.json();
+                        // if (!response.ok) {
+                        //     throw new Error("Failed to fetch quiz data to compare to correct answers");
+                        // }
+
+                        //const quizData = await response.json();
 
                         // Comparamos con los datos del back:
-                        quizData.questions.forEach((question, index) => {
-                            const existingChosenAnswerIndex = chosenAnswers.findIndex(answer => answer.questionId === question.id);
-                            if (existingChosenAnswerIndex
-                                && chosenAnswers[existingChosenAnswerIndex].value === question.respuestacorrecta) {
+                        console.log(quiz);
+                        quiz.questions.forEach((question, index) => {
+                            if (chosenAnswers[index].index == question.respuestacorrecta) {
 
                                 // Modificar el arreglo de respuestas escogidas para decir si una es correcta o no
-                                setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, index) => {
-                                    if (index === existingChosenAnswerIndex) {
+                                setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, indexCorrect) => {
+                                    if (index == indexCorrect) {
+                                        let temporalAmount = correctAnswerAmount + 1;
+                                        setCorrectAnswerAmount(temporalAmount);
+
                                         return { ...answer, isCorrect: true }
+
                                     }
                                     return answer;
                                 }));
-
-                                setCorrectAnswerAmount(correctAnswerAmount + 1);
                             }
                         });
                     }
@@ -216,7 +224,7 @@ const Quiz = () => {
     const showQuestion = (question) => {
         // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
         let content;
-        switch (currentQuestionType){
+        switch (currentQuestionType) {
             case "Opción múltiple":
                 content = <div>
                     <p>(Opción múltiple)</p>
@@ -225,7 +233,7 @@ const Quiz = () => {
                         <MDBRadio name='multipleChoiceRadio' id={index.toString()}
                             value={respuesta}
                             checked={chosenAnswers.some(answer => answer.index == index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
-                            onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished}/>
+                            onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished} />
                     ))}
                 </div>
                 break;
@@ -237,12 +245,12 @@ const Quiz = () => {
                     <MDBRadio name='trueFalseRadio' id={(0).toString()}
                         value={question.respuestas[0]}
                         checked={chosenAnswers.some(answer => answer.index == 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
-                        onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished}/>
+                        onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished} />
 
                     <MDBRadio name='trueFalseRadio' id={(1).toString()}
                         value={question.respuestas[1]}
                         checked={chosenAnswers.some(answer => answer.index == 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
-                        onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished}/>
+                        onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished} />
                 </div>
                 break;
         }
@@ -321,7 +329,7 @@ const Quiz = () => {
                                     </MDBBtn>
                                 </div>
                                 <MDBBtn color='success' className="mt-3" block
-                                    onClick={quizIsFinished ? () => {} : handleFinishButtonClick}
+                                    onClick={quizIsFinished ? () => { } : handleFinishButtonClick}
                                     disabled={quizIsFinished}>
                                     <MDBIcon fas icon="stop" /> Terminar
                                 </MDBBtn>
