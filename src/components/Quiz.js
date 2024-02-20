@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 
 
 const Quiz = () => {
-    const { quizId } = useParams();
+    const { id } = useParams();
     const [loading, setLoading] = useState(true); // Estado de carga (NOTA: Importante dejar, pues los datos pueden llegar tarde desde la API)
 
     const [quiz, setQuiz] = useState({});
@@ -31,7 +31,7 @@ const Quiz = () => {
     useEffect(() => {
         const fetchQuiz = async (e) => {
             try {
-                const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
+                const response = await fetch(`http://localhost:8000/api/play/`+id, {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -51,7 +51,7 @@ const Quiz = () => {
         };
 
         fetchQuiz();
-    }, [quizId]);
+    }, [id]);
 
 
     const handleTimestamp = (timestamp) => {
@@ -261,7 +261,7 @@ const Quiz = () => {
                         <MDBListGroup horizontal>
                             <MDBListGroupItem noBorders>
                                 {/* NOTA: Ver como relacionar un test concreto con un usuario */}
-                                Hecho por <MDBCardLink href="#">RandomUser</MDBCardLink>
+                                Hecho por <MDBCardLink href="#">{quiz.author}</MDBCardLink>
                             </MDBListGroupItem>
                             <MDBListGroupItem noBorders>
                                 Creado el {handleTimestamp(quiz.created_at)}
