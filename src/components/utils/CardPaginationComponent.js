@@ -4,6 +4,7 @@ import {
     MDBCard, MDBCardBody, MDBCardHeader, MDBCardImage, MDBCardLink, MDBCardText, MDBCardTitle,
     MDBCol, MDBFooter, MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBRow, MDBTypography
 } from "mdb-react-ui-kit";
+import Swal from "sweetalert2";
 
 const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
     const navigate = useNavigate();
@@ -22,6 +23,11 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
         try {
             await navigator.clipboard.writeText(`http://localhost:3000/quiz/play/${cardId}`);
             console.log("Quiz URL copied to clipboard successfully");
+            await Swal.fire({
+                icon: "success",
+                text: "Enlace del cuestionario copiado al portapapeles",
+                timer: 2000
+            });
         }
         catch (error) {
             console.error("Failed to copy quiz URL to clipboard: ", error);
@@ -61,7 +67,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards
                                     <MDBCardText>{card.text}</MDBCardText>
                                 </MDBCardBody>
                                 <MDBFooter>
-                                    <MDBBtn color='link' rippleColor='dark' onClick={() => handleShareButtonClick(card.id)}>
+                                    <MDBBtn color='link' rippleColor='dark' block onClick={() => handleShareButtonClick(card.id)}>
                                         <MDBIcon fas icon="share-alt" />
                                     </MDBBtn>
                                 </MDBFooter>

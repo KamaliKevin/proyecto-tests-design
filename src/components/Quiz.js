@@ -102,6 +102,11 @@ const Quiz = () => {
         try {
             await navigator.clipboard.writeText(window.location.href);
             console.log("Quiz URL copied to clipboard successfully");
+            await Swal.fire({
+                icon: "success",
+                text: "Enlace del cuestionario copiado al portapapeles",
+                timer: 2000
+            });
         }
         catch (error) {
             console.error("Failed to copy quiz URL to clipboard: ", error);
