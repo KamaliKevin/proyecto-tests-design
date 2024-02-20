@@ -36,7 +36,7 @@ const Quiz = () => {
     useEffect(() => {
         const fetchQuiz = async (e) => {
             try {
-                const response = await fetch(`http://localhost:8000/api/play/`+id, {
+                const response = await fetch(`http://localhost:8000/api/play/` + id, {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -182,12 +182,12 @@ const Quiz = () => {
                         // Comparamos con los datos del back:
                         quizData.questions.forEach((question, index) => {
                             const existingChosenAnswerIndex = chosenAnswers.findIndex(answer => answer.questionId === question.id);
-                            if(existingChosenAnswerIndex
-                                && chosenAnswers[existingChosenAnswerIndex].value === question.respuestacorrecta){
+                            if (existingChosenAnswerIndex
+                                && chosenAnswers[existingChosenAnswerIndex].value === question.respuestacorrecta) {
 
                                 // Modificar el arreglo de respuestas escogidas para decir si una es correcta o no
                                 setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, index) => {
-                                    if(index === existingChosenAnswerIndex){
+                                    if (index === existingChosenAnswerIndex) {
                                         return { ...answer, isCorrect: true }
                                     }
                                     return answer;
@@ -204,6 +204,7 @@ const Quiz = () => {
                         setQuizIsFinished(true);
                         handleCurrentQuestionType(quiz.questions[0]);
                         setCurrentQuestion(quiz.questions[0]);
+                        setCurrentQuestionIndex(0);
                     }
                 };
 
@@ -223,9 +224,9 @@ const Quiz = () => {
                     <p>{question.enunciado}</p>
                     {question.respuestas.map((respuesta, index) => (
                         <MDBRadio name='multipleChoiceRadio' id={index.toString()}
-                                  value={respuesta}
-                                  checked={chosenAnswers.some(answer => answer.index === index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
-                                  onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished}/>
+                            value={respuesta}
+                            checked={chosenAnswers.some(answer => answer.index === index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
+                            onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished}/>
                     ))}
                 </div>
                 break;
@@ -235,14 +236,14 @@ const Quiz = () => {
                     <p>(Verdadero/Falso)</p>
                     <p>{question.enunciado}</p>
                     <MDBRadio name='trueFalseRadio' id={(0).toString()}
-                              value={question.respuestas[0]}
-                              checked={chosenAnswers.some(answer => answer.index === 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
-                              onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished}/>
+                        value={question.respuestas[0]}
+                        checked={chosenAnswers.some(answer => answer.index === 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
+                        onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished}/>
 
                     <MDBRadio name='trueFalseRadio' id={(1).toString()}
-                              value={question.respuestas[1]}
-                              checked={chosenAnswers.some(answer => answer.index === 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
-                              onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished}/>
+                        value={question.respuestas[1]}
+                        checked={chosenAnswers.some(answer => answer.index === 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
+                        onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished}/>
                 </div>
                 break;
         }
@@ -287,7 +288,7 @@ const Quiz = () => {
                         <MDBCard className="mb-4">
                             <MDBCardBody>
                                 <MDBCardText>
-                                    {quiz.description || "[Sin descripción]"}
+                                    {quiz.description || "Sin descripción"}
                                 </MDBCardText>
                             </MDBCardBody>
                         </MDBCard>
@@ -321,8 +322,8 @@ const Quiz = () => {
                                     </MDBBtn>
                                 </div>
                                 <MDBBtn color='success' className="mt-3" block
-                                        onClick={quizIsFinished ? () => {} : handleFinishButtonClick}
-                                        disabled={quizIsFinished}>
+                                    onClick={quizIsFinished ? () => {} : handleFinishButtonClick}
+                                    disabled={quizIsFinished}>
                                     <MDBIcon fas icon="stop" /> Terminar
                                 </MDBBtn>
                             </div>
