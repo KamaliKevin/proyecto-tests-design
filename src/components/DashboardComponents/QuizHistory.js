@@ -11,6 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const QuizHistory = () => {
     const navigate = useNavigate();
@@ -67,6 +68,54 @@ const QuizHistory = () => {
         navigate(`/quiz/edit/${id}`);
     }
 
+    const onDelete = async (id) => {
+        Swal.fire({
+            icon: "warning",
+            text: "AVISO: Está apunto de BORRAR un cuestionario. Esto significa que no podrá volver a verlo o editarlo. ¿Está seguro de eliminarlo de nuestra base de datos?",
+            showCancelButton: true,
+            confirmButtonText: "Sí, estoy seguro",
+            confirmButtonColor: "green",
+            cancelButtonText: "Cancelar",
+            cancelButtonColor: "red"
+        }).then(result => {
+            if (result.isConfirmed) {
+                const csrfToken = document.cookie
+                    .split('; ')
+                    .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+                    ?.split('=')[1];
+
+                const deleteQuiz = async (e) => {
+                    try {
+                        const response = await fetch(`http://localhost:8000/api/user/test/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
+                            },
+                            credentials: 'include' // Include cookies for the domain
+                        });
+
+                        if (!response.ok) {
+                            throw new Error("Failed to delete quiz");
+                        }
+
+                        await Swal.fire({
+                            icon: "success",
+                            text: "Cuestionario borrado con éxito",
+                            timer: 2000
+                        });
+
+                        console.log("Quiz deleted successfully");
+                    }
+                    catch (error) {
+                        console.error(error);
+                    }
+                };
+
+                deleteQuiz();
+            }
+        });
+    }
+
 
 
     // madeQuizzes = [
@@ -80,12 +129,12 @@ const QuizHistory = () => {
             <MDBCard>
                 <MDBCardHeader>
                     <MDBTypography tag='h3' className="my-3">
-                        <MDBIcon fas icon="list-alt" /> Quiz History
+                        <MDBIcon fas icon="list-alt" /> Historial de cuestionarios
                     </MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
                     <MDBTypography tag='h5' className="py-3 border-bottom">
-                        Played quizzes
+                        Cuestionarios jugados
                     </MDBTypography>
 
                     <MDBListGroup light className='mb-3'>
@@ -105,12 +154,12 @@ const QuizHistory = () => {
                                         />
                                         <div className='ms-3'>
                                             <p className='fw-bold mb-1'>{quiz.name}</p>
-                                            <p className='text-muted mb-0'>Created by <a href="#">{quiz.creator}</a></p>
+                                            <p className='text-muted mb-0'>Creado por <a href="#">{quiz.creator}</a></p>
                                         </div>
                                     </div>
                                     <div className="ms-5">
                                         <MDBBtn size='sm' rounded color='link' >
-                                            View
+                                            Ver
                                         </MDBBtn>
                                     </div>
                                 </div>
@@ -119,7 +168,7 @@ const QuizHistory = () => {
                     </MDBListGroup>
 
                     <MDBTypography tag='h5' className="py-3 border-bottom">
-                        Quizzes made by you
+                        Cuestionarios hechos por ti
                     </MDBTypography>
 
                     <MDBListGroup light className='mb-4'>
@@ -142,9 +191,12 @@ const QuizHistory = () => {
                                             <p className='fw-bold mb-1'>{quiz.name}</p>
                                         </div>
                                     </div>
-                                    <div className="ms-5">
+                                    <div className="d-flex align-content-center ms-5">
+                                        <MDBBtn className='me-2' color='danger' onClick={() => onDelete(quiz.id)}>
+                                            Eliminar
+                                        </MDBBtn>
                                         <MDBBtn size='sm' rounded color='link' onClick={() => onView(quiz.id)}>
-                                            View
+                                            Ver
                                         </MDBBtn>
                                     </div>
                                 </div>

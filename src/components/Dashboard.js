@@ -24,29 +24,29 @@ const Dashboard = ({ userIsAdmin }) => {
                 </MDBTabsItem>
                 <MDBTabsItem>
                     <MDBTabsLink onClick={() => handleTabClick('settings')} active={activeTab === 'settings'}>
-                        <MDBIcon fas icon="cog" /> Settings
+                        <MDBIcon fas icon="cog" /> Ajustes
                     </MDBTabsLink>
                 </MDBTabsItem>
                 <MDBTabsItem>
                     <MDBTabsLink onClick={() => handleTabClick('quizHistory')} active={activeTab === 'quizHistory'}>
-                        <MDBIcon fas icon="list-alt" /> Quiz History
+                        <MDBIcon fas icon="list-alt" /> Historial de cuestionarios
                     </MDBTabsLink>
                 </MDBTabsItem>
                 {userIsAdmin && (
                     <>
                         <MDBTabsItem>
                             <MDBTabsLink onClick={() => handleTabClick('user-management')} active={activeTab === 'user-management'}>
-                                <MDBIcon fas icon="users-cog" /> User Management
+                                <MDBIcon fas icon="users-cog" /> Manejo de usuarios
                             </MDBTabsLink>
                         </MDBTabsItem>
                         <MDBTabsItem>
                             <MDBTabsLink onClick={() => handleTabClick('quiz-management')} active={activeTab === 'quiz-management'}>
-                                <MDBIcon fas icon="list-ul" /> Quiz Management
+                                <MDBIcon fas icon="list-ul" /> Manejo de cuestionarios
                             </MDBTabsLink>
                         </MDBTabsItem>
                         <MDBTabsItem>
                             <MDBTabsLink onClick={() => handleTabClick('contact-management')} active={activeTab === 'contact-management'}>
-                                <MDBIcon fas icon="phone-square" /> Contact Management
+                                <MDBIcon fas icon="phone-square" /> Manejo de contactos
                             </MDBTabsLink>
                         </MDBTabsItem>
                     </>
