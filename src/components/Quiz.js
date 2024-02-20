@@ -78,11 +78,22 @@ const Quiz = () => {
 
     const handleCurrentQuestionType = (question) => {
         // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
-        if (question.respuestas.length === 2 && question.respuestas.includes("Verdadero") && question.respuestas.includes("Falso")) {
-            setCurrentQuestionType("Verdadero/Falso");
-        }
-        else {
-            setCurrentQuestionType("Opción múltiple");
+        switch(question.tipo){
+            case "multipleAnswer":
+                setCurrentQuestionType("Respuesta múltiple");
+                break;
+
+            case "multipleChoice":
+                setCurrentQuestionType("Opción múltiple");
+                break;
+
+            case "falsoVerdadero":
+                setCurrentQuestionType("Verdadero/Falso");
+                break;
+
+            default:
+                setCurrentQuestionType("Tipo desconocido");
+                break;
         }
     }
 
