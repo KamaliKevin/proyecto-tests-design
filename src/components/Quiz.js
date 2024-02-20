@@ -216,7 +216,6 @@ const Quiz = () => {
     const showQuestion = (question) => {
         // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
         let content;
-
         switch (currentQuestionType){
             case "Opción múltiple":
                 content = <div>
@@ -225,7 +224,7 @@ const Quiz = () => {
                     {question.respuestas.map((respuesta, index) => (
                         <MDBRadio name='multipleChoiceRadio' id={index.toString()}
                             value={respuesta}
-                            checked={chosenAnswers.some(answer => answer.index === index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
+                            checked={chosenAnswers.some(answer => answer.index == index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
                             onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished}/>
                     ))}
                 </div>
@@ -237,12 +236,12 @@ const Quiz = () => {
                     <p>{question.enunciado}</p>
                     <MDBRadio name='trueFalseRadio' id={(0).toString()}
                         value={question.respuestas[0]}
-                        checked={chosenAnswers.some(answer => answer.index === 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
+                        checked={chosenAnswers.some(answer => answer.index == 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
                         onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished}/>
 
                     <MDBRadio name='trueFalseRadio' id={(1).toString()}
                         value={question.respuestas[1]}
-                        checked={chosenAnswers.some(answer => answer.index === 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
+                        checked={chosenAnswers.some(answer => answer.index == 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
                         onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished}/>
                 </div>
                 break;
