@@ -24,9 +24,14 @@ const Quiz = () => {
     const [currentQuestionType, setCurrentQuestionType] = useState("");
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState({});
+    const [currentQuestionResult, setCurrentQuestionResult] = useState("");
 
     const [chosenAnswers, setChosenAnswers] = useState([]);
 
+    const [correctAnswers, setCorrectAnswers] = useState([]);
+    const [correctAnswerAmount, setCorrectAnswerAmount] = useState(0);
+
+    const [quizIsFinished, setQuizIsFinished] = useState(false);
 
     useEffect(() => {
         const fetchQuiz = async (e) => {
@@ -35,10 +40,20 @@ const Quiz = () => {
                     method: 'GET',
                     credentials: 'include'
                 });
+
                 if (!response.ok) {
                     throw new Error("Failed to fetch quiz data");
                 }
+
                 const quizData = await response.json();
+
+                // Eliminamos las respuestas correctas para que no sean accesibles,
+                // y de paso, quitamos datos innecesarios:
+                quizData.questions.forEach(question => {
+                    delete question.respuestacorrecta;
+                    delete question.favorita;
+                });
+
                 console.log(quizData);
                 setQuiz(quizData);
             }
@@ -96,7 +111,12 @@ const Quiz = () => {
         const newChosenAnswer = {
             index: event.target.id, // Índice de opción
             value: event.target.value, // Texto de la opción
-            questionId: currentQuestion.id // ID de la pregunta que corresponde a la opción
+            questionId: currentQuestion.id, // ID de la pregunta que corresponde a la opción
+            isCorrect: false // Sirve para poder saber si la respuesta escogida en correcta o no (a manipular después)
+
+            // NOTA: "isCorrect" no muestra explicitamente que la respuesta es correcta, ya que todos los valores
+            // al principio serán "false" de manera predeterminada, y luego SÍ se comprueba si la respuesta en incorrecta o no
+            // con el botón de "Terminar" ("handleFinishButtonClick")
         };
 
         // Comprobamos si la respuesta marcada ya existe en el arreglo de respuestas escogidas:
@@ -116,42 +136,21 @@ const Quiz = () => {
 
     };
 
-    const showQuestion = (question) => {
-        // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
-        let content;
-
-        switch (currentQuestionType){
-            case "Opción múltiple":
-                content = <div>
-                    <p>(Opción múltiple)</p>
-                    <p>{question.enunciado}</p>
-                    {question.respuestas.map((respuesta, index) => (
-                        <MDBRadio name='multipleChoiceRadio' id={index.toString()}
-                                  value={respuesta}
-                                  checked={chosenAnswers.some(answer => answer.index === index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
-                                  onChange={handleCheckedAnswer} label={respuesta} />
-                    ))}
-                </div>
-                break;
-
-            case "Verdadero/Falso":
-                content = <div>
-                    <p>(Verdadero/Falso)</p>
-                    <p>{question.enunciado}</p>
-                    <MDBRadio name='trueFalseRadio' id={(0).toString()}
-                              value={question.respuestas[0]}
-                              checked={chosenAnswers.some(answer => answer.index === 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
-                              onChange={handleCheckedAnswer} label={question.respuestas[0]} />
-
-                    <MDBRadio name='trueFalseRadio' id={(1).toString()}
-                              value={question.respuestas[1]}
-                              checked={chosenAnswers.some(answer => answer.index === 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
-                              onChange={handleCheckedAnswer} label={question.respuestas[1]} />
-                </div>
-                break;
+    const showQuestionResult = (question) => {
+        if(quizIsFinished){
+            const existingChosenAnswer = chosenAnswers.find(answer => answer.questionId === question.id);
+            if(existingChosenAnswer.isCorrect){
+                return <p className="text-success">Respuesta correcta</p>;
+            }
+            else {
+                return <p className="text-danger">Respuesta incorrecta</p>;
+            }
         }
+    }
 
-        return content;
+    const showGrade = () => {
+        const grade = (correctAnswerAmount * 10) / quiz.questions.length;
+        return <p className="fw-bold">{`Su nota es ${grade} de 10`}</p>
     }
 
     const handleFinishButtonClick = () => {
@@ -167,8 +166,88 @@ const Quiz = () => {
         }).then(result => {
             if(result.isConfirmed){
                 // TODO - Manejar la lógica para cuando se termina el cuestionario
+                const compareToCorrectAnswers = async (e) => {
+                    try {
+                        const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        });
+
+                        if (!response.ok) {
+                            throw new Error("Failed to fetch quiz data to compare to correct answers");
+                        }
+
+                        const quizData = await response.json();
+
+                        // Comparamos con los datos del back:
+                        quizData.questions.forEach((question, index) => {
+                            const existingChosenAnswerIndex = chosenAnswers.findIndex(answer => answer.questionId === question.id);
+                            if(existingChosenAnswerIndex
+                                && chosenAnswers[existingChosenAnswerIndex].value === question.respuestacorrecta){
+
+                                // Modificar el arreglo de respuestas escogidas para decir si una es correcta o no
+                                setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, index) => {
+                                    if(index === existingChosenAnswerIndex){
+                                        return { ...answer, isCorrect: true }
+                                    }
+                                    return answer;
+                                }));
+
+                                setCorrectAnswerAmount(correctAnswerAmount + 1);
+                            }
+                        });
+                    }
+                    catch (error) {
+                        console.error(error);
+                    }
+                    finally {
+                        setQuizIsFinished(true);
+                        handleCurrentQuestionType(quiz.questions[0]);
+                        setCurrentQuestion(quiz.questions[0]);
+                    }
+                };
+
+                compareToCorrectAnswers();
             }
         })
+    }
+
+    const showQuestion = (question) => {
+        // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
+        let content;
+
+        switch (currentQuestionType){
+            case "Opción múltiple":
+                content = <div>
+                    <p>(Opción múltiple)</p>
+                    <p>{question.enunciado}</p>
+                    {question.respuestas.map((respuesta, index) => (
+                        <MDBRadio name='multipleChoiceRadio' id={index.toString()}
+                                  value={respuesta}
+                                  checked={chosenAnswers.some(answer => answer.index === index && answer.value === respuesta && answer.questionId === currentQuestion.id)}
+                                  onChange={handleCheckedAnswer} label={respuesta} disabled={quizIsFinished}/>
+                    ))}
+                </div>
+                break;
+
+            case "Verdadero/Falso":
+                content = <div>
+                    <p>(Verdadero/Falso)</p>
+                    <p>{question.enunciado}</p>
+                    <MDBRadio name='trueFalseRadio' id={(0).toString()}
+                              value={question.respuestas[0]}
+                              checked={chosenAnswers.some(answer => answer.index === 0 && answer.value === question.respuestas[0] && answer.questionId === currentQuestion.id)}
+                              onChange={handleCheckedAnswer} label={question.respuestas[0]} disabled={quizIsFinished}/>
+
+                    <MDBRadio name='trueFalseRadio' id={(1).toString()}
+                              value={question.respuestas[1]}
+                              checked={chosenAnswers.some(answer => answer.index === 1 && answer.value === question.respuestas[1] && answer.questionId === currentQuestion.id)}
+                              onChange={handleCheckedAnswer} label={question.respuestas[1]} disabled={quizIsFinished}/>
+                </div>
+                break;
+        }
+
+        return content;
     }
 
 
@@ -215,6 +294,7 @@ const Quiz = () => {
 
                         <MDBCardTitle>{quiz.name}</MDBCardTitle>
                         <MDBCardText>
+                            {quizIsFinished && showGrade()}
                             {quizIsPlaying && showQuestion(currentQuestion)}
                             {/*
                                 <div>
@@ -227,6 +307,7 @@ const Quiz = () => {
                                     <RelationalQuestionDots/>
                                 </div>
                             */}
+                            {quizIsFinished && showQuestionResult(currentQuestion)}
                         </MDBCardText>
 
                         {quizIsPlaying ? (
@@ -239,7 +320,9 @@ const Quiz = () => {
                                         Siguiente <MDBIcon fas icon="angle-double-right" />
                                     </MDBBtn>
                                 </div>
-                                <MDBBtn color='success' className="mt-3" block onClick={handleFinishButtonClick}>
+                                <MDBBtn color='success' className="mt-3" block
+                                        onClick={quizIsFinished ? () => {} : handleFinishButtonClick}
+                                        disabled={quizIsFinished}>
                                     <MDBIcon fas icon="stop" /> Terminar
                                 </MDBBtn>
                             </div>
