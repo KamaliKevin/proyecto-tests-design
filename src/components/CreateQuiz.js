@@ -207,7 +207,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                 .then(data => {
                     Swal.fire({
                         icon: "success",
-                        title: "El cuestionario se sido subido a la plataforma con éxito",
+                        title: "El cuestionario ha sido subido a la plataforma con éxito",
                         showConfirmButton: true,
                     })
                 })

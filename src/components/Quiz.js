@@ -30,6 +30,7 @@ const Quiz = () => {
 
     const [correctAnswers, setCorrectAnswers] = useState([]);
     const [correctAnswerAmount, setCorrectAnswerAmount] = useState(0);
+    const [failedAnswers, setFailedAnswers] = useState([]);
 
     const [quizIsFinished, setQuizIsFinished] = useState(false);
 
@@ -166,6 +167,47 @@ const Quiz = () => {
 
     };
 
+    const handleFailedAnswers = async (e) => {
+        // Creamos un cuestionario correspondiente con las preguntas fallidas
+        const csrfToken = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+            ?.split('=')[1];
+
+        const failedQuestions = quiz.questions.filter(question => {
+            const relatedAnswer = failedAnswers.find(failedAnswer => failedAnswer.questionId === question.id); // Encuentra la respuesta relacionada a la pregunta fallida
+            return question.id === relatedAnswer.questionId;
+        });
+
+        const quizWithFailedQuestions = {
+            ...quiz,
+            name: `Failed quiz: ${quiz.name}`,
+            questions: failedQuestions
+        };
+
+        try {
+            const response = await fetch("https://localhost:8000/api/upload-test", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers
+                },
+                credentials: 'include', // Include cookies for the domain
+                body: JSON.stringify(quizWithFailedQuestions),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to store the failed answers and create a corresponding quiz');
+            }
+
+            const responseData = await response.json();
+            console.log('Failed answers were stored and used to create a quiz:', responseData);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
     const showQuestionResult = (question) => {
         if (quizIsFinished) {
             const existingChosenAnswer = chosenAnswers.find(answer => answer.questionId === question.id);
@@ -223,10 +265,13 @@ const Quiz = () => {
                                     if (index == indexCorrect) {
                                         let temporalAmount = correctAnswerAmount + 1;
                                         setCorrectAnswerAmount(temporalAmount);
+                                        setCorrectAnswers(answer);
 
                                         return { ...answer, isCorrect: true }
 
                                     }
+
+                                    setFailedAnswers(answer);
                                     return answer;
                                 }));
                             }
@@ -237,6 +282,7 @@ const Quiz = () => {
                     }
                     finally {
                         setQuizIsFinished(true);
+                        await handleFailedAnswers();
                         handleCurrentQuestionType(quiz.questions[0]);
                         setCurrentQuestion(quiz.questions[0]);
                         setCurrentQuestionIndex(0);
