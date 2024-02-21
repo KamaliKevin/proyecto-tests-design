@@ -6,6 +6,7 @@ import QuizHistory from './DashboardComponents/QuizHistory';
 import UserManagement from "./DashboardComponents/UserManagement";
 import QuizManagement from "./DashboardComponents/QuizManagement";
 import ContactManagement from "./DashboardComponents/ContactManagement";
+import QuestionBank from "./DashboardComponents/QuestionBank";
 
 const Dashboard = ({ userIsAdmin }) => {
     const [activeTab, setActiveTab] = useState('profile');
@@ -30,6 +31,11 @@ const Dashboard = ({ userIsAdmin }) => {
                 <MDBTabsItem>
                     <MDBTabsLink onClick={() => handleTabClick('quizHistory')} active={activeTab === 'quizHistory'}>
                         <MDBIcon fas icon="list-alt" /> Historial de cuestionarios
+                    </MDBTabsLink>
+                </MDBTabsItem>
+                <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleTabClick('questionBank')} active={activeTab === 'questionBank'}>
+                        <MDBIcon fas icon="th-list" /> Banco de preguntas
                     </MDBTabsLink>
                 </MDBTabsItem>
                 {userIsAdmin && (
@@ -62,6 +68,9 @@ const Dashboard = ({ userIsAdmin }) => {
                 </MDBTabsPane>
                 <MDBTabsPane open={activeTab === 'quizHistory'}>
                     <QuizHistory />
+                </MDBTabsPane>
+                <MDBTabsPane open={activeTab === 'questionBank'}>
+                    <QuestionBank/>
                 </MDBTabsPane>
                 {userIsAdmin && (
                     <>
