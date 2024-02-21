@@ -62,7 +62,7 @@ const QuizHistory = () => {
 
 
 
-    const onView = async (id) =>{
+    const onView = async (id) => {
         // console.log("aa"+id);
         // navigate("/create-quiz?id="+id)
         navigate(`/quiz/edit/${id}`);
@@ -104,7 +104,7 @@ const QuizHistory = () => {
                             text: "Cuestionario borrado con éxito",
                             timer: 2000
                         }).then(result => {
-                            navigate("/dashboard"); // Redirigir a la misma página para que se refresque la vista
+                            window.location.reload();
                         });
                     }
                     catch (error) {
@@ -194,7 +194,7 @@ const QuizHistory = () => {
                                     </div>
                                     <div className="d-flex align-content-center ms-5">
                                         <MDBBtn className='me-2' color='danger' onClick={() => onDelete(quiz.id)}>
-                                            Eliminar
+                                            <MDBIcon fas icon="trash" />
                                         </MDBBtn>
                                         <MDBBtn size='sm' rounded color='link' onClick={() => onView(quiz.id)}>
                                             Ver
