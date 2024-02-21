@@ -98,13 +98,14 @@ const QuizHistory = () => {
                             throw new Error("Failed to delete quiz");
                         }
 
+                        console.log("Quiz deleted successfully");
                         await Swal.fire({
                             icon: "success",
                             text: "Cuestionario borrado con éxito",
                             timer: 2000
+                        }).then(result => {
+                            navigate("/dashboard"); // Redirigir a la misma página para que se refresque la vista
                         });
-
-                        console.log("Quiz deleted successfully");
                     }
                     catch (error) {
                         console.error(error);
