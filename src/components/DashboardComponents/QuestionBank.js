@@ -56,10 +56,10 @@ const QuestionBank = () => {
                                     <MDBListGroup light small>
                                         {question.respuestas.map(respuesta => (
                                             <MDBListGroupItem>
-                                                {question.respuestas.includes(question.respuestacorrecta) ? (
-                                                    <MDBIcon fas icon="times-circle" color="danger"/>
-                                                ) : (
+                                                {respuesta === question.respuestas[question.respuestacorrecta] ? (
                                                     <MDBIcon fas icon="check" color="success"/>
+                                                ) : (
+                                                    <MDBIcon fas icon="times-circle" color="danger"/>
                                                 )}
                                                 {respuesta}
                                             </MDBListGroupItem>
