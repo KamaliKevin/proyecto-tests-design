@@ -1,12 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
 import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
     MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
 import { CategoryContext } from "./CategoryContext";
 
 const Navbar = ({userIsLoggedIn}) => {
-    const [openBasic, setOpenBasic] = useState(false);
     const { categories, setCategories } = useContext(CategoryContext);
+    const navigate = useNavigate();
+    const [openBasic, setOpenBasic] = useState(false);
+
+    const onLogout = () => {
+        // Borrar almacenamiento local
+        localStorage.removeItem("USER");
+        localStorage.removeItem("XSRF-TOKEN");
+
+        // Borrar la cookie del inicio de sesión
+        // (poner una fecha pasada de caducidad debería hacer que el navegador borre dicha cookie)
+        document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+        // Redirigir a la página de inicio
+        navigate("/home");
+    }
 
     return (
         <MDBNavbar expand="lg" dark bgColor="dark">
@@ -61,8 +75,13 @@ const Navbar = ({userIsLoggedIn}) => {
                     <div className="d-grid gap-2 d-lg-flex">
                         {userIsLoggedIn ? (
                             <>
-                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/dashboard">Dashboard</MDBBtn>
-                                <MDBBtn color="warning" href="/create-quiz">Create Quiz</MDBBtn>
+                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/dashboard">
+                                    Dashboard
+                                </MDBBtn>
+                                <MDBBtn color="warning" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/create-quiz">
+                                    Create Quiz
+                                </MDBBtn>
+                                <MDBBtn color="info" onClick={onLogout}>Logout</MDBBtn>
                             </>
                         ) : (
                             <>
