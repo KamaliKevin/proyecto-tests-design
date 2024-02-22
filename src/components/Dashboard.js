@@ -2,11 +2,12 @@ import { useState } from 'react';
 import {MDBTabsContent, MDBTabsPane, MDBTabs, MDBTabsItem, MDBTabsLink, MDBIcon} from 'mdb-react-ui-kit';
 import Profile from './DashboardComponents/Profile';
 import Settings from './DashboardComponents/Settings';
-import QuizHistory from './DashboardComponents/QuizHistory';
+import MadeQuizzes from './DashboardComponents/MadeQuizzes';
 import UserManagement from "./DashboardComponents/UserManagement";
 import QuizManagement from "./DashboardComponents/QuizManagement";
 import ContactManagement from "./DashboardComponents/ContactManagement";
 import QuestionBank from "./DashboardComponents/QuestionBank";
+import PlayedQuizzes from "./DashboardComponents/PlayedQuizzes";
 
 const Dashboard = ({ userIsAdmin }) => {
     const [activeTab, setActiveTab] = useState('profile');
@@ -29,8 +30,13 @@ const Dashboard = ({ userIsAdmin }) => {
                     </MDBTabsLink>
                 </MDBTabsItem>
                 <MDBTabsItem>
-                    <MDBTabsLink onClick={() => handleTabClick('quizHistory')} active={activeTab === 'quizHistory'}>
-                        <MDBIcon fas icon="list-alt" /> Historial de cuestionarios
+                    <MDBTabsLink onClick={() => handleTabClick('playedQuizzes')} active={activeTab === 'playedQuizzes'}>
+                        <MDBIcon fas icon="play" /> Cuestionarios jugados
+                    </MDBTabsLink>
+                </MDBTabsItem>
+                <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleTabClick('madeQuizzes')} active={activeTab === 'madeQuizzes'}>
+                        <MDBIcon fas icon="list-alt" /> Cuestionarios hechos
                     </MDBTabsLink>
                 </MDBTabsItem>
                 <MDBTabsItem>
@@ -66,8 +72,11 @@ const Dashboard = ({ userIsAdmin }) => {
                 <MDBTabsPane open={activeTab === 'settings'}>
                     <Settings />
                 </MDBTabsPane>
-                <MDBTabsPane open={activeTab === 'quizHistory'}>
-                    <QuizHistory />
+                <MDBTabsPane open={activeTab === 'playedQuizzes'}>
+                    <PlayedQuizzes />
+                </MDBTabsPane>
+                <MDBTabsPane open={activeTab === 'madeQuizzes'}>
+                    <MadeQuizzes />
                 </MDBTabsPane>
                 <MDBTabsPane open={activeTab === 'questionBank'}>
                     <QuestionBank/>
