@@ -19,6 +19,7 @@ const Navbar = ({userIsLoggedIn}) => {
         document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
         // Redirigir a la página de inicio
+        window.location.reload();
         navigate("/home");
     }
 
