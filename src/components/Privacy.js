@@ -15,7 +15,7 @@ const Privacy = () => {
             <MDBCard alignment='center'>
                 <MDBCardHeader>
                     <MDBTypography tag='h3' className="my-3">
-                        <MDBIcon fas icon="user-secret" /> Privacy Policy
+                        <MDBIcon fas icon="user-secret" /> Política de privacidad
                     </MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
@@ -23,34 +23,38 @@ const Privacy = () => {
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem noBorders>
                                 <p>
-                                    We are committed to protecting your privacy. We will only use the information that we collect about you lawfully
-                                    (in accordance with the General Data Protection Regulation (GDPR).
+                                    Estamos comprometidos a proteger su privacidad.
+                                    Solo utilizaremos la información que recopilamos sobre usted de manera legal
+                                    (de acuerdo con el Reglamento General de Protección de Datos (GDPR).
                                 </p>
                             </MDBListGroupItem>
 
                             <MDBListGroupItem className="mt-5" noBorders>
                                 <MDBTypography tag='h4' className="py-3 border-bottom">
-                                    Collection of Personal Information
+                                    Recopilación de Información Personal
                                 </MDBTypography>
                                 <p>
-                                    We collect information about you for 2 reasons: firstly, to process your order and secondly, to provide you with
-                                    the best possible service. We will not e-mail you in the future unless you have given us your consent. We will
-                                    give you the chance to refuse any marketing email from us or from another trader in the future.
+                                    Recopilamos información sobre usted por 2 razones: primero, para procesar su pedido y segundo, para brindarle
+                                    el mejor servicio posible. No le enviaremos correos electrónicos en el futuro
+                                    a menos que nos haya dado su consentimiento.
+                                    Le daremos la oportunidad de rechazar cualquier correo electrónico de marketing de nosotros
+                                    o de otro comerciante en el futuro.
                                 </p>
                             </MDBListGroupItem>
 
                             <MDBListGroupItem className="mt-5" noBorders>
                                 <MDBTypography tag="h4" className="py-3 border-bottom">
-                                    Use of Personal Information
+                                    Uso de la Información Personal
                                 </MDBTypography>
                                 <p>
-                                    We will not sell, distribute or lease your personal information to third parties unless we have your permission or
-                                    are required by law to do so. We may use your personal information to send you promotional information about third
-                                    parties that we think you may find interesting if you tell us that you wish this to happen.
+                                    No venderemos, distribuiremos o alquilaremos su información personal a terceros
+                                    a menos que tengamos su permiso o
+                                    estemos obligados por ley a hacerlo.
+                                    Podemos usar su información personal para enviarle información promocional sobre terceros
+                                    que creemos que pueden ser de su interés si nos dice que desea que esto suceda.
                                 </p>
                             </MDBListGroupItem>
                         </MDBListGroup>
-
                     </MDBCardText>
                 </MDBCardBody>
             </MDBCard>

@@ -11,7 +11,7 @@ const EditQuiz = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/user/test/${quizId}`, {
+                const response = await fetch(`${process.env.BACKEND_URL}/api/user/test/${quizId}`, {
                     method: 'GET',
                     credentials: 'include'
                 });

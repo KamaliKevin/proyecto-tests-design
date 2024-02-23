@@ -16,7 +16,7 @@ const Register = ({ onLogin }) => {
     const register = async (e) => {
         e.preventDefault();
 
-        const cookie = await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+        const cookie = await fetch(`${process.env.BACKEND_URL}/sanctum/csrf-cookie`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -35,7 +35,7 @@ const Register = ({ onLogin }) => {
         formData.append('password_confirmation', document.querySelector("#password_confirmation").value);
 
 
-        await fetch("http://localhost:8000/register", {
+        await fetch(`${process.env.BACKEND_URL}/register`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -51,7 +51,7 @@ const Register = ({ onLogin }) => {
                 return res.json();
             }
             else {
-                await fetch('http://localhost:8000/api/user', {
+                await fetch(`${process.env.BACKEND_URL}/api/user`, {
                     method: 'GET',
                     credentials: 'include', // Important: Include credentials for authentication
                 }).then(response => response.json())

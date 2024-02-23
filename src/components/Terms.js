@@ -15,7 +15,7 @@ const Terms = () => {
             <MDBCard alignment='center'>
                 <MDBCardHeader>
                     <MDBTypography tag='h3' className="my-3">
-                        <MDBIcon fas icon="scroll" /> Terms & Conditions
+                        <MDBIcon fas icon="scroll" /> Términos y condiciones
                     </MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
@@ -23,77 +23,82 @@ const Terms = () => {
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem noBorders>
                                 <p>
-                                    Welcome to our trivia website. If you continue to browse and use this website, you are agreeing to comply
-                                    with and be bound by the following terms and conditions of use, which together with our privacy policy govern
-                                    our relationship with you in relation to this website. If you disagree with any part of these terms and conditions,
-                                    please do not use our website.
+                                    Bienvenido a nuestro sitio web de trivia. Si continúa navegando y utilizando este sitio web,
+                                    acepta cumplir con los siguientes términos y condiciones de uso,
+                                    que junto con nuestra política de privacidad rigen nuestra relación con usted en relación
+                                    con este sitio web. Si no está de acuerdo con alguna parte de estos términos y condiciones,
+                                    por favor no utilice nuestro sitio web.
                                 </p>
                             </MDBListGroupItem>
 
                             <MDBListGroupItem className="mt-5" noBorders>
                                 <MDBTypography tag='h4' className="py-3 border-bottom">
-                                    The use of this website is subject to the following terms of use:
+                                    El uso de este sitio web está sujeto a los siguientes términos de uso:
                                 </MDBTypography>
                                 <MDBListGroup light numbered>
                                     <MDBListGroupItem noBorders>
-                                        The content of the pages of this website is for your general information and use only.
-                                        It is subject to change without notice.
+                                        El contenido de las páginas de este sitio web es únicamente para su información general y uso.
+                                        Está sujeto a cambios sin previo aviso.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        This website uses cookies to monitor browsing preferences. If you do allow cookies to be used,
-                                        the following personal information may be stored by us for use by third parties.
+                                        Este sitio web utiliza cookies para monitorear las preferencias de navegación.
+                                        Si permite que se utilicen cookies, la siguiente información personal puede ser almacenada
+                                        por nosotros para uso de terceros.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        Neither we nor any third parties provide any warranty or guarantee as to the accuracy,
-                                        timeliness, performance, completeness, or suitability of the information and materials found
-                                        or offered on this website for any particular purpose.
-                                        You acknowledge that such information and materials may contain inaccuracies or errors,
-                                        and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
+                                        Ni nosotros ni terceros proporcionamos ninguna garantía o garantía en cuanto a la precisión,
+                                        puntualidad, rendimiento, integridad o idoneidad de la información y los materiales encontrados
+                                        u ofrecidos en este sitio web para un propósito particular.
+                                        Usted reconoce que tal información y materiales pueden contener imprecisiones o errores,
+                                        y excluimos expresamente la responsabilidad por tales imprecisiones o errores en la máxima medida permitida por la ley.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        Your use of any information or materials on this website is entirely at your own risk,
-                                        for which we shall not be liable. It shall be your own responsibility to ensure that any products,
-                                        services, or information available through this website meet your specific requirements.
+                                        Su uso de cualquier información o material en este sitio web es totalmente bajo su propio riesgo,
+                                        por lo que no seremos responsables. Será su responsabilidad asegurarse de que cualquier producto,
+                                        servicio o información disponible a través de este sitio web satisfaga sus requisitos específicos.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        This website contains material which is owned by or licensed to us. This material includes, but is not limited to,
-                                        the design, layout, look, appearance, and graphics. Reproduction is prohibited other than in accordance
-                                        with the copyright notice, which forms part of these terms and conditions.
+                                        Este sitio web contiene material que es propiedad de nosotros o con licencia para nosotros.
+                                        Este material incluye, entre otros, el diseño, la disposición, el aspecto, la apariencia y los gráficos.
+                                        Se prohíbe la reproducción que no esté de acuerdo con el aviso de derechos de autor,
+                                        que forma parte de estos términos y condiciones.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        All trademarks reproduced in this website, which are not the property of, or licensed to the operator,
-                                        are acknowledged on the website.
+                                        Todas las marcas comerciales reproducidas en este sitio web, que no son propiedad de,
+                                        o con licencia para, el operador, son reconocidas en el sitio web.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offense.
+                                        El uso no autorizado de este sitio web puede dar lugar a una reclamación por daños y perjuicios
+                                        y/o ser un delito penal.
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        From time to time, this website may also include links to other websites.
-                                        These links are provided for your convenience to provide further information.
-                                        They do not signify that we endorse the website(s).
-                                        We have no responsibility for the content of the linked website(s).
+                                        De vez en cuando, este sitio web también puede incluir enlaces a otros sitios web.
+                                        Estos enlaces se proporcionan para su conveniencia para proporcionar más información.
+                                        No significan que respaldemos el (los) sitio(s) web. No tenemos ninguna responsabilidad
+                                        por el contenido del (los) sitio(s) web vinculado(s).
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        From time to time, this website may also include links to other websites.
-                                        These links are provided for your convenience to provide further information.
-                                        They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).
+                                        De vez en cuando, este sitio web también puede incluir enlaces a otros sitios web.
+                                        Estos enlaces se proporcionan para su conveniencia para proporcionar más información.
+                                        No significan que respaldemos el (los) sitio(s) web. No tenemos ninguna responsabilidad
+                                        por el contenido del (los) sitio(s) web vinculado(s).
                                     </MDBListGroupItem>
 
                                     <MDBListGroupItem noBorders>
-                                        Your use of this website and any dispute arising out of such use of the website
-                                        is subject to the laws of England, Northern Ireland, Scotland, and Wales.
+                                        Su uso de este sitio web y cualquier disputa derivada de dicho uso del sitio web está sujeto
+                                        a las leyes de Inglaterra, Irlanda del Norte, Escocia y Gales.
                                     </MDBListGroupItem>
                                 </MDBListGroup>
-
                             </MDBListGroupItem>
+
 
                         </MDBListGroup>
 

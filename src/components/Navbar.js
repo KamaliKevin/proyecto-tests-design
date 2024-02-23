@@ -68,7 +68,7 @@ const Navbar = ({userIsLoggedIn}) => {
                         {userIsLoggedIn ? (
                             <>
                                 <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/dashboard">
-                                    <MDBIcon fas icon="user-circle" /> Dashboard
+                                    <MDBIcon fas icon="table" /> Menú
                                 </MDBBtn>
                                 <MDBBtn color="warning" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/quiz/create">
                                     <MDBIcon fas icon="plus-circle" /> Crear cuestionario
