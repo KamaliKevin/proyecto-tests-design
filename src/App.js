@@ -62,7 +62,7 @@ function App() {
 
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                             <Route element={<ProtectedRoute />}>
-                                <Route element={<Dashboard userIsAdmin={true} />} path="/dashboard" />
+                                <Route element={<Dashboard userIsModOrAdmin={false} />} path="/dashboard" />
                                 <Route element={<ChangePassword/>} path="/password-reset/:token"/>
                                 <Route element={<CreateQuiz quizToBeEdited={null} />} path="/create-quiz" />
                                 <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />

@@ -9,7 +9,7 @@ import ContactManagement from "./DashboardComponents/ContactManagement";
 import QuestionBank from "./DashboardComponents/QuestionBank";
 import PlayedQuizzes from "./DashboardComponents/PlayedQuizzes";
 
-const Dashboard = ({ userIsAdmin }) => {
+const Dashboard = ({ userIsModOrAdmin }) => {
     const [activeTab, setActiveTab] = useState('profile');
 
     const handleTabClick = (tab) => {
@@ -44,7 +44,7 @@ const Dashboard = ({ userIsAdmin }) => {
                         <MDBIcon fas icon="th-list" /> Banco de preguntas
                     </MDBTabsLink>
                 </MDBTabsItem>
-                {userIsAdmin && (
+                {userIsModOrAdmin && (
                     <>
                         <MDBTabsItem>
                             <MDBTabsLink onClick={() => handleTabClick('user-management')} active={activeTab === 'user-management'}>
@@ -81,7 +81,7 @@ const Dashboard = ({ userIsAdmin }) => {
                 <MDBTabsPane open={activeTab === 'questionBank'}>
                     <QuestionBank/>
                 </MDBTabsPane>
-                {userIsAdmin && (
+                {userIsModOrAdmin && (
                     <>
                         <MDBTabsPane open={activeTab === 'user-management'}>
                             <UserManagement/>
