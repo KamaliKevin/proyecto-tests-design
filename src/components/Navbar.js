@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
 import {MDBBtn, MDBCollapse, MDBContainer, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle,
     MDBIcon, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler} from "mdb-react-ui-kit";
+import logo from "../images/logo.png";
 import { CategoryContext } from "./CategoryContext";
 
 const Navbar = ({userIsLoggedIn}) => {
@@ -27,7 +28,9 @@ const Navbar = ({userIsLoggedIn}) => {
         <MDBNavbar expand="lg" dark bgColor="dark">
             <MDBContainer fluid>
                 <Link to="/" className="nav-link">
-                    <MDBNavbarBrand>Logo</MDBNavbarBrand>
+                    <MDBNavbarBrand style={{ maxWidth: 200 }}>
+                        <img src={logo} className="img-fluid" alt="Logo" />
+                    </MDBNavbarBrand>
                 </Link>
 
                 <MDBNavbarToggler
