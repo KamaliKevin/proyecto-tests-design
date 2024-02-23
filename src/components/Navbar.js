@@ -44,9 +44,6 @@ const Navbar = ({userIsLoggedIn}) => {
                         <MDBNavbarItem>
                             <MDBNavbarLink href="/home">Inicio</MDBNavbarLink>
                         </MDBNavbarItem>
-                        <MDBNavbarItem>
-                            <MDBNavbarLink href="#">Link</MDBNavbarLink>
-                        </MDBNavbarItem>
 
                         <MDBNavbarItem>
                             <MDBDropdown>
@@ -60,12 +57,6 @@ const Navbar = ({userIsLoggedIn}) => {
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavbarItem>
-
-                        <MDBNavbarItem>
-                            <MDBNavbarLink disabled href="#" tabIndex={-1} aria-disabled="true">
-                                Disabled
-                            </MDBNavbarLink>
-                        </MDBNavbarItem>
                     </MDBNavbarNav>
 
                     <form className="d-flex input-group my-2">
@@ -77,17 +68,23 @@ const Navbar = ({userIsLoggedIn}) => {
                         {userIsLoggedIn ? (
                             <>
                                 <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/dashboard">
-                                    Dashboard
+                                    <MDBIcon fas icon="user-circle" /> Dashboard
                                 </MDBBtn>
-                                <MDBBtn color="warning" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/create-quiz">
-                                    Create Quiz
+                                <MDBBtn color="warning" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/quiz/create">
+                                    <MDBIcon fas icon="plus-circle" /> Crear cuestionario
                                 </MDBBtn>
-                                <MDBBtn color="info" onClick={onLogout}>Logout</MDBBtn>
+                                <MDBBtn color="info" onClick={onLogout}>
+                                    <MDBIcon fas icon="sign-out-alt" /> Cerrar sesión
+                                </MDBBtn>
                             </>
                         ) : (
                             <>
-                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/login">Login</MDBBtn>
-                                <MDBBtn color="success" href="/register">Register</MDBBtn>
+                                <MDBBtn color="secondary" className="ms-lg-2 ms-sm-0 mt-lg-0 mt-sm-2" href="/login">
+                                    <MDBIcon fas icon="sign-in-alt" /> Iniciar sesión
+                                </MDBBtn>
+                                <MDBBtn color="success" href="/register">
+                                    <MDBIcon fas icon="user-plus" /> Registrarse
+                                </MDBBtn>
                             </>
                         )}
                     </div>

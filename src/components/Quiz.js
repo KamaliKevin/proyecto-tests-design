@@ -181,7 +181,7 @@ const Quiz = () => {
 
         const quizWithFailedQuestions = {
             ...quiz,
-            name: `Failed quiz: ${quiz.name}`,
+            name: `Cuestionario fallado: ${quiz.name}`,
             questions: failedQuestions
         };
 

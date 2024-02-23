@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 
 const Category = () => {
     const { categoryName, pageNumber } = useParams(); // Parámetros de cada categoría
-    const [categoryCards, setCategoryCards] = useState([]);
+    const [categoryPaginationData, setCategoryPaginationData] = useState([]);
+    // const [categoryCards, setCategoryCards] = useState([]);
 
     useEffect(() => {
-        const fetchCategoryCards = async () => {
+        const fetchCategoryPaginationData = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/api/public-tests`, {
                     method: 'GET',
@@ -16,23 +17,29 @@ const Category = () => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const testData = await response.json();
-                const formattedCategoryCards = testData.data.filter(categoryCard => categoryCard.category_names.includes(categoryName));
-                const prepareCards = formattedCategoryCards.map(quiz => ({
-                    id: quiz.id,
-                    title: quiz.name,
-                    text: quiz.description || "Sin descripción",
-                    category_names: quiz.category_names,
-                    image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp'
-                }));
-                setCategoryCards(prepareCards);
+                const paginationData = await response.json();
+
+                // Modificar los datos de paginación para que se adapten a la vista:
+                const correspondingCategoryCards = paginationData.data
+                    .filter(categoryCard => categoryCard.category_names.includes(categoryName))
+                    .map(quiz => ({
+                        id: quiz.id,
+                        title: quiz.name,
+                        text: quiz.description || "Sin descripción",
+                        category_names: quiz.category_names,
+                        image: 'https://mdbootstrap.com/img/new/standard/nature/184.webp'
+                    }));
+
+                const formattedPaginationData = {...paginationData, data: correspondingCategoryCards};
+
+                setCategoryPaginationData(formattedPaginationData);
             }
             catch (error) {
                 console.error('Error fetching category cards: ', error);
             }
         };
 
-        fetchCategoryCards();
+        fetchCategoryPaginationData();
     }, []);
 
     return (
@@ -40,10 +47,11 @@ const Category = () => {
             <CardPaginationComponent
                 pageName="category"
                 pageNumber={Number(pageNumber)}
+                pageTotal={categoryPaginationData.last_page}
                 title={categoryName}
                 titleIcon="question-circle"
-                cards={categoryCards}
-                cardsPerPage={9}
+                cards={categoryPaginationData.data}
+                cardsPerPage={categoryPaginationData.per_page}
                 cardsPerRow={3}
             />
         </div>

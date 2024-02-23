@@ -54,9 +54,6 @@ function App() {
                             {/* Redirige a "/home" desde la ruta raíz, "/" */}
                             <Route element={<Navigate to="/home" replace />} path="/" />
 
-                            {/* Redirige a "/category/1" desde la ruta "/category" */}
-                            {/* <Route element={<Navigate to="/category/:categoryName/1" replace />} path="/category" /> IMPORTANTE: ¡Adaptar redirección con las nuevas rutas! */}
-
                             <Route element={<Home />} path="/home" />
                             <Route element={<Category />} path="/category/:categoryName/:pageNumber" />
 
@@ -64,7 +61,7 @@ function App() {
                             <Route element={<ProtectedRoute />}>
                                 <Route element={<Dashboard userIsModOrAdmin={false} />} path="/dashboard" />
                                 <Route element={<ChangePassword/>} path="/password-reset/:token"/>
-                                <Route element={<CreateQuiz quizToBeEdited={null} />} path="/create-quiz" />
+                                <Route element={<CreateQuiz quizToBeEdited={null} />} path="/quiz/create" />
                                 <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />
                             </Route>
 

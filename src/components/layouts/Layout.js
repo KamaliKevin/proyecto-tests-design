@@ -177,7 +177,14 @@ const Layout = () => {
                         </section>
                     </MDBContainer>
 
-                    <div className='text-center p-3' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+                    <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+                        Escríbenos a:
+                        <a className='text-white' href="mailto:soporte_quizma@example.com">
+                            soporte_quizma@example.com
+                        </a>
+                    </div>
+
+                    <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                         © 2020 Copyright:
                         <a className='text-white' href='https://mdbootstrap.com/'>
                             MDBootstrap.com

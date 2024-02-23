@@ -5,11 +5,25 @@ import {
     MDBCol, MDBFooter, MDBIcon, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBRow, MDBTypography
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
+import {useEffect} from "react";
 
-const CardPaginationComponent = ({ pageName, pageNumber, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
+const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, titleIcon, cards, cardsPerPage, cardsPerRow }) => {
     const navigate = useNavigate();
     const currentPage = pageNumber; // Índice de la página actual
-    const pageCount = Math.ceil(cards.length / cardsPerPage); // Total de páginas
+    const pageCount = pageTotal; // Total de páginas
+
+
+    // Controlar que el usuario sea redirigido si a una pagina de la paginación si va directamente a una que no existe
+    useEffect(() => {
+        if(isNaN(currentPage) || currentPage < 1){
+            navigate(`/${pageName}/${title}/1`);
+        }
+        else if(currentPage > pageCount){
+            navigate(`/${pageName}/${title}/${pageCount}`);
+        }
+        window.scrollTo(0, 0);
+    }, [currentPage]);
+
 
     const handlePageClick = (newPage) => {
         if(newPage >= 1 && newPage <= pageCount){

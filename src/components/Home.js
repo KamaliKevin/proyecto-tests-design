@@ -16,6 +16,7 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
+
 const Home = () => {
     const [cards, setCards] = useState([]);
 
