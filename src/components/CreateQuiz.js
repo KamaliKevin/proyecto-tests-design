@@ -175,7 +175,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
             // Use method spoofing for Laravel, since using PUT doesn't work properly
             formData.append('_method', 'PUT');
 
-            await fetch(`${process.env.BACKEND_URL}/api/user/test/` + quizToBeEdited.test_id, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test/` + quizToBeEdited.test_id, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -194,7 +194,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                 })
                 .catch(error => console.error('Error:', error));
         } else {
-            await fetch(`${process.env.BACKEND_URL}/api/upload-test`, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload-test`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

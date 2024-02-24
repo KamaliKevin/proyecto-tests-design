@@ -81,7 +81,7 @@ const UserManagement = () => {
                 const promoteToMod = async (e) => {
                     try {
                         // TODO - Crear ruta para poder actualizar a un usuario (excepto el mismo con el que se está en sesión)
-                        const response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -138,7 +138,7 @@ const UserManagement = () => {
                 const promoteToAdmin = async (e) => {
                     try {
                         // TODO - Crear ruta para poder actualizar a un usuario (excepto el mismo con el que se está en sesión)
-                        const response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -191,7 +191,7 @@ const UserManagement = () => {
                 const deleteUser = async (e) => {
                     try {
                         // TODO - Crear ruta para poder eliminar a un usuario (excepto el mismo con el que se está en sesión)
-                        const response = await fetch(`${process.env.BACKEND_URL}/api/user/${id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers

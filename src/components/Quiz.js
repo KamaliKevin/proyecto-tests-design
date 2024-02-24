@@ -37,7 +37,7 @@ const Quiz = () => {
     useEffect(() => {
         const fetchQuiz = async (e) => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}/api/play/` + id, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/play/` + id, {
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -244,7 +244,7 @@ const Quiz = () => {
                     try {
                         // When api is available, fix this
 
-                        // const response = await fetch(`${process.env.BACKEND_URL}/api/user/test/${quizId}`, {
+                        // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test/${quizId}`, {
                         //     method: 'GET',
                         //     credentials: 'include'
                         // });

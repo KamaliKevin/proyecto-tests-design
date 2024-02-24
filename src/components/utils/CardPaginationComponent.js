@@ -35,7 +35,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
     const handleShareButtonClick = async (cardId) => {
         // NOTA: El "async" es necesario debido a que "navigator" es una API nativa de JS
         try {
-            await navigator.clipboard.writeText(`${process.env.FRONTEND_URL}/quiz/play/${cardId}`);
+            await navigator.clipboard.writeText(`${process.env.REACT_APP_FRONTEND_URL}/quiz/play/${cardId}`);
             console.log("Quiz URL copied to clipboard successfully");
             await Swal.fire({
                 icon: "success",

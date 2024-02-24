@@ -24,7 +24,7 @@ const Home = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await fetch(`${process.env.BACKEND_URL}/api/public-tests`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public-tests`, {
                     method: 'GET',
                     credentials: 'include'
                 });

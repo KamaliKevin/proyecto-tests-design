@@ -75,7 +75,7 @@ const QuizManagement = () => {
 
                 const approveQuiz = async (e) => {
                     try {
-                        const response = await fetch(`${process.env.BACKEND_URL}/api/test/${id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/test/${id}`, {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -130,7 +130,7 @@ const QuizManagement = () => {
 
                 const rejectQuiz = async (e) => {
                     try {
-                        const response = await fetch(`${process.env.BACKEND_URL}/api/test/${id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/test/${id}`, {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',

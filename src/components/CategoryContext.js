@@ -8,7 +8,7 @@ const CategoryContextProvider = ({ children }) => {
     // Conseguir los datos de las categorías existentes:
     useEffect(() => {
         const fetchCategories = async () => {
-            await fetch(`${process.env.BACKEND_URL}/api/categories`, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/categories`, {
                 method: 'GET'
             })
                 .then(response => response.json())

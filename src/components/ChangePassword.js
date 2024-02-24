@@ -33,9 +33,9 @@ const ChangePassword = () => {
         formData.append('password_confirmation', document.querySelector("#new_password_confirmation").value);
         formData.append('token', token);
 
-        // NOTA: "${process.env.BACKEND_URL}/reset-password" es la ruta del back usada por Sanctum para COMPLETAR
+        // NOTA: "${process.env.REACT_APP_BACKEND_URL}/reset-password" es la ruta del back usada por Sanctum para COMPLETAR
         // el proceso de cambiar una contraseña
-        await fetch(`${process.env.BACKEND_URL}/reset-password`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/reset-password`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

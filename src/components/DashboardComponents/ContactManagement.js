@@ -66,7 +66,7 @@ const ContactManagement = () => {
         const markAsRead = async (e) => {
             try {
                 // TODO - Crear una ruta para un contacto en concreto
-                const response = await fetch(`${process.env.BACKEND_URL}/api/contact/${id}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact/${id}`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -104,7 +104,7 @@ const ContactManagement = () => {
         const setStatus = async (e) => {
             try {
                 // TODO - Crear una ruta para un contacto en concreto
-                const response = await fetch(`${process.env.BACKEND_URL}/api/contact/${id}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact/${id}`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

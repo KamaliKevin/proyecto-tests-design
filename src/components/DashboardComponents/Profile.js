@@ -26,7 +26,7 @@ const Profile = () => {
 
     const handleChangePasswordClick = async (e) => {
         try {
-            // NOTA: "${process.env.BACKEND_URL}/forgot-password" es la ruta del back usada por Sanctum para INICIAR
+            // NOTA: "${process.env.REACT_APP_BACKEND_URL}/forgot-password" es la ruta del back usada por Sanctum para INICIAR
             // el proceso de cambio de contraseña, no para realizar el proceso en si. Esto manda un mensaje por email
             // con un link que lleva a la página para introducir una nueva contraseña ("ChangePassword")
 
@@ -37,7 +37,7 @@ const Profile = () => {
 
             const formData = new FormData();
             formData.append('email', userData.email);
-            const response = await fetch(`${process.env.BACKEND_URL}/forgot-password`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
