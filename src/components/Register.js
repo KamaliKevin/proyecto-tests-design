@@ -1,3 +1,5 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import {
     MDBInput,
     MDBCheckbox,
@@ -7,8 +9,6 @@ import {
     MDBTypography,
     MDBCardHeader, MDBCardBody, MDBCardText
 } from 'mdb-react-ui-kit';
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Register = ({ onLogin }) => {
     const [errors, setErrors] = useState(null);
@@ -98,10 +98,10 @@ const Register = ({ onLogin }) => {
                                 </div>
                             )}
 
-                            <MDBInput className='mb-4' type='text' id='username' label='Username' />
-                            <MDBInput className='mb-4' type='email' id='email' label='Email' />
-                            <MDBInput className='mb-4' type='password' id='password' label='Password' />
-                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Confirm Password' />
+                            <MDBInput className='mb-4' type='text' id='username' label='Nombre' />
+                            <MDBInput className='mb-4' type='email' id='email' label='Correo electrónico' />
+                            <MDBInput className='mb-4' type='password' id='password' label='Contraseña' />
+                            <MDBInput className='mb-4' type='password' id='password_confirmation' label='Confirmar contraseña' />
                             {/* <MDBInput className='mb-4' type='tel' id='phoneNumber' label='Phone number' /> */}
 
                             <MDBCheckbox
@@ -112,14 +112,14 @@ const Register = ({ onLogin }) => {
                             />
 
                             <MDBBtn type='submit' className='mb-4' block onClick={register}>
-                                Sign up
+                                Registrarse
                             </MDBBtn>
 
                             <div className='text-center'>
                                 <p>
-                                    Already a member? <Link to="/login">Login</Link>
+                                    ¿Ya eres un miembro? <Link to="/login">Inicia sesión</Link>
                                 </p>
-                                <p>or sign up with:</p>
+                                <p>o inicia sesión con:</p>
 
                                 <MDBBtn floating color="secondary" className='mx-1'>
                                     <MDBIcon fab icon='facebook-f' />

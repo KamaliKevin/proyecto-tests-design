@@ -76,4 +76,4 @@ const RecoverPassword = () => {
     );
 }
 
-export default RecoverPassword();
+export default RecoverPassword;
