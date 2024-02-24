@@ -15,6 +15,7 @@ const Navbar = ({userIsLoggedIn}) => {
         localStorage.removeItem("USER");
         localStorage.removeItem("XSRF-TOKEN");
 
+
         // Borrar la cookie del inicio de sesión
         // (poner una fecha pasada de caducidad debería hacer que el navegador borre dicha cookie)
         document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
