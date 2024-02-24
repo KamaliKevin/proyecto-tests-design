@@ -47,11 +47,11 @@ const Category = () => {
             <CardPaginationComponent
                 pageName="category"
                 pageNumber={Number(pageNumber)}
-                pageTotal={categoryPaginationData.last_page}
+                pageTotal={categoryPaginationData.last_page || 1}
                 title={categoryName}
                 titleIcon="question-circle"
-                cards={categoryPaginationData.data}
-                cardsPerPage={categoryPaginationData.per_page}
+                cards={categoryPaginationData.data || null}
+                cardsPerPage={categoryPaginationData.per_page || 0}
                 cardsPerRow={3}
             />
         </div>

@@ -48,9 +48,9 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
         }
     };
 
-    const startCardIndex = (currentPage - 1) * cardsPerPage; // Índice inicial de las cartas para la página actual
-    const endCardIndex = Math.min(startCardIndex + cardsPerPage, cards.length); // Índice final de las cartas para la página actual
-    const currentCards = cards.slice(startCardIndex, endCardIndex); // Total de cartas para la página actual
+    const startCardIndex = cardsPerPage ? (currentPage - 1) * cardsPerPage : 0; // Índice inicial de las cartas para la página actual
+    const endCardIndex = cards ? Math.min(startCardIndex + cardsPerPage, cards.length) : 0; // Índice final de las cartas para la página actual
+    const currentCards = cards ? cards.slice(startCardIndex, endCardIndex) : []; // Total de cartas para la página actual
 
 
     const leftEllipsisIsTriggered = currentPage > 2; // Enseñar la elipsis izquierda de la paginación a partir de la tercera página
