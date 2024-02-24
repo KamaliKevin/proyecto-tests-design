@@ -79,7 +79,7 @@ const Login = ({ onLogin }) => {
         <div className="d-flex justify-content-center align-content-center mt-5">
             <MDBCard>
                 <MDBCardHeader>
-                    <MDBTypography tag='h3' className="my-3">Login</MDBTypography>
+                    <MDBTypography tag='h3' className="my-3">Iniciar sesión</MDBTypography>
                 </MDBCardHeader>
                 <MDBCardBody>
                     <MDBCardText>
@@ -101,19 +101,19 @@ const Login = ({ onLogin }) => {
                                     <MDBCheckbox id='rememberMe' label='Remember me' defaultChecked />
                                 </MDBCol>
                                 <MDBCol>
-                                    <a href='#'>Forgot password?</a>
+                                    <Link to="/recover-password">¿Se olvidó de la contraseña?</Link>
                                 </MDBCol>
                             </MDBRow>
 
                             <MDBBtn type='submit' className='mb-4' block onClick={login}>
-                                Sign in
+                                Iniciar sesión
                             </MDBBtn>
 
                             <div className='text-center'>
                                 <p>
-                                    Not a member? <Link to="/register">Register</Link>
+                                    ¿No eres miembro? <Link to="/register">Regístrate</Link>
                                 </p>
-                                <p>or sign up with:</p>
+                                <p>o inicia sesión con:</p>
 
                                 <MDBBtn floating color="secondary" className='mx-1'>
                                     <MDBIcon fab icon='facebook-f' />

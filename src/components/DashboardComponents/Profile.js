@@ -37,6 +37,7 @@ const Profile = () => {
 
             const formData = new FormData();
             formData.append('email', userData.email);
+
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, {
                 method: 'POST',
                 headers: {
@@ -60,7 +61,8 @@ const Profile = () => {
             else {
                 console.error('Failed to send password change email');
                 await Swal.fire({
-                    title: `No se ha podido enviar un mensaje a ${userData.email} para iniciar el proceso de cambio de contraseña. Inténtelo más tarde`,
+                    title: `No se ha podido enviar un mensaje a ${userData.email} para iniciar el proceso de cambio de contraseña. 
+                    Inténtelo más tarde`,
                     icon: "error",
                     showConfirmButton: true
                 });

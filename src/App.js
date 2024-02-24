@@ -21,6 +21,7 @@ import { CategoryContextProvider } from "./components/CategoryContext";
 import EditQuiz from "./components/EditQuiz";
 import ChangePassword from "./components/ChangePassword";
 import RefreshLocation from "./components/utils/RefreshLocation";
+import RecoverPassword from "./components/RecoverPassword";
 
 function App() {
     const navigate = useNavigate();
@@ -76,6 +77,7 @@ function App() {
                             <Route element={<Privacy />} path="/privacy" />
                             <Route element={<Terms />} path="/terms" />
 
+                            <Route element={<RecoverPassword/>} path="/recover-password"/>
                             <Route element={<NotFound />} path="*" />
                         </Route>
                     </Routes>

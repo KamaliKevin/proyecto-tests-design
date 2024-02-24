@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
     MDBBtn,
     MDBCard,
@@ -12,21 +12,27 @@ import {
 import Swal from "sweetalert2";
 
 const ChangePassword = () => {
-    // Obtenemos los datos del usuario que inició sesión
-    const retrievedUserData = localStorage.getItem("USER") ?? "";
-    const formattedUserData = JSON.parse(retrievedUserData);
-
     const navigate = useNavigate();
     const { token } = useParams(); // Token de la URL del mensaje por email para cambiar la contraseña
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const email = queryParams.get("email"); // Email de la URL del mensaje por email para cambiar la contraseña
+
+    // Obtenemos los datos del usuario que inició sesión o está recuperando su contraseña
+    const retrievedUserData = localStorage.getItem("USER") ?? `{"email": "${email}"}`;
+    const formattedUserData = JSON.parse(retrievedUserData);
+
     const [userData, setUserData] = useState(formattedUserData);
     const [errors, setErrors] = useState(null);
 
     const changePassword = async (e) => {
         e.preventDefault();
+
         const csrfToken = document.cookie
             .split('; ')
             .find(cookie => cookie.startsWith('XSRF-TOKEN='))
             ?.split('=')[1];
+
         let formData = new FormData();
         formData.append('email', userData.email);
         formData.append('password', document.querySelector("#new_password").value);
