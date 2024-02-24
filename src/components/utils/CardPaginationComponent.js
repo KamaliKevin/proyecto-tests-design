@@ -64,7 +64,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
                 </MDBTypography>
             </MDBCardHeader>
             <MDBCardBody>
-                {cards ? (
+                {cards === null ? (
                     <MDBCardText>
                         <MDBRow className={`row-cols-1 row-cols-md-${cardsPerRow} g-4`}>
                             {currentCards.map((card, i) => (
