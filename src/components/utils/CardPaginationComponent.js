@@ -64,6 +64,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
                 </MDBTypography>
             </MDBCardHeader>
             <MDBCardBody>
+                {/* NOTA: NO cambiar "cards === null" por simplemente "cards": la comparación no funcionaría! */}
                 {cards === null ? (
                     <MDBCardText>
                         <MDBRow className={`row-cols-1 row-cols-md-${cardsPerRow} g-4`}>
@@ -154,7 +155,9 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
                     </MDBCardText>
                 ) : (
                     <MDBCardText>
-                        <MDBTypography tag="h4">No existen cuestionarios actualmente para esta categoría</MDBTypography>
+                        <div className="d-flex justify-content-center">
+                            <MDBTypography tag="h4">No existen cuestionarios actualmente para esta categoría</MDBTypography>
+                        </div>
                     </MDBCardText>
                 )}
             </MDBCardBody>
