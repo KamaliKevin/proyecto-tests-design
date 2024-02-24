@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const RefreshLocation = () => {
     const { pathname } = useLocation();
-    const prevPathname = useRef();
+    const prevPathname = useRef("");
 
     useEffect(() => {
         if (pathname !== prevPathname.current) {
