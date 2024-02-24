@@ -49,7 +49,7 @@ function App() {
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
             <CategoryContextProvider>
                 <CreateQuizContextProvider>
-                    <RefreshLocation/>
+                    {/* <RefreshLocation/> */}
                     <Navbar userIsLoggedIn={userIsLoggedIn} />
                     <Routes>
                         <Route element={<Layout />} path="/">
