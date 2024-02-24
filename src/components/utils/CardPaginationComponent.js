@@ -21,14 +21,12 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
         else if(currentPage > pageCount){
             navigate(`/${pageName}/${title}/${pageCount}`);
         }
-        window.scrollTo(0, 0);
     }, [currentPage]);
 
 
     const handlePageClick = (newPage) => {
         if(newPage >= 1 && newPage <= pageCount){
             navigate(`/${pageName}/${title}/${newPage}`); // Ir a la nueva página
-            window.scrollTo(0, 0);
         }
     };
 

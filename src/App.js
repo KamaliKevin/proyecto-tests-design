@@ -20,6 +20,7 @@ import NotFound from "./components/NotFound";
 import { CategoryContextProvider } from "./components/CategoryContext";
 import EditQuiz from "./components/EditQuiz";
 import ChangePassword from "./components/ChangePassword";
+import RefreshLocation from "./components/utils/RefreshLocation";
 
 function App() {
     const navigate = useNavigate();
@@ -48,6 +49,7 @@ function App() {
         <MDBContainer className="p-0" style={{ height: "100vh" }}>
             <CategoryContextProvider>
                 <CreateQuizContextProvider>
+                    <RefreshLocation/>
                     <Navbar userIsLoggedIn={userIsLoggedIn} />
                     <Routes>
                         <Route element={<Layout />} path="/">

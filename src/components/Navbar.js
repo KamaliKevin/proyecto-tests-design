@@ -20,14 +20,13 @@ const Navbar = ({userIsLoggedIn}) => {
         document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
         // Redirigir a la página de inicio
-        window.location.reload();
         navigate("/home");
     }
 
     return (
         <MDBNavbar expand="lg" dark bgColor="dark">
             <MDBContainer fluid>
-                <Link to="/" className="nav-link">
+                <Link to="/home" className="nav-link">
                     <MDBNavbarBrand style={{ maxWidth: 200 }}>
                         <img src={logo} className="img-fluid" alt="Logo" />
                     </MDBNavbarBrand>
