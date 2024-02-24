@@ -62,7 +62,12 @@ const ChangePassword = () => {
                     icon: "success",
                     timer: 2000
                 }).then(result => {
-                    navigate("/dashboard");
+                    if(localStorage.getItem("USER")){
+                        navigate("/dashboard");
+                    }
+                    else {
+                        navigate("/login");
+                    }
                 });
             }
         })

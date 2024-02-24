@@ -50,7 +50,7 @@ const RecoverPassword = () => {
 
 
     return (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mt-5 ">
             <MDBCard>
                 <MDBCardHeader>
                     <MDBTypography tag="h3" className="my-3">
@@ -61,11 +61,11 @@ const RecoverPassword = () => {
                     <MDBCardText>
                         <form>
                             <MDBInput type='email' id='email' name='email' label='Correo electrónico' />
-                            <MDBTypography tag="h6" color="info" className='mb-4'>
+                            <MDBTypography tag="h6" color="info" className='mt-4'>
                                 Recuerde revisar que su correo electrónico está bien escrito
                             </MDBTypography>
 
-                            <MDBBtn color="primary" block onClick={recoverPassword}>
+                            <MDBBtn className="mt-4" color="primary" block onClick={recoverPassword}>
                                 Enviar
                             </MDBBtn>
                         </form>
