@@ -64,91 +64,99 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
                 </MDBTypography>
             </MDBCardHeader>
             <MDBCardBody>
-                <MDBRow className={`row-cols-1 row-cols-md-${cardsPerRow} g-4`}>
-                    {currentCards.map((card, i) => (
-                        <MDBCol key={i}>
-                            <MDBCard>
-                                <MDBRipple rippleTag='div' className='bg-image hover-zoom'>
-                                    <MDBCardImage src={card.image} alt={card.title} position="top" />
-                                    <MDBCardLink href={`/quiz/play/${card.id}`}>
-                                        <div className='mask'></div>
-                                    </MDBCardLink>
-                                </MDBRipple>
-                                <MDBCardBody>
-                                    <MDBCardLink href={`/quiz/play/${card.id}`}>
-                                        <MDBCardTitle>{card.title}</MDBCardTitle>
-                                    </MDBCardLink>
-                                    <MDBCardText>{card.text}</MDBCardText>
-                                </MDBCardBody>
-                                <MDBFooter>
-                                    <MDBBtn color='link' rippleColor='dark' block onClick={() => handleShareButtonClick(card.id)}>
-                                        <MDBIcon fas icon="share-alt" />
-                                    </MDBBtn>
-                                </MDBFooter>
-                            </MDBCard>
-                        </MDBCol>
-                    ))}
-                </MDBRow>
+                {cards ? (
+                    <MDBCardText>
+                        <MDBRow className={`row-cols-1 row-cols-md-${cardsPerRow} g-4`}>
+                            {currentCards.map((card, i) => (
+                                <MDBCol key={i}>
+                                    <MDBCard>
+                                        <MDBRipple rippleTag='div' className='bg-image hover-zoom'>
+                                            <MDBCardImage src={card.image} alt={card.title} position="top" />
+                                            <MDBCardLink href={`/quiz/play/${card.id}`}>
+                                                <div className='mask'></div>
+                                            </MDBCardLink>
+                                        </MDBRipple>
+                                        <MDBCardBody>
+                                            <MDBCardLink href={`/quiz/play/${card.id}`}>
+                                                <MDBCardTitle>{card.title}</MDBCardTitle>
+                                            </MDBCardLink>
+                                            <MDBCardText>{card.text}</MDBCardText>
+                                        </MDBCardBody>
+                                        <MDBFooter>
+                                            <MDBBtn color='link' rippleColor='dark' block onClick={() => handleShareButtonClick(card.id)}>
+                                                <MDBIcon fas icon="share-alt" />
+                                            </MDBBtn>
+                                        </MDBFooter>
+                                    </MDBCard>
+                                </MDBCol>
+                            ))}
+                        </MDBRow>
 
-                <nav aria-label="Pagination" className="d-flex justify-content-center mt-5">
-                    <MDBPagination size='lg' className='mb-0'>
-                        <MDBPaginationItem disabled={currentPage === 1}
-                                           style={{ cursor: currentPage === 1 ? "default" : "pointer" }}>
-                            <MDBPaginationLink onClick={() => handlePageClick(currentPage - 1)} tabIndex="-1" >
-                                <MDBIcon fas icon="backward" />
-                            </MDBPaginationLink>
-                        </MDBPaginationItem>
+                        <nav aria-label="Pagination" className="d-flex justify-content-center mt-5">
+                            <MDBPagination size='lg' className='mb-0'>
+                                <MDBPaginationItem disabled={currentPage === 1}
+                                                   style={{ cursor: currentPage === 1 ? "default" : "pointer" }}>
+                                    <MDBPaginationLink onClick={() => handlePageClick(currentPage - 1)} tabIndex="-1" >
+                                        <MDBIcon fas icon="backward" />
+                                    </MDBPaginationLink>
+                                </MDBPaginationItem>
 
-                        {/* Enseñar la elipsis izquierda si ya se está ya en la tercera página */}
-                        {leftEllipsisIsTriggered && (
-                            <MDBPaginationItem style={{ cursor: "pointer" }}>
-                                <MDBPaginationLink onClick={() => handlePageClick(currentPage - 2)}>
-                                    <MDBIcon fas icon="ellipsis-h" />
-                                </MDBPaginationLink>
-                            </MDBPaginationItem>
-                        )}
+                                {/* Enseñar la elipsis izquierda si ya se está ya en la tercera página */}
+                                {leftEllipsisIsTriggered && (
+                                    <MDBPaginationItem style={{ cursor: "pointer" }}>
+                                        <MDBPaginationLink onClick={() => handlePageClick(currentPage - 2)}>
+                                            <MDBIcon fas icon="ellipsis-h" />
+                                        </MDBPaginationLink>
+                                    </MDBPaginationItem>
+                                )}
 
-                        {/* Enseñar el número de la página anterior */}
-                        {currentPage > 1 && (
-                            <MDBPaginationItem style={{ cursor: "pointer" }}>
-                                <MDBPaginationLink onClick={() => handlePageClick(currentPage - 1)}>
-                                    {currentPage - 1}
-                                </MDBPaginationLink>
-                            </MDBPaginationItem>
-                        )}
+                                {/* Enseñar el número de la página anterior */}
+                                {currentPage > 1 && (
+                                    <MDBPaginationItem style={{ cursor: "pointer" }}>
+                                        <MDBPaginationLink onClick={() => handlePageClick(currentPage - 1)}>
+                                            {currentPage - 1}
+                                        </MDBPaginationLink>
+                                    </MDBPaginationItem>
+                                )}
 
-                        {/* Enseñar el número de la página actual */}
-                        <MDBPaginationItem active style={{ cursor: "pointer" }}>
-                            <MDBPaginationLink>{currentPage}</MDBPaginationLink>
-                        </MDBPaginationItem>
+                                {/* Enseñar el número de la página actual */}
+                                <MDBPaginationItem active style={{ cursor: "pointer" }}>
+                                    <MDBPaginationLink>{currentPage}</MDBPaginationLink>
+                                </MDBPaginationItem>
 
-                        {/* Enseñar el número de la página siguiente */}
-                        {currentPage < pageCount && (
-                            <MDBPaginationItem style={{ cursor: "pointer" }}>
-                                <MDBPaginationLink onClick={() => handlePageClick(currentPage + 1)}>
-                                    {currentPage + 1}
-                                </MDBPaginationLink>
-                            </MDBPaginationItem>
-                        )}
+                                {/* Enseñar el número de la página siguiente */}
+                                {currentPage < pageCount && (
+                                    <MDBPaginationItem style={{ cursor: "pointer" }}>
+                                        <MDBPaginationLink onClick={() => handlePageClick(currentPage + 1)}>
+                                            {currentPage + 1}
+                                        </MDBPaginationLink>
+                                    </MDBPaginationItem>
+                                )}
 
-                        {/* Quitar la elipsis derecha si ya se está ya en la penúltima página */}
-                        {rightEllipsisIsTriggered && (
-                            <MDBPaginationItem style={{ cursor: "pointer" }}>
-                                <MDBPaginationLink onClick={() => handlePageClick(currentPage + 2)}>
-                                    <MDBIcon fas icon="ellipsis-h" />
-                                </MDBPaginationLink>
-                            </MDBPaginationItem>
-                        )}
+                                {/* Quitar la elipsis derecha si ya se está ya en la penúltima página */}
+                                {rightEllipsisIsTriggered && (
+                                    <MDBPaginationItem style={{ cursor: "pointer" }}>
+                                        <MDBPaginationLink onClick={() => handlePageClick(currentPage + 2)}>
+                                            <MDBIcon fas icon="ellipsis-h" />
+                                        </MDBPaginationLink>
+                                    </MDBPaginationItem>
+                                )}
 
-                        {/* Botón de página siguiente */}
-                        <MDBPaginationItem disabled={currentPage === pageCount}
-                                           style={{ cursor: currentPage === pageCount ? "default" : "pointer" }}>
-                            <MDBPaginationLink onClick={() => handlePageClick(currentPage + 1)}>
-                                <MDBIcon fas icon="forward" />
-                            </MDBPaginationLink>
-                        </MDBPaginationItem>
-                    </MDBPagination>
-                </nav>
+                                {/* Botón de página siguiente */}
+                                <MDBPaginationItem disabled={currentPage === pageCount}
+                                                   style={{ cursor: currentPage === pageCount ? "default" : "pointer" }}>
+                                    <MDBPaginationLink onClick={() => handlePageClick(currentPage + 1)}>
+                                        <MDBIcon fas icon="forward" />
+                                    </MDBPaginationLink>
+                                </MDBPaginationItem>
+                            </MDBPagination>
+                        </nav>
+                    </MDBCardText>
+                ) : (
+                    <MDBCardText>
+                        <MDBTypography tag="h4">No existen cuestionarios actualmente para esta categoría</MDBTypography>
+                    </MDBCardText>
+                )}
             </MDBCardBody>
         </MDBCard>
     );
