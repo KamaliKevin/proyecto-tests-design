@@ -176,7 +176,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
             formData.append('_method', 'PUT');
 
             await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test/` + quizToBeEdited.test_id, {
-                mode: 'no-cors',
+                
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -196,7 +196,7 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                 .catch(error => console.error('Error:', error));
         } else {
             await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload-test`, {
-                mode: 'no-cors',
+                
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

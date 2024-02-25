@@ -39,7 +39,7 @@ const Quiz = () => {
         const fetchQuiz = async (e) => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/play/` + id, {
-                    mode: 'no-cors',
+                    
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -189,7 +189,7 @@ const Quiz = () => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload-test`, {
-                mode: 'no-cors',
+                
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

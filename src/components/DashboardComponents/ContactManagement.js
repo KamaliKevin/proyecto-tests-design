@@ -28,7 +28,7 @@ const ContactManagement = () => {
             // TODO - Crear una ruta para conseguir todos los contactos
             try {
                 const response = await fetch('https://localhost:8000/api/contacts', {
-                    mode: 'no-cors',
+                    
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -68,7 +68,7 @@ const ContactManagement = () => {
             try {
                 // TODO - Crear una ruta para un contacto en concreto
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact/${id}`, {
-                    mode: 'no-cors',
+                    
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -107,7 +107,7 @@ const ContactManagement = () => {
             try {
                 // TODO - Crear una ruta para un contacto en concreto
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact/${id}`, {
-                    mode: 'no-cors',
+                    
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

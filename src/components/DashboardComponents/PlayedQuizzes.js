@@ -27,7 +27,7 @@ const PlayedQuizzes = () => {
         async function fetchHistory() {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test-history`, {
-                    mode: 'no-cors',
+                    
                     method: 'GET',
                     credentials: 'include',
                 });
