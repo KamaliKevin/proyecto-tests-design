@@ -27,6 +27,7 @@ const PlayedQuizzes = () => {
         async function fetchHistory() {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test-history`, {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -39,9 +40,10 @@ const PlayedQuizzes = () => {
 
                 let userTestData = testHistory.map(test => ({
                     name: test.name,
-                    creator: test.author,
+                    author: test.author,
                     id: test.id,
                     category_names: test.category_names,
+                    grade: test.grade,
                     image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp', // NOTA: Sustituir después por imagen relacionada desde la BD
                 }));
 
@@ -79,7 +81,7 @@ const PlayedQuizzes = () => {
                                     </MDBBadge>
                                 ))}
 
-                                <div className='d-flex justify-content-between align-items-center'>
+                                <div className='d-flex justify-content-between align-items-center mb-3'>
                                     <div className='d-flex align-items-center'>
                                         <img
                                             src={quiz.image_src}
@@ -89,14 +91,18 @@ const PlayedQuizzes = () => {
                                         />
                                         <div className='ms-3'>
                                             <p className='fw-bold mb-1'>{quiz.name}</p>
-                                            <p className='text-muted mb-0'>Creado por <a href="#">{quiz.creator}</a></p>
+                                            <p className='text-muted mb-0'>Creado por <a href="#">{quiz.author}</a></p>
                                         </div>
                                     </div>
-                                    <div className="ms-5">
+                                    <div className="d-flex justify-content-between align-items-center ms-5">
                                         <MDBBtn size='sm' rounded color='link' onClick={() => onPlay(quiz.id)}>
                                             Volver a jugar
                                         </MDBBtn>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <MDBTypography color="info" tag="h6">Nota obtenida: {quiz.grade ?? 0}</MDBTypography>
                                 </div>
                             </MDBListGroupItem>
                         ))}

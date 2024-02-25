@@ -14,6 +14,7 @@ const RecoverPassword = () => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, {
+                mode: 'cors',
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

@@ -33,6 +33,7 @@ const UserManagement = () => {
             // TODO - Crear una ruta para conseguir todos los usuarios (excepto el propio usuario con el se tiene la sesión actual)
             try {
                 const response = await fetch('https://localhost:8000/api/users', {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -82,6 +83,7 @@ const UserManagement = () => {
                     try {
                         // TODO - Crear ruta para poder actualizar a un usuario (excepto el mismo con el que se está en sesión)
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
+                            mode: 'cors',
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -139,6 +141,7 @@ const UserManagement = () => {
                     try {
                         // TODO - Crear ruta para poder actualizar a un usuario (excepto el mismo con el que se está en sesión)
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
+                            mode: 'cors',
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -192,6 +195,7 @@ const UserManagement = () => {
                     try {
                         // TODO - Crear ruta para poder eliminar a un usuario (excepto el mismo con el que se está en sesión)
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/${id}`, {
+                            mode: 'cors',
                             method: 'DELETE',
                             headers: {
                                 'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers

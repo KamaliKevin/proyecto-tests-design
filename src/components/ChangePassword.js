@@ -42,6 +42,7 @@ const ChangePassword = () => {
         // NOTA: "${process.env.REACT_APP_BACKEND_URL}/reset-password" es la ruta del back usada por Sanctum para COMPLETAR
         // el proceso de cambiar una contraseña
         await fetch(`${process.env.REACT_APP_BACKEND_URL}/reset-password`, {
+            mode: 'cors',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

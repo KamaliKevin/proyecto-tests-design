@@ -29,6 +29,7 @@ const QuizManagement = () => {
             try {
                 // TODO - Crear una ruta para poder conseguir los cuestionarios pendientes de aprobar ('pending')
                 const response = await fetch('https://localhost:8000/api/pending-tests', {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -76,6 +77,7 @@ const QuizManagement = () => {
                 const approveQuiz = async (e) => {
                     try {
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/test/${id}`, {
+                            mode: 'cors',
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',
@@ -131,6 +133,7 @@ const QuizManagement = () => {
                 const rejectQuiz = async (e) => {
                     try {
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/test/${id}`, {
+                            mode: 'cors',
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',

@@ -31,6 +31,7 @@ const Quiz = () => {
     const [correctAnswers, setCorrectAnswers] = useState([]);
     const [correctAnswerAmount, setCorrectAnswerAmount] = useState(0);
     const [failedAnswers, setFailedAnswers] = useState([]);
+    const [grade, setGrade] = useState(0);
 
     const [quizIsFinished, setQuizIsFinished] = useState(false);
 
@@ -38,6 +39,7 @@ const Quiz = () => {
         const fetchQuiz = async (e) => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/play/` + id, {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -186,7 +188,8 @@ const Quiz = () => {
         };
 
         try {
-            const response = await fetch("https://localhost:8000/api/upload-test", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload-test`, {
+                mode: 'cors',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -221,7 +224,6 @@ const Quiz = () => {
     }
 
     const showGrade = () => {
-        const grade = (correctAnswerAmount * 10) / quiz.questions.length;
         return <p className="fw-bold">{`Su nota es ${grade} de 10`}</p>
     }
 
@@ -283,6 +285,7 @@ const Quiz = () => {
                     finally {
                         setQuizIsFinished(true);
                         await handleFailedAnswers();
+                        await handleGrade();
                         handleCurrentQuestionType(quiz.questions[0]);
                         setCurrentQuestion(quiz.questions[0]);
                         setCurrentQuestionIndex(0);

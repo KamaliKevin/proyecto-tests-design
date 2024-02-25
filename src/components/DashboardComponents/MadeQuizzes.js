@@ -24,6 +24,7 @@ const MadeQuizzes = () => {
         async function fetchAndSetUserTests() {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/tests`, {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -79,6 +80,7 @@ const MadeQuizzes = () => {
                 const deleteQuiz = async (e) => {
                     try {
                         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test/${id}`, {
+                            mode: 'cors',
                             method: 'DELETE',
                             headers: {
                                 'X-XSRF-TOKEN': decodeURIComponent(csrfToken), // Include the CSRF token in the headers

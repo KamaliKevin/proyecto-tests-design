@@ -12,6 +12,7 @@ const EditQuiz = () => {
         const fetchQuiz = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test/${quizId}`, {
+                    mode: 'cors',
                     method: 'GET',
                     credentials: 'include'
                 });

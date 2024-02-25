@@ -9,6 +9,7 @@ const CategoryContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/categories`, {
+                mode: 'cors',
                 method: 'GET'
             })
                 .then(response => response.json())
