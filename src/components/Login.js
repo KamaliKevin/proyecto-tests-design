@@ -18,7 +18,7 @@ const Login = ({ onLogin }) => {
         e.preventDefault();
 
         const cookie = await fetch(`${process.env.REACT_APP_BACKEND_URL}/sanctum/csrf-cookie`, {
-            mode: 'cors',
+            mode: 'no-cors',
             method: 'GET',
             credentials: 'include'
         });
@@ -35,7 +35,7 @@ const Login = ({ onLogin }) => {
         formData.append('password', document.querySelector("#password").value);
 
         await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
-            mode: 'cors',
+            mode: 'no-cors',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,7 +52,7 @@ const Login = ({ onLogin }) => {
             }
             else {
                 await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user`, {
-                    mode: 'cors',
+                    mode: 'no-cors',
                     method: 'GET',
                     credentials: 'include', // Important: Include credentials for authentication
                 }).then(response => response.json())

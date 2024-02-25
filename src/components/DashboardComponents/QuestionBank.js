@@ -19,7 +19,7 @@ const QuestionBank = () => {
             // creadas por el usuario
             try {
                 const response = await fetch('https://localhost:8000/api/user/tests', {
-                    mode: 'cors',
+                    mode: 'no-cors',
                     method: 'GET',
                     credentials: 'include', // Include cookies for the domain
                 });

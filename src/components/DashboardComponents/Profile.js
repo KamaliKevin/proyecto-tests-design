@@ -39,7 +39,7 @@ const Profile = () => {
             formData.append('email', userData.email);
 
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, {
-                mode: 'cors',
+                mode: 'no-cors',
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

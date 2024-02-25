@@ -11,7 +11,7 @@ const Category = () => {
         const fetchCategoryPaginationData = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public-tests`, {
-                    mode: 'cors',
+                    mode: 'no-cors',
                     method: 'GET',
                     credentials: 'include'
                 });
