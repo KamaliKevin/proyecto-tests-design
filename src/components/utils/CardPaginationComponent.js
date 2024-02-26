@@ -12,7 +12,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
     const currentPage = pageNumber; // Índice de la página actual
     const pageCount = pageTotal; // Total de páginas
 
-
+    
     // Controlar que el usuario sea redirigido si a una pagina de la paginación si va directamente a una que no existe
     useEffect(() => {
         if(isNaN(currentPage) || currentPage < 1){
@@ -63,7 +63,7 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
             </MDBCardHeader>
             <MDBCardBody>
                 {/* NOTA: NO cambiar "cards === null" por simplemente "cards": la comparación no funcionaría! */}
-                {cards === null ? (
+                {cards !== null ? (
                     <MDBCardText>
                         <MDBRow className={`row-cols-1 row-cols-md-${cardsPerRow} g-4`}>
                             {currentCards.map((card, i) => (
