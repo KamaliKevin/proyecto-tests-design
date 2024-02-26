@@ -37,13 +37,13 @@ const PlayedQuizzes = () => {
                 }
 
                 const testHistory = await response.json();
-
+                console.log(testHistory);
                 let userTestData = testHistory.map(test => ({
                     name: test.name,
                     author: test.author,
                     id: test.id,
                     category_names: test.category_names,
-                    grade: test.grade,
+                    grade: test.score,
                     image_src: 'https://mdbootstrap.com/img/new/fluid/city/116.webp', // NOTA: Sustituir después por imagen relacionada desde la BD
                 }));
 

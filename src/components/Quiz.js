@@ -242,22 +242,22 @@ const Quiz = () => {
                 // TODO - Manejar la lógica para cuando se termina el cuestionario
                 console.log(chosenAnswers);
 
-                const handleGrade = async (e) => {
+                const handleGrade = async (importedGrade) => {
                     // Actualizamos la nota en un registro del historial de cuestionarios del usuario o creamos dicho registro
                     const csrfToken = document.cookie
                         .split('; ')
                         .find(cookie => cookie.startsWith('XSRF-TOKEN='))
                         ?.split('=')[1];
 
-                    const obtainedGrade = (correctAnswerAmount * 10) / quiz.questions.length; // Nota obtenida
+                    //const obtainedGrade = (correctAnswerAmount * 10) / quiz.questions.length; // Nota obtenida
 
                     const formData = new FormData();
                     formData.append('_method', 'PUT'); // Use method spoofing for Laravel, since using PUT doesn't work properly
-                    formData.append('grade', obtainedGrade); // TODO - En el back, tener un 'SMALLINT' que se llame 'grade' para guardar la nota que sacó el usuario
+                    formData.append('grade', importedGrade); // TODO - En el back, tener un 'SMALLINT' que se llame 'grade' para guardar la nota que sacó el usuario
 
                     try {
                         // TODO - Se necesita una ruta para actualizar un registro del historial en concreto
-                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/test-history/${quiz.id}`, {
+                        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/test-histories/`+id, {
                             mode: 'cors',
                             method: 'POST',
                             headers: {
@@ -275,12 +275,14 @@ const Quiz = () => {
                         console.error(error);
                     }
                     finally {
-                        console.log(obtainedGrade);
+                        console.log(importedGrade);
                         //setGrade(obtainedGrade);
                     }
                 }
 
                 const compareToCorrectAnswers = async (e) => {
+                    let correctAnswer = 0;
+
                     try {
                         // When api is available, fix this
 
@@ -297,7 +299,6 @@ const Quiz = () => {
 
                         // Comparamos con los datos del back:
                         console.log(quiz);
-                        let correctAnswer = 0;
                         quiz.questions.forEach((question, index) => {
                             if (chosenAnswers[index].index == question.respuestacorrecta) {
                                 correctAnswer++;
@@ -313,15 +314,16 @@ const Quiz = () => {
                                 }));
                             }
                         });
-                        setGrade(Math.round(((correctAnswer * 10) / quiz.questions.length) * 100) / 100);
+                        await setGrade(Math.round(((correctAnswer * 10) / quiz.questions.length) * 100) / 100);
                     }
                     catch (error) {
                         console.error(error);
                     }
                     finally {
+                        console.log(grade);
                         setQuizIsFinished(true);
                         //await handleFailedAnswers();
-                        await handleGrade();
+                        await handleGrade(Math.round(((correctAnswer * 10) / quiz.questions.length) * 100) / 100);
                         handleCurrentQuestionType(quiz.questions[0]);
                         setCurrentQuestion(quiz.questions[0]);
                         setCurrentQuestionIndex(0);
