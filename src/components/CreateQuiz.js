@@ -391,10 +391,10 @@ const CreateQuiz = ({ quizToBeEdited }) => {
                                 value={selectedQuestionType} onChange={handleQuestionTypeSelect}>
                                 <option value="">-- Elige el tipo de pregunta --</option>
                                 <option value="Opcion multiple">Opción múltiple</option>
-                                <option value="Multiple respuestas">Multiple respuestas</option>
+                                {/* <option value="Multiple respuestas">Multiple respuestas</option> */}
 
                                 <option value="Verdadero / Falso">Verdadero / Falso</option>
-                                <option value="Relacional">Relacional</option>
+                                {/* <option value="Relacional">Relacional</option> */}
                             </select>
                         </div>
 
