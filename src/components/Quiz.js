@@ -278,7 +278,9 @@ const Quiz = () => {
                                 }));
                             }
                         });
-                        setGrade((correctAnswerAmount*10)/quiz.questions);
+                        console.log(correctAnswerAmount);
+                        console.log(quiz.questions.length);
+                        setGrade((correctAnswerAmount*10)/quiz.questions.length);
                     }
                     catch (error) {
                         console.error(error);
