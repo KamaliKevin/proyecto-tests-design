@@ -26,7 +26,7 @@ import RecoverPassword from "./components/RecoverPassword";
 function App() {
     const navigate = useNavigate();
     const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-
+    const [userIsMod, setUserIsMod] = useState(false);
 
     const handleLogin = async () => {
         if (localStorage.getItem("XSRF-TOKEN")) {
@@ -43,6 +43,11 @@ function App() {
         const token = localStorage.getItem("XSRF-TOKEN");
         if (token) {
             setUserIsLoggedIn(true);
+            const role = JSON.parse(localStorage.getItem("USER")).role
+            if(role == "mod"|| role == "admin"){
+                setUserIsMod(true)
+            }
+            console.log();
         }
     }, []);
 
@@ -62,7 +67,7 @@ function App() {
 
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                             <Route element={<ProtectedRoute />}>
-                                <Route element={<Dashboard userIsModOrAdmin={false} />} path="/dashboard" />
+                                <Route element={<Dashboard userIsModOrAdmin={userIsMod} />} path="/dashboard" />
                                 <Route element={<ChangePassword/>} path="/password-reset/:token"/>
                                 <Route element={<CreateQuiz quizToBeEdited={null} />} path="/quiz/create" />
                                 <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />
