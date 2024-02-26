@@ -12,7 +12,9 @@ const CardPaginationComponent = ({ pageName, pageNumber, pageTotal, title, title
     const currentPage = pageNumber; // Índice de la página actual
     const pageCount = pageTotal; // Total de páginas
 
-    
+    if(cards != null && cards.length == 0){
+        cards = null;
+    }
     // Controlar que el usuario sea redirigido si a una pagina de la paginación si va directamente a una que no existe
     useEffect(() => {
         if(isNaN(currentPage) || currentPage < 1){
