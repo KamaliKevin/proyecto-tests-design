@@ -68,11 +68,10 @@ function App() {
                             {/* Rutas protegidas (comprueban si el usuario inició sesión) */}
                             <Route element={<ProtectedRoute />}>
                                 <Route element={<Dashboard userIsModOrAdmin={userIsMod} />} path="/dashboard" />
-                                <Route element={<ChangePassword/>} path="/password-reset/:token"/>
                                 <Route element={<CreateQuiz quizToBeEdited={null} />} path="/quiz/create" />
                                 <Route element={<EditQuiz />} path="/quiz/edit/:quizId" />
                             </Route>
-
+                            <Route element={<ChangePassword/>} path="/password-reset/:token"/>
                             <Route element={<GuestRoute />}>
                                 <Route element={<Login onLogin={handleLogin} />} path="/login" />
                                 <Route element={<Register onLogin={handleLogin} />} path="/register" />
