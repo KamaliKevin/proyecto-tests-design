@@ -261,12 +261,12 @@ const Quiz = () => {
                         console.log(quiz);
                         quiz.questions.forEach((question, index) => {
                             if (chosenAnswers[index].index == question.respuestacorrecta) {
-
+                                let temporalAmount = correctAnswerAmount + 1;
+                                setCorrectAnswerAmount(temporalAmount);
                                 // Modificar el arreglo de respuestas escogidas para decir si una es correcta o no
                                 setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, indexCorrect) => {
                                     if (index == indexCorrect) {
-                                        let temporalAmount = correctAnswerAmount + 1;
-                                        setCorrectAnswerAmount(temporalAmount);
+                                        
                                         setCorrectAnswers(answer);
 
                                         return { ...answer, isCorrect: true }
@@ -278,6 +278,7 @@ const Quiz = () => {
                                 }));
                             }
                         });
+                        setGrade((correctAnswerAmount*10)/quiz.questions);
                     }
                     catch (error) {
                         console.error(error);
