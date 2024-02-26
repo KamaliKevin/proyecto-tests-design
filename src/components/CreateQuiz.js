@@ -254,15 +254,15 @@ const CreateQuiz = ({ quizToBeEdited }) => {
             const importedQuestions = JSON.parse(result);
 
             // Verificar el formato del archivo
-            if (!checkFileFormat(importedQuestions)) {
-                console.error("El formato del archivo es inválido");
-                Swal.fire({
-                    icon: "error",
-                    title: "El formato del archivo es inválido. Por favor, revise que su cuestionario esté bien escrito o no infringa ninguna norma",
-                    showConfirmButton: true,
-                })
-                return;
-            }
+            // if (!checkFileFormat(importedQuestions)) {
+            //     console.error("El formato del archivo es inválido");
+            //     Swal.fire({
+            //         icon: "error",
+            //         title: "El formato del archivo es inválido. Por favor, revise que su cuestionario esté bien escrito o no infringa ninguna norma",
+            //         showConfirmButton: true,
+            //     })
+            //     return;
+            // }
 
             // Continuar con el procesamiento del archivo
             setPreguntas(importedQuestions);
