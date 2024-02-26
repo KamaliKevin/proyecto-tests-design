@@ -1,9 +1,14 @@
 import Swal from "sweetalert2";
-import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardText, MDBInput, MDBTypography} from "mdb-react-ui-kit";
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardText, MDBInput, MDBTypography } from "mdb-react-ui-kit";
 
 const RecoverPassword = () => {
 
     const recoverPassword = async (e) => {
+        e.preventDefault();
+        const cookie = await fetch(`${process.env.REACT_APP_BACKEND_URL}/sanctum/csrf-cookie`, {
+            method: 'GET',
+            credentials: 'include'
+        });
         const csrfToken = document.cookie
             .split('; ')
             .find(cookie => cookie.startsWith('XSRF-TOKEN='))
@@ -14,7 +19,7 @@ const RecoverPassword = () => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/forgot-password`, {
-                
+
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
