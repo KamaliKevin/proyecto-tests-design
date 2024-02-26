@@ -10,7 +10,7 @@ const Category = () => {
     useEffect(() => {
         const fetchCategoryPaginationData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public-tests`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public-tests?page=${pageNumber}`, {
                     
                     method: 'GET',
                     credentials: 'include'
@@ -19,7 +19,6 @@ const Category = () => {
                     throw new Error('Network response was not ok');
                 }
                 const paginationData = await response.json();
-
                 // Modificar los datos de paginación para que se adapten a la vista:
                 const correspondingCategoryCards = paginationData.data
                     .filter(categoryCard => categoryCard.category_names.includes(categoryName))
@@ -32,7 +31,6 @@ const Category = () => {
                     }));
 
                 const formattedPaginationData = {...paginationData, data: correspondingCategoryCards};
-
                 setCategoryPaginationData(formattedPaginationData);
             }
             catch (error) {
@@ -41,7 +39,7 @@ const Category = () => {
         };
 
         fetchCategoryPaginationData();
-    }, []);
+    }, [pageNumber]);
 
     return (
         <div className="mt-5">
