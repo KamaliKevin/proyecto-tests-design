@@ -28,6 +28,10 @@ const ChangePassword = () => {
     const changePassword = async (e) => {
         e.preventDefault();
 
+        const cookie = await fetch(`${process.env.REACT_APP_BACKEND_URL}/sanctum/csrf-cookie`, {
+            method: 'GET',
+            credentials: 'include'
+        });
         const csrfToken = document.cookie
             .split('; ')
             .find(cookie => cookie.startsWith('XSRF-TOKEN='))
