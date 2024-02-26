@@ -39,7 +39,7 @@ const Quiz = () => {
         const fetchQuiz = async (e) => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/play/` + id, {
-                    
+
                     method: 'GET',
                     credentials: 'include'
                 });
@@ -81,7 +81,7 @@ const Quiz = () => {
 
     const handleCurrentQuestionType = (question) => {
         // NOTA: Esta función se debería modificar una vez haya más tipo de preguntas
-        switch(question.tipo){
+        switch (question.tipo) {
             case "multipleAnswer":
                 setCurrentQuestionType("Respuesta múltiple");
                 break;
@@ -189,7 +189,7 @@ const Quiz = () => {
 
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/upload-test`, {
-                
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -259,36 +259,31 @@ const Quiz = () => {
 
                         // Comparamos con los datos del back:
                         console.log(quiz);
+                        let correctAnswer = 0;
                         quiz.questions.forEach((question, index) => {
                             if (chosenAnswers[index].index == question.respuestacorrecta) {
-                                let temporalAmount = correctAnswerAmount + 1;
-                                setCorrectAnswerAmount(temporalAmount);
+                                correctAnswer++;
                                 // Modificar el arreglo de respuestas escogidas para decir si una es correcta o no
                                 setChosenAnswers(prevChosenAnswers => prevChosenAnswers.map((answer, indexCorrect) => {
                                     if (index == indexCorrect) {
-                                        
-                                        setCorrectAnswers(answer);
-
                                         return { ...answer, isCorrect: true }
-
+                                    } else {
+                                        setFailedAnswers(answer);
+                                        return answer;
                                     }
 
-                                    setFailedAnswers(answer);
-                                    return answer;
                                 }));
                             }
                         });
-                        console.log(correctAnswerAmount);
-                        console.log(quiz.questions.length);
-                        setGrade((correctAnswerAmount*10)/quiz.questions.length);
+                        setGrade(Math.round(((correctAnswer * 10) / quiz.questions.length) * 100)/100);
                     }
                     catch (error) {
                         console.error(error);
                     }
                     finally {
                         setQuizIsFinished(true);
-                        await handleFailedAnswers();
-                        await handleGrade();
+                        //await handleFailedAnswers();
+                        //await handleGrade();
                         handleCurrentQuestionType(quiz.questions[0]);
                         setCurrentQuestion(quiz.questions[0]);
                         setCurrentQuestionIndex(0);
