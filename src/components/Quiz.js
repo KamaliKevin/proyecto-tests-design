@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 const Quiz = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true); // Estado de carga (NOTA: Importante dejar, pues los datos pueden llegar tarde desde la API)
-    useN
     const navigate = useNavigate();
     const [quiz, setQuiz] = useState({});
     const [quizIsPlaying, setQuizIsPlaying] = useState(false);
