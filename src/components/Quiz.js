@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import {
     MDBBtn,
     MDBCard,
@@ -17,7 +17,8 @@ import Swal from "sweetalert2";
 const Quiz = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true); // Estado de carga (NOTA: Importante dejar, pues los datos pueden llegar tarde desde la API)
-
+    useN
+    const navigate = useNavigate();
     const [quiz, setQuiz] = useState({});
     const [quizIsPlaying, setQuizIsPlaying] = useState(false);
 
@@ -45,6 +46,7 @@ const Quiz = () => {
                 });
 
                 if (!response.ok) {
+                    navigate("/home");
                     throw new Error("Failed to fetch quiz data");
                 }
 
